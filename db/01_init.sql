@@ -21,7 +21,7 @@ INSERT INTO `am_perfiles` (`prf_id`, `prf_nombre`, `prf_descripcion`, `prf_actua
 (3, 'Clientes - crear', 'El usuario puede crear clientes', NOW(), 0),
 (4, 'Clientes - borrar', 'El usuario puede borrar clientes', NOW(), 0),
 (5, 'Ubicaciones - ver', 'El usuario puede ver las oficinas', NOW(), 0),
-(6, 'Ubicaciones - editar', 'El usuario puede editar las oficinas, NOW(), 0'),
+(6, 'Ubicaciones - editar', 'El usuario puede editar las oficinas', NOW(), 0),
 (7, 'Ubicaciones - crear', 'El usuario puede crear oficinas', NOW(), 0),
 (8, 'Ubicaciones - borrar', 'El usuario puede borrar las oficinas', NOW(), 0),
 (9, 'Equipos - ver', 'El usuario puede ver los equipos', NOW(), 0),
