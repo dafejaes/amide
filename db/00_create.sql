@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `amide_db`.`am_usuarios` (
   `am_sucursales_suc_id` INT NOT NULL,
   `usr_nombre` VARCHAR(255) NULL,
   `usr_correo` VARCHAR(100) NULL,
-  `usr_contraseña` VARCHAR(45) NULL,
+  `usr_contrasena` VARCHAR(45) NULL,
   `usr_telefono` VARCHAR(45) NULL,
   `usr_cargo` VARCHAR(100) NULL,
   `usr_estado` TINYINT NULL,

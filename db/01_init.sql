@@ -1,29 +1,44 @@
--- SE CARGAN Clientes
-INSERT INTO `dmt_cliente` (`cli_id`, `cli_dtcreate`, `cli_nombre`, `cli_estado`, `cli_email`, `cli_url`, `cli_telefono`, `cli_fecha_inicio`, `cli_fecha_fin`, `cli_nit`, `cli_pais`, `cli_departamento`, `cli_ciudad`, `cli_direccion`) VALUES ('1', '2013-05-16 00:00:00', 'Universidad de Antioquia', 'activo', 'universidad@udea.edu.co', 'www.udea.edu.co', '4116508', '2013-05-01 00:00:00', '2020-06-12 00:00:00', '900097657-1', 'Colombia', 'Antioquia', 'Medellin', 'Zona Norte');
--- SE CARGAN USUARIOS
-INSERT INTO `dmt_usuario` (`usr_id`, `dmt_cliente_cli_id`, `usr_dtcreate`, `usr_habilitado`, `usr_email`, `usr_pass`, `usr_nombre`, `usr_apellido`, `usr_identificacion`, `usr_cargo`, `usr_telefono`, `usr_celular`, `usr_pais`, `usr_departamento`, `usr_ciudad`, `usr_direccion`, `usr_imagen`) VALUES
-(1, 1, NOW(), 1, 'prueba@correo.com', '95B490918894B85EB280AF6B54DB9DBF811ED3D7', 'prueba', 'apellido_prueba', '123456789', 'Administrador', '654987321', '321654987', 'elpais', 'departamento-estado', 'laciudad', 'ladireccion', 'prueba.jpg');
+-- Se agregan los clientes
 
--- SE CARGAN PERFILES
-INSERT INTO `dmt_perfiles` (`prf_id`, `prf_nombre`, `prf_descripcion`) VALUES
-(1, 'Clientes - Ver', NULL),
-(2, 'Clientes - Crear', NULL),
-(3, 'Clientes - Editar', NULL),
-(4, 'Clientes - Eliminar', NULL),
-(5, 'Usuarios - Ver', NULL),
-(6, 'Usuarios - Crear', NULL),
-(7, 'Usuarios - Editar', NULL),
-(8, 'Usuarios - Eliminar', NULL),
-(9, 'Usuarios - Permisos', NULL);
+INSERT INTO `am_clientes` (`cli_id`, `cli_nombre`, `cli_tipo`, `cli_estado`, `cli_actualizado`, `cli_borrado`) VALUES
+(1, 'Hospital Universidad de Antioquia', 'Interno', 'Activo', NOW(), 0);
 
--- SE INICIALIZAN PERFILES
-INSERT INTO dmt_usuario_has_dmt_perfiles (dmt_usuario_usr_id, dmt_perfiles_prf_id, dtcreate) VALUES 
-('1', '1', NOW()),
-('1', '2', NOW()),
-('1', '3', NOW()),
-('1', '4', NOW()),
-('1', '5', NOW()),
-('1', '6', NOW()),
-('1', '7', NOW()),
-('1', '8', NOW()),
-('1', '9', NOW());
+-- Se crean las sucursales
+
+INSERT INTO `am_sucursales` (`suc_id`, `am_clientes_cli_id`, `suc_nombre`, `suc_ciudad`, `suc_direccion`, `suc_telefono`, `suc_actualizado`, `suc_borrado`) VALUES
+(1, 1, 'Hospital Ciudad Universitaria', 'Medellín', 'calle 67 No. 53 - 108', '219 8332', NOW(), 0);
+
+--  Se agregan los usuarios
+
+INSERT INTO `am_usuarios` (`usr_id`, `am_sucursales_suc_id`, `usr_nombre`, `usr_correo`, `usr_contrasena`, `usr_telefono`, `usr_cargo`, `usr_estado`, `usr_actualizado`, `usr_borrado`) VALUES
+(1, 1, 'Prueba', 'prueba@correo.com', '95B490918894B85EB280AF6B54DB9DBF811ED3D7', '12345', 'Administrador', 'Activo', NOW(), 0);
+
+-- Se crean los perfiles
+
+INSERT INTO `am_perfiles` (`prf_id`, `prf_nombre`, `prf_descripcion`, `prf_actualizado`, `prf_borrado`) VALUES
+(1, 'Clientes - ver', 'El usuario puede ver los clientes', NOW(), 0),
+(2, 'Clientes - editar', 'El usuario puede editar los clientes', NOW(), 0),
+(3, 'Clientes - crear', 'El usuario puede crear clientes', NOW(), 0),
+(4, 'Clientes - borrar', 'El usuario puede borrar clientes', NOW(), 0),
+(5, 'Ubicaciones - ver', 'El usuario puede ver las oficinas', NOW(), 0),
+(6, 'Ubicaciones - editar', 'El usuario puede editar las oficinas, NOW(), 0'),
+(7, 'Ubicaciones - crear', 'El usuario puede crear oficinas', NOW(), 0),
+(8, 'Ubicaciones - borrar', 'El usuario puede borrar las oficinas', NOW(), 0),
+(9, 'Equipos - ver', 'El usuario puede ver los equipos', NOW(), 0),
+(10, 'Equipos - editar', 'El usuario puede editar los equipos', NOW(), 0),
+(11, 'Equipos - crear', 'El usuario puede crear equipos', NOW(), 0),
+(12, 'Equipos - borrar', 'El usuario puede borrar equipos', NOW(), 0);
+
+INSERT INTO `am_usuarios_has_am_perfiles` (`am_usuarios_usr_id`, `am_perfiles_prf_id`) VALUES
+(1,1),
+(1,2),
+(1,3),
+(1,4),
+(1,5),
+(1,6),
+(1,7),
+(1,8),
+(1,9),
+(1,10),
+(1,11),
+(1,12);
