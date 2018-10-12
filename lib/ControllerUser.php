@@ -5,7 +5,6 @@ include 'Util.php';
 
 /**
  * Clase que contiene todas las operaciones utilizadas sobre la base de datos
- * @author Camilo Garzon Calle
  */
 class ControllerUser {
 
@@ -201,44 +200,39 @@ class ControllerUser {
                 $arrjson = $this->UTILITY->error_missing_data();
             } else {
                 $pass = $this->UTILITY->make_hash_pass($this->email, $this->pass);
-                $q = "SELECT * FROM dmt_usuario WHERE usr_email = '$this->email' AND usr_pass = '$pass' AND usr_habilitado = 1";
+                $q = "SELECT * FROM am_usuarios WHERE usr_correo = '$this->email' AND usr_contrasena = '$pass' AND usr_estado = 1 AND usr_borrado = 0";
                 $con = mysqli_query($this->conexion,$q) or die(mysqli_error() . "***ERROR: " . $q);
                 $resultado = mysqli_num_rows($con);
                 while ($obj = mysqli_fetch_object($con)) {
-                    $q2 = "SELECT cli_id, cli_nombre FROM dmt_cliente WHERE cli_id = " . $obj->dmt_cliente_cli_id;
+                    $q2 = "SELECT suc_id, suc_nombre FROM am_sucursales WHERE suc_id = " . $obj->am_sucursales_suc_id;
                     $con2 = mysqli_query($this->conexion,$q2) or die(mysqli_error() . "***ERROR: " . $q2);
-                    $cliente = '0';
-                    $clientenombre = 'ninguno';
+                    $sucursal = '0';
+                    $sucursalnombre = 'ninguno';
                     while ($obj2 = mysqli_fetch_object($con2)) {
-                        $cliente = $obj2->cli_id;
-                        $clientenombre = $obj2->cli_nombre;
+                        $sucursal = $obj2->suc_id;
+                        $sucursalnombre = $obj2->suc_nombre;
                     }
 
                     //se consultan los perfiles asignados
-                    $q3 = "SELECT dmt_perfiles_prf_id FROM dmt_usuario_has_dmt_perfiles WHERE dmt_usuario_usr_id = $obj->usr_id ORDER BY dmt_perfiles_prf_id ASC";
+                    $q3 = "SELECT am_perfiles_prf_id FROM am_usuarios_has_am_perfiles WHERE am_usuarios_usr_id = $obj->usr_id ORDER BY am_perfiles_prf_id ASC";
                     $con3 = mysqli_query($this->conexion,$q3) or die(mysqli_error() . "***ERROR: " . $q3);
                     $arrassigned = array();
                     while ($obj3 = mysqli_fetch_object($con3)) {
-                        $arrassigned[] = ($obj3->dmt_perfiles_prf_id);
+                        $arrassigned[] = ($obj3->am_perfiles_prf_id);
                     }
+
+                    //se consulta el cliente
                     $arrjson = array('output' => array(
                             'valid' => true,
                             'id' => $obj->usr_id,
-                            'idcli' => ($cliente),
-                            'clientenombre' => ($clientenombre),
+                            'idsuc' => ($sucursal),
+                            'sucursalnombre' => ($sucursalnombre),
                             'nombre' => ($obj->usr_nombre),
-                            'apellido' => ($obj->usr_apellido),
                             'cargo' => ($obj->usr_cargo),
-                            'email' => ($obj->usr_email),
-                            'identificacion' => ($obj->usr_identificacion),
-                            'celular' => ($obj->usr_celular),
+                            'email' => ($obj->usr_correo),
                             'telefono' => ($obj->usr_telefono),
-                            'pais' => ($obj->usr_pais),
-                            'departamento' => ($obj->usr_departamento),
-                            'ciudad' => ($obj->usr_ciudad),
-                            'direccion' => ($obj->usr_direccion),
-                            'habilitado' => ($obj->usr_habilitado),
-                            'dtcreate' => ($obj->usr_dtcreate),
+                            'habilitado' => ($obj->usr_estado),
+                            'dtcreate' => ($obj->usr_actualizado),
                             'permisos' => $arrassigned));
                 }
                 if ($resultado == 0) {
