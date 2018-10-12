@@ -192,11 +192,11 @@ class ControllerUser {
      * Metodo para loguearse
      */
     private function usrlogin() {
-        $resultado = 0;
+        //$resultado = 0;
         if ($this->UTILITY->validate_email($this->email)) {
             $arrjson = $this->UTILITY->error_wrong_email();
         } else {
-            if ($this->email == "" || $this->pass == "") {
+            if ($this->pass == "") {
                 $arrjson = $this->UTILITY->error_missing_data();
             } else {
                 $pass = $this->UTILITY->make_hash_pass($this->email, $this->pass);
