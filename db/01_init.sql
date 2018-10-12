@@ -11,7 +11,7 @@ INSERT INTO `am_sucursales` (`suc_id`, `am_clientes_cli_id`, `suc_nombre`, `suc_
 --  Se agregan los usuarios
 
 INSERT INTO `am_usuarios` (`usr_id`, `am_sucursales_suc_id`, `usr_nombre`, `usr_correo`, `usr_contrasena`, `usr_telefono`, `usr_cargo`, `usr_estado`, `usr_actualizado`, `usr_borrado`) VALUES
-(1, 1, 'Prueba', 'prueba@correo.com', '95B490918894B85EB280AF6B54DB9DBF811ED3D7', '12345', 'Administrador', 'Activo', NOW(), 0);
+(1, 1, 'Prueba', 'prueba@correo.com', '95B490918894B85EB280AF6B54DB9DBF811ED3D7', '12345', 'Administrador', 1, NOW(), 0);
 
 -- Se crean los perfiles
 
