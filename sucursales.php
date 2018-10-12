@@ -1,6 +1,6 @@
 <?php
 include 'include/generic_validate_session.php';
-include 'lib/ControllerCustomer.php';
+include 'lib/ControllerBranchOffice.php';
 /**
  * se cargan los permisos
  */
@@ -13,8 +13,8 @@ $delete = $SESSION_DATA->getPermission(4);
 /**
  * se cargan datos
  */
-$SUCURSAL = new ControllerCustomer();
-$SUCURSAL->cliget();
+$SUCURSAL = new ControllerBranchOffice();
+$SUCURSAL->sucget();
 $arrsucursal = $SUCURSAL->getResponse();
 $isvalid = $arrsucursal['output']['valid'];
 $arrclientes = $arrsucursal['output']['response'];
