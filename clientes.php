@@ -7,8 +7,8 @@ include 'lib/ControllerCustomer.php';
 if (!$SESSION_DATA->getPermission(1)) {
     header('Location: main.php');
 }
-$create = $SESSION_DATA->getPermission(2);
-$edit = $SESSION_DATA->getPermission(3);
+$create = $SESSION_DATA->getPermission(3);
+$edit = $SESSION_DATA->getPermission(2);
 $delete = $SESSION_DATA->getPermission(4);
 /**
  * se cargan datos
@@ -55,14 +55,17 @@ $arrclientes = $arrclientes['output']['response'];
                             <tr>
 <!--                                <th class="head0" style="width: 140px;">Acciones</th>-->
                                 <th class="head0" style="width: 50px;">Acciones
-                                <th class="head1"> id</th>>
-                                <th class="head0"> Nombre sucursal</th>
-                                <th class="head1">Ciudad</th>
-                                <th class="head0">Dirección</th>
-                                <th class="head1">Telefono</th>>
+                                <th class="head1"> Nit</th>
+                                <th class="head0"> Nombre Cliente</th>
+                                <th class="head1">Tipo</th>
+                                <th class="head0">Url</th>
+                                <th class="head1">Estado</th>
+
                             </tr>
                         </thead>
                         <colgroup>
+                            <col class="con0" />
+                            <col class="con1" />
                             <col class="con0" />
                             <col class="con1" />
                             <col class="con0" />
@@ -90,9 +93,16 @@ $arrclientes = $arrclientes['output']['response'];
 					    }
 					    ?>
 					</td>
-					<td class="con1"><?php echo $arrclientes[$i]['nombre']; ?></td>
-					<td class="con0"><?php echo $arrclientes[$i]['estado']; ?></td>
-					<td class="con1"><?php echo $arrclientes[$i]['url']; ?></td>
+					<td class="con1"><?php echo $arrclientes[$i]['nit']; ?></td>
+					<td class="con0"><?php echo $arrclientes[$i]['nombre']; ?></td>
+					<td class="con1"><?php echo $arrclientes[$i]['tipo']; ?></td>
+                        <td class="con0"><?php echo $arrclientes[$i]['url']; ?></td>
+                        <td class="con1"><?php if($arrclientes[$i]['estado']){
+                            echo('Activo');
+                            }
+                            else{
+                            echo('Inactivo');
+                            }; ?></td>
 				    </tr>
 				    <?php
 				}
