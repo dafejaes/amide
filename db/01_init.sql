@@ -1,12 +1,12 @@
 -- Se agregan los clientes
 
-INSERT INTO `am_clientes` (`cli_id`, `cli_nombre`, `cli_tipo`, `cli_nit`, `cli_estado`, `cli_actualizado`, `cli_borrado`) VALUES
-(1, 'Hospital Universidad de Antioquia', 'Interno', '890980040-8', 1, NOW(), 0);
+INSERT INTO `am_clientes` (`cli_id`, `cli_nombre`, `cli_tipo`, `cli_url`, `cli_nit`, `cli_estado`, `cli_actualizado`, `cli_borrado`) VALUES
+(1, 'Hospital Universidad de Antioquia', 'Interno', 'www.udea.edu.co', '890980040-8', 1, NOW(), 0);
 
 -- Se crean las sucursales
 
 INSERT INTO `am_sucursales` (`suc_id`, `am_clientes_cli_id`, `suc_nombre`, `suc_ciudad`, `suc_direccion`, `suc_telefono`, `suc_actualizado`, `suc_borrado`) VALUES
-(1, 1, 'Hospital Ciudad Universitaria', 'Medellín', 'calle 67 No. 53 - 108', '219 8332', NOW(), 0);
+(1, 1, 'Hospital Ciudad Universitaria', 'Medellin', 'calle 67 No. 53 - 108', '219 8332', NOW(), 0);
 
 --  Se agregan los usuarios
 
