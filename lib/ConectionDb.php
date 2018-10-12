@@ -2,9 +2,8 @@
 
 /**
  * Clase para conectar a la base de datos
- * @author Camilo Garzon Calle
- * @copyright Secuencia24
- * @version 1.0
+
+ *
  */
 class ConectionDb {
 
@@ -17,7 +16,7 @@ class ConectionDb {
 	$this->host = "localhost";
 	$this->pass = "";
 	$this->user = "root";
-	$this->db = "danmet_db";
+	$this->db = "amide_db";
 	//Este es el timestamp que se debe ingresar, de acuerdo a la hora deseada
 	$this->server_date = 'DATE_ADD(NOW(),INTERVAL 1 HOUR)';
 	$this->connection = NULL;
