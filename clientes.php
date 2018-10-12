@@ -134,26 +134,32 @@ $arrclientes = $arrclientes['output']['response'];
 		    </div>
                 </div>
                 <div class="control-group">
-                    <label class="control-label">Email</label>
-                    <div class="controls"><input type="email" name="email" id="email" class="text ui-widget-content ui-corner-all" /></div>
+                    <label class="control-label">Tipo</label>
+                    <div class="controls">
+                        <select name="tipo" id="tipo" class="text ui-widget-content ui-corner-all">
+                            <option value="seleccione">Seleccione...</option>
+                            <option value="Interno">Interno</option>
+                            <option value="externo">Externo</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="control-group">
                     <label class="control-label">URL</label>
                     <div class="controls"><input type="text" name="url" id="url" class="text ui-widget-content ui-corner-all" /></div>
                 </div>
-                <div class="control-group">
+                <!-- <div class="control-group">
                     <label class="control-label">Fecha Inicio</label>
                     <div class="controls"><input type="text" name="fechainicio" id="fechainicio" readonly="true" class="text ui-widget-content ui-corner-all" /></div>
                 </div>
                 <div class="control-group">
                     <label class="control-label">Fecha Fin</label>
                     <div class="controls"><input type="text" name="fechafin" id="fechafin" readonly="true" class="text ui-widget-content ui-corner-all" /></div>
-                </div>
+                </div>-->
                 <div class="control-group">
                     <label class="control-label">NIT</label>
                     <div class="controls"><input type="text" name="nit" id="nit" class="text ui-widget-content ui-corner-all" /></div>
                 </div>
-                <div class="control-group">
+                <!--<div class="control-group">
                     <label class="control-label">Telefono</label>
                     <div class="controls"><input type="text" name="telefono" id="telefono" class="text ui-widget-content ui-corner-all" /></div>
                 </div>
@@ -172,7 +178,7 @@ $arrclientes = $arrclientes['output']['response'];
                 <div class="control-group">
                     <label class="control-label">Dirección</label>
                     <div class="controls"><input type="text" name="direccion" id="direccion" class="text ui-widget-content ui-corner-all" /></div>
-                </div>
+                </div>-->
             </form>
         </div>
 	<?php include 'include/generic_script.php'; ?>
