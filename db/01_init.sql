@@ -1,7 +1,7 @@
 -- Se agregan los clientes
 
-INSERT INTO `am_clientes` (`cli_id`, `cli_nombre`, `cli_tipo`, `cli_nit` `cli_estado`, `cli_actualizado`, `cli_borrado`) VALUES
-(1, 'Hospital Universidad de Antioquia', 'Interno', '890980040-8' 'Activo', NOW(), 0);
+INSERT INTO `am_clientes` (`cli_id`, `cli_nombre`, `cli_tipo`, `cli_nit`, `cli_estado`, `cli_actualizado`, `cli_borrado`) VALUES
+(1, 'Hospital Universidad de Antioquia', 'Interno', '890980040-8', 1, NOW(), 0);
 
 -- Se crean las sucursales
 
