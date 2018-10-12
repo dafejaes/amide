@@ -258,14 +258,10 @@ a:focus {
 }
 
 .img-circle {
-  /* cambia estos dos valores para definir el tamaño de tu círculo */
-  height: 10px;
-  width: 10px;
-  /* los siguientes valores son independientes del tamaño del círculo */
-  background-repeat: no-repeat;
-  background-position: 50%;
+  width: 300px;
+  height: 300px;
   border-radius: 50%;
-  background-size: 100% auto;
+  overflow:hidden;
 }
 
 .row {
