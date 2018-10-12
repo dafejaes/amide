@@ -5,8 +5,8 @@ include 'Util.php';
 
 /**
  * Clase que contiene todas las operaciones utilizadas sobre la base de datos
- * @author Camilo Garzon Calle
  */
+
 class ControllerCustomer {
 
     private $conexion, $CDB, $op, $id, $euid, $sdid;
@@ -92,9 +92,9 @@ class ControllerCustomer {
     }
 
     public function cliget() {
-        $q = "SELECT * FROM am_sucursales, am_clientes where am_clientes_cli_id = cli_id ORDER BY suc_nombre AND suc_borrado = 0";
+        $q = "SELECT * FROM am_clientes ORDER BY cli_nombre AND cli_borrado = 0";
         if ($this->id > 0) {
-            $q = "SELECT * FROM am_sucursales, am_clientes WHERE suc_id = " . $this->id . "AND am_clientes_cli_id = clid_id"    ;
+            $q = "SELECT * FROM am_clientes WHERE cli_id = " . $this->id;
         }
         $con = mysqli_query($this->conexion,$q) or die(mysqli_error() . "***ERROR: " . $q);
         $resultado = mysqli_num_rows($con);
@@ -102,16 +102,14 @@ class ControllerCustomer {
         $arr = array();
         while ($obj = mysqli_fetch_object($con)) {
             $arr[] = array(
-                'id' => $obj->suc_id,
-                'cli_id' => $obj->am_clientes_cli_id,
-                'sucnombre' => ($obj->suc_nombre),
-                'ciudad' => ($obj->suc_ciudad),
-                'direccion' => ($obj->suc_direccion),
-                'telefono' => ($obj->suc_telefono),
-                'clinombre' => ($obj->cli_nombre),
-                'clinit' => ($obj->cli_nit),
+                'id' => $obj->cli_id,
+                'nombre' => ($obj->cli_nombre),
                 'nit' => ($obj->cli_nit),
-                'dtcreate' => ($obj->suc_actualizado));
+                'tipo' => ($obj->cli_tipo),
+                'url' => ($obj->cli_url),
+                'estado' => ($obj->cli_estado),
+                'clinit' => ($obj->cli_nit),
+                'dtcreate' => ($obj->cli_actualizado));
         }
         if ($resultado > 0) {
             $arrjson = array('output' => array('valid' => true, 'response' => $arr));
