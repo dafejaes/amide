@@ -18,7 +18,7 @@ include 'include/generic_validate_session.php';
             </div>
 	    <div class="container" style="height: 300px; margin: 0 auto !important; text-align: center;">
 		<br><br>
-		<h1>BIENVENIDO AL SISTEMA DE INFORMACIÓN DE SECUENCIA24</h1>
+		<h1>¡Bienvenido a AntioquiaMide!</h1>
 		<?php 
                 //print_r($_SESSION['usuario']) 
                 ?>
