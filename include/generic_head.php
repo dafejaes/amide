@@ -3,7 +3,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <!--Fin Optimized mobile viewport -->
 <META NAME="Author" CONTENT="Daniel Felipe Jaramillo Escobar"/>
-<title>Administrador de Información :: Secuencia24</title>
+<title>AntioquiaMide Metrología</title>
 <!--styles-->
 <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
 <link rel="stylesheet" type="text/css" href="css/app.css" />
