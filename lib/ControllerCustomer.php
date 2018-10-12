@@ -92,29 +92,26 @@ class ControllerCustomer {
     }
 
     public function cliget() {
-        $q = "SELECT * FROM dmt_cliente ORDER BY cli_nombre ASC";
+        $q = "SELECT * FROM am_sucursales, am_clientes where am_clientes_cli_id = cli_id ORDER BY suc_nombre AND suc_borrado = 0";
         if ($this->id > 0) {
-            $q = "SELECT * FROM dmt_cliente WHERE cli_id = " . $this->id;
+            $q = "SELECT * FROM am_sucursales, am_clientes WHERE suc_id = " . $this->id . "AND am_clientes_cli_id = clid_id"    ;
         }
         $con = mysqli_query($this->conexion,$q) or die(mysqli_error() . "***ERROR: " . $q);
         $resultado = mysqli_num_rows($con);
+
         $arr = array();
         while ($obj = mysqli_fetch_object($con)) {
             $arr[] = array(
-                'id' => $obj->cli_id,
-                'nombre' => ($obj->cli_nombre),
-                'estado' => ($obj->cli_estado),
-                'email' => ($obj->cli_email),
-                'url' => ($obj->cli_url),
-                'fechainicio' => ($obj->cli_fecha_inicio),
-                'fechafin' => ($obj->cli_fecha_fin),
+                'id' => $obj->suc_id,
+                'cli_id' => $obj->am_clientes_cli_id,
+                'sucnombre' => ($obj->suc_nombre),
+                'ciudad' => ($obj->suc_ciudad),
+                'direccion' => ($obj->suc_direccion),
+                'telefono' => ($obj->suc_telefono),
+                'clinombre' => ($obj->cli_nombre),
+                'clinit' => ($obj->cli_nit),
                 'nit' => ($obj->cli_nit),
-                'telefono' => ($obj->cli_telefono),
-                'pais' => ($obj->cli_pais),
-                'departamento' => ($obj->cli_departamento),
-                'ciudad' => ($obj->cli_ciudad),
-                'direccion' => ($obj->cli_direccion),
-                'dtcreate' => ($obj->cli_dtcreate));
+                'dtcreate' => ($obj->suc_actualizado));
         }
         if ($resultado > 0) {
             $arrjson = array('output' => array('valid' => true, 'response' => $arr));
