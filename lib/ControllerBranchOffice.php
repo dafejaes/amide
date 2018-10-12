@@ -52,7 +52,7 @@ class ControllerBranchOffice
     public function sucget() {
         $q = "SELECT * FROM am_sucursales, am_clientes where am_clientes_cli_id = cli_id ORDER BY suc_nombre AND suc_borrado = 0";
         if ($this->id > 0) {
-            $q = "SELECT * FROM am_sucursales, am_clientes WHERE suc_id = " . $this->id . "AND am_clientes_cli_id = clid_id"    ;
+            $q = "SELECT * FROM am_sucursales, am_clientes WHERE suc_id = " . $this->id . "AND am_clientes_cli_id = cli_id"    ;
         }
         $con = mysqli_query($this->conexion,$q) or die(mysqli_error() . "***ERROR: " . $q);
         $resultado = mysqli_num_rows($con);
