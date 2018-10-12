@@ -9,6 +9,8 @@
                 ?>
                 <li <?php if ($_ACTIVE_SIDEBAR == "clientes") echo 'class="active"'; ?>><a href="clientes.php">Clientes</a></li>
                 <li class="divider-vertical"></li>
+                <li <?php if ($_ACTIVE_SIDEBAR == "sucursales") echo 'class="active"'; ?>><a href="sucursales.php">Sucursales</a></li>
+                <li class="divider-vertical"></li>
                 <?php
             }
             //if($SESSION_DATA->getPermission(5)){
