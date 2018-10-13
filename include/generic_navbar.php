@@ -13,12 +13,14 @@
                 <li class="divider-vertical"></li>
                 <?php
             }
-            //if($SESSION_DATA->getPermission(5)){
+            if($SESSION_DATA->getPermission(5)){
                 ?>
-                <!--<li <?php //if ($_ACTIVE_SIDEBAR == "usuario") echo 'class="active"'; ?>><a href="usuario.php">Usuarios</a></li>
-                <li class="divider-vertical"></li>-->
+                <li <?php if ($_ACTIVE_SIDEBAR == "servicios") echo 'class="active"'; ?>><a href="servicio.php">Servicios</a></li>
+                <li class="divider-vertical"></li>
+                <li <?php if ($_ACTIVE_SIDEBAR == "ubicaciones") echo 'class="active"'; ?>><a href="ubicacion.php">Ubicacion</a></li>
+                <li class="divider-vertical"></li>
                 <?php
-            //}
+            }
             ?>
 
         </ul>

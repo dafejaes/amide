@@ -1,10 +1,10 @@
-$(document).on('ready', initcliente);
+$(document).on('ready', initsucursal);
 var q, nombre, estado, allFields, tips;
 
 /**
  * se activa para inicializar el documento
  */
-function initcliente() {
+function initsucursal() {
     q = {};
     q.ke = _ucode;
     q.lu = _ulcod;
@@ -27,7 +27,7 @@ function initcliente() {
     });
 
     $("#dialog-form").dialog({
-        autoOpen: false, height: 700, width: 450, modal: true,
+        autoOpen: false, height: 700, width: 100, modal: false,
         buttons: {
             "Guardar": function() {
                 var bValid = true;
@@ -112,7 +112,7 @@ var CLIENTE = {
         UTIL.cursorNormal();
         if (data.output.valid) {
             updateTips('Información guardada correctamente');
-            window.location = 'clientes.php';
+            window.location = 'sucursales.php';
         } else {
             updateTips('Error: ' + data.output.response.content);
         }

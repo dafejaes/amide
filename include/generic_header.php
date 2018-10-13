@@ -5,7 +5,7 @@ if (isset($_SESSION['usuario'])) {
         <div align="left" class= "nav">
         <img class="img-circle" src="images/prueba.jpg" width="150px">
             <?php
-            echo($_SESSION['usuario']['nombre']);
+            echo($_SESSION['usuario']['nombre'] . "(" . $_SESSION['usuario']['cargo'] . ")");
             ?>
             <img class="img-polaroid" src="images/favicon3.png" width="150px" align="right">
         </div>

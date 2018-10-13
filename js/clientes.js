@@ -18,8 +18,8 @@ function initcliente() {
         "sPaginationType": "full_numbers"
     });
 
-    UTIL.applyDatepicker('fechainicio');
-    UTIL.applyDatepicker('fechafin');
+    //UTIL.applyDatepicker('fechainicio');
+    //UTIL.applyDatepicker('fechafin');
 
     $("#crearcliente").button().click(function() {
         q.id = 0;
@@ -96,16 +96,11 @@ var CLIENTE = {
         q.op = 'clisave';
         q.nombre = $('#nombre').val();
         q.estado = $('#estado').val();
-        q.email = $('#email').val();
+        q.tipo = $('#tipo').val();
         q.url = $('#url').val();
-        q.fechainicio = $('#fechainicio').val();
+        q.nit = $('#nit').val();
         q.fechafin = $('#fechafin').val();
         q.nit = $('#nit').val();
-        q.telefono = $('#telefono').val();
-        q.pais = $('#pais').val();
-        q.departamento = $('#departamento').val();
-        q.ciudad = $('#ciudad').val();
-        q.direccion = $('#direccion').val();
         UTIL.callAjaxRqst(q, this.savedatahandler);
     },
     savedatahandler: function(data) {

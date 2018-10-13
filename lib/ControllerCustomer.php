@@ -29,16 +29,9 @@ class ControllerCustomer {
         if ($this->op == 'clisave') {
             $this->nombre = isset($rqst['nombre']) ? $rqst['nombre'] : '';
             $this->estado = isset($rqst['estado']) ? $rqst['estado'] : '';
-            $this->email = isset($rqst['email']) ? $rqst['email'] : '';
+            $this->tipo = isset($rqst['tipo']) ? $rqst['tipo'] : '';
             $this->url = isset($rqst['url']) ? $rqst['url'] : '';
-            $this->fechainicio = isset($rqst['fechainicio']) ? $rqst['fechainicio'] : '';
-            $this->fechafin = isset($rqst['fechafin']) ? $rqst['fechafin'] : '';
             $this->nit = isset($rqst['nit']) ? $rqst['nit'] : '';
-            $this->telefono = isset($rqst['telefono']) ? $rqst['telefono'] : '';
-            $this->pais = isset($rqst['pais']) ? $rqst['pais'] : '';
-            $this->departamento = isset($rqst['departamento']) ? $rqst['departamento'] : '';
-            $this->ciudad = isset($rqst['ciudad']) ? $rqst['ciudad'] : '';
-            $this->direccion = isset($rqst['direccion']) ? $rqst['direccion'] : '';
             $this->clisave();
         } else if ($this->op == 'cliget') {
             $this->cliget();
@@ -57,6 +50,12 @@ class ControllerCustomer {
      */
     private function clisave() {
         $id = 0;
+        if($this->estado = 'Activo'){
+           $estado2=1;
+        }
+        else{
+            $estado2=0;
+        }
         if ($this->id > 0) {
             //actualiza la informacion
             $q = "SELECT cli_id FROM dmt_cliente WHERE cli_id = " . $this->id;
@@ -83,9 +82,9 @@ class ControllerCustomer {
                 $arrjson = array('output' => array('valid' => true, 'id' => $id));
             }
         } else {
-            $q = "INSERT INTO dmt_cliente (cli_dtcreate, cli_nombre, cli_estado, cli_email, cli_url, cli_fecha_inicio, cli_fecha_fin, cli_nit, cli_telefono, cli_pais, cli_departamento, cli_ciudad, cli_direccion) VALUES (" . $this->UTILITY->date_now_server() . ", '$this->nombre', '$this->estado', '$this->email', '$this->url', '$this->fechainicio', '$this->fechafin', '$this->nit', '$this->telefono', '$this->pais', '$this->departamento', '$this->ciudad', '$this->direccion')";
-            mysql_query($q, $this->conexion) or die(mysql_error() . "***ERROR: " . $q);
-            $id = mysql_insert_id();
+            $q = "INSERT INTO am_clientes (cli_nombre, cli_nit, cli_tiipo, cli_url, cli_estado, cli_actualizado, cli_borrado) VALUES (" . $this->nombre . ", ". $this->nit . "," .  $this->tipo . "," . $this->url . "," . $estado2 . "," . $this->UTILITY->date_now_server() . ", " . 0 . ")";
+            mysqli_query($this->conexion, $q) or die(mysqli_error() . "***ERROR: " . $q);
+            $id = mysqli_insert_id();
             $arrjson = array('output' => array('valid' => true, 'id' => $id));
         }
         $this->response = ($arrjson);
