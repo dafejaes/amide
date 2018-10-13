@@ -20,7 +20,7 @@
                 <li <?php if ($_ACTIVE_SIDEBAR == "ubicaciones") echo 'class="active"'; ?>><a href="ubicacion.php">Ubicacion</a></li>
                 <li class="divider-vertical"></li>
                 <?php
-            }
+            }if
             ?>
 
         </ul>

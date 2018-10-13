@@ -99,8 +99,6 @@ var CLIENTE = {
         q.tipo = $('#tipo').val();
         q.url = $('#url').val();
         q.nit = $('#nit').val();
-        q.fechafin = $('#fechafin').val();
-        q.nit = $('#nit').val();
         UTIL.callAjaxRqst(q, this.savedatahandler);
     },
     savedatahandler: function(data) {

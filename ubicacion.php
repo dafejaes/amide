@@ -42,7 +42,7 @@ $arrusuarios = $arrusuarios['output']['response'];
         <?php
         if ($create) {
             ?>
-            <a href="#" id="crearusuario" class="btn btn-info botoncrear">Crear</a>
+            <a href="#" id="crearubicacion" class="btn btn-info botoncrear">Crear</a>
             <?php
         }
         ?>
@@ -51,10 +51,11 @@ $arrusuarios = $arrusuarios['output']['response'];
                 <thead>
                 <tr>
                     <th class="head0" style="width: 70px;">Acciones</th>
-                    <th class="head1">Nombre completo</th>
-                    <th class="head0">Email</th>
-                    <th class="head1">Telefono / Celular</th>
-                    <th class="head0">País</th>
+                    <th class="head1">Ubicacion</th>
+                    <th class="head0">Piso</th>
+                    <th class="head1">Torre</th>
+                    <th class="head0">Area asistencial</th>
+                    <th class="head1">Sucursal</th>
                 </tr>
                 </thead>
                 <colgroup>
@@ -63,6 +64,7 @@ $arrusuarios = $arrusuarios['output']['response'];
                     <col class="con0" />
                     <col class="con1" />
                     <col class="con0" />
+                    <col class="con1" />
                 </colgroup>
                 <!--                                    <td class="con0"><a href="#" onclick="editdata();"><span class="ui-icon ui-icon-pencil"></span></a><a href="#"><span class="ui-icon ui-icon-trash"></span></a></td>-->
                 <tbody>
@@ -84,17 +86,13 @@ $arrusuarios = $arrusuarios['output']['response'];
                                     <a href="#" onclick="USUARIO.deletedata(<?php echo $arrusuarios[$i]['id']; ?>);"><span class="icon-trash"></span></a><span>&nbsp;&nbsp;</span>
                                     <?php
                                 }
-                                if ($editpermission) {
-                                    ?>
-                                    <a href="#" onclick="USUARIO.editpermission(<?php echo $arrusuarios[$i]['id']; ?>);"><span class="icon-ban-circle"></span></a>
-                                    <?php
-                                }
                                 ?>
                             </td>
-                            <td class="con1"><?php echo $arrusuarios[$i]['nombre'] . ' ' . $arrusuarios[$i]['apellido']; ?></td>
-                            <td class="con0"><?php echo $arrusuarios[$i]['email']; ?></td>
-                            <td class="con1"><?php echo $arrusuarios[$i]['telefono'] . ' / ' . $arrusuarios[$i]['celular']; ?></td>
-                            <td class="con0"><?php echo $arrusuarios[$i]['pais']; ?></td>
+                            <td class="con1"><?php echo $arrusuarios[$i]['ubicacion']; ?></td>
+                            <td class="con0"><?php echo $arrusuarios[$i]['piso']; ?></td>
+                            <td class="con1"><?php echo $arrusuarios[$i]['torre']; ?></td>
+                            <td class="con0"><?php echo $arrusuarios[$i]['areanombre']; ?></td>
+                            <td class="cono1"><?php echo $arrusuarios[$i]['sucnombre']; ?></td>
                         </tr>
                         <?php
                     }

@@ -57,9 +57,9 @@ class ControllerLocation {
     /**  Función para obtener las ubicaciones */
 
     public function locatget() {
-        $q = "SELECT * FROM am_servicio, am_departamento, am_areas WHERE am_departamento_dep_id = dep_id AND am_areas_are_id = are_id AND ser_borrado = 0 ORDER BY ser_nombre";
+        $q = "SELECT * FROM am_ubicaciones, am_ubicaciones_has_am_areas, am_areas WHERE am_ubicaciones_ubi_id = ubi_id AND am_areas_are_id = are_id AND ubi_borrado = 0 ORDER BY ubi_id";
         if ($this->id > 0) {
-            $q = "SELECT * FROM am_servicio, am_departamento, am_areas WHERE suc_id = " . $this->id . "AND am_departamento_dep_id=dep_id AND am_areas_are_id=are_id";
+            $q = "SELECT * FROM am_ubicaciones, am_ubicaciones_has_am_areas, am_areas WHERE am_ubicaciones_ubi_id = ubi_id AND am_areas_are_id= are_id AND ubi_borrado = 0 AND  ubi_id = ". $this->id;
         }
         $con = mysqli_query($this->conexion,$q) or die(mysqli_error() . "***ERROR: " . $q);
         $resultado = mysqli_num_rows($con);
@@ -68,12 +68,13 @@ class ControllerLocation {
         while ($obj = mysqli_fetch_object($con)) {
             $arr[] = array(
                 'id' => $obj->ser_id,
-                'dep_id' => $obj->am_departamento_dep_id,
-                'area_id' => $obj->are_id,
-                'depnombre' =>$obj->dep_nombre,
-                'sernombre' => ($obj->ser_nombre),
-                'arenombre' => ($obj->are_nombre),
-                'dtcreate' => ($obj->ser_actualizado));
+                'sucnombre' => $obj->suc_nombre,
+                'torre'=>$obj->ubi_torre,
+                'piso'=>$obj->ubi_piso,
+                'ubicacion'=>$obj->ubi_ubicacion,
+                'extension'=>$obj->ubi_extension,
+                'dtcreate'=>$obj->ubi_actualizado
+            );
         }
         if ($resultado > 0) {
             $arrjson = array('output' => array('valid' => true, 'response' => $arr));

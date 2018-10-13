@@ -50,7 +50,7 @@ class ControllerCustomer {
      */
     private function clisave() {
         $id = 0;
-        if($this->estado = 'Activo'){
+        if($this->estado == 'Activo'){
            $estado2=1;
         }
         else{
