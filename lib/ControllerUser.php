@@ -137,9 +137,9 @@ class ControllerUser {
     }
 
     public function usrget() {
-        $q = "SELECT * FROM dmt_usuario ORDER BY usr_nombre ASC";
+        $q = "SELECT * FROM am_usuarios, am_sucursales WHERE am_sucursales_suc_id = suc_id AND usr_borrado = 0 ORDER BY usr_nombre ASC";
         if ($this->id > 0) {
-            $q = "SELECT * FROM dmt_usuario WHERE usr_id = " . $this->id;
+            $q = "SELECT * FROM am_usuarios WHERE usr_id = " . $this->id . "AND usr_borrado = 0";
         }
         //if ($this->sdid > 0) {
         //    $q = "SELECT * FROM fir_usuario WHERE fir_sede_sde_id = " . $this->sdid;
@@ -153,20 +153,14 @@ class ControllerUser {
         while ($obj = mysqli_fetch_object($con)) {
             $arr[] = array(
                 'id' => $obj->usr_id,
-                'idcli' => $obj->dmt_cliente_cli_id,
-                'nombre' => ($obj->usr_nombre),
-                'apellido' => ($obj->usr_apellido),
-                'cargo' => ($obj->usr_cargo),
-                'email' => ($obj->usr_email),
-                'identificacion' => ($obj->usr_identificacion),
-                'celular' => ($obj->usr_celular),
-                'telefono' => ($obj->usr_telefono),
-                'pais' => ($obj->usr_pais),
-                'departamento' => ($obj->usr_departamento),
-                'ciudad' => ($obj->usr_ciudad),
-                'direccion' => ($obj->usr_direccion),
-                'habilitado' => ($obj->usr_habilitado),
-                'dtcreate' => ($obj->usr_dtcreate));
+                'idsuc'=> $obj->suc_id,
+                'nombre'=> $obj->usr_nombre,
+                'correo' => $obj->usr_correo,
+                'telefono' => $obj->usr_telefono,
+                'cargo' => $obj->usr_cargo,
+                'sucnombre'=> $obj->suc_nombre,
+                'dtcreate' => $obj->usr_actualizado);
+
         }
         if ($resultado > 0) {
             $arrjson = array('output' => array('valid' => true, 'response' => $arr));

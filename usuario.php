@@ -4,13 +4,13 @@ include 'lib/ControllerUser.php';
 /**
  * se cargan los permisos 
  */
-if (!$SESSION_DATA->getPermission(5)){
+if (!$SESSION_DATA->getPermission(13)){
     header('Location: main.php');
 }
-$create = $SESSION_DATA->getPermission(6);
-$edit = $SESSION_DATA->getPermission(7);
-$delete = $SESSION_DATA->getPermission(8);
-$editpermission = $SESSION_DATA->getPermission(9);
+$create = $SESSION_DATA->getPermission(15);
+$edit = $SESSION_DATA->getPermission(14);
+$delete = $SESSION_DATA->getPermission(16);
+$editpermission = $SESSION_DATA->getPermission(17);
 /**
  * se cargan datos
  */
@@ -51,10 +51,12 @@ $arrusuarios = $arrusuarios['output']['response'];
                         <thead>
                             <tr>
                                 <th class="head0" style="width: 70px;">Acciones</th>
-                                <th class="head1">Nombre completo</th>
-                                <th class="head0">Email</th>
-                                <th class="head1">Telefono / Celular</th>
-                                <th class="head0">País</th>
+                                <th class="head1">id</th>
+                                <th class="head0">Nombre</th>
+                                <th class="head1">Correo</th>
+                                <th class="head0">Telefono</th>
+                                <th class="head1">Cargo</th>
+                                <th class="head0">Sucursal</th>
                             </tr>
                         </thead>
                         <colgroup>
@@ -63,6 +65,8 @@ $arrusuarios = $arrusuarios['output']['response'];
                             <col class="con0" />
                             <col class="con1" />
                             <col class="con0" />
+                            <col class="cono1"/>
+                            <col class="cono0"/>
                         </colgroup>
 <!--                                    <td class="con0"><a href="#" onclick="editdata();"><span class="ui-icon ui-icon-pencil"></span></a><a href="#"><span class="ui-icon ui-icon-trash"></span></a></td>-->
                         <tbody>
@@ -91,10 +95,12 @@ $arrusuarios = $arrusuarios['output']['response'];
 					    }
 					    ?>
 					</td>
-					<td class="con1"><?php echo $arrusuarios[$i]['nombre'] . ' ' . $arrusuarios[$i]['apellido']; ?></td>
-					<td class="con0"><?php echo $arrusuarios[$i]['email']; ?></td>
-					<td class="con1"><?php echo $arrusuarios[$i]['telefono'] . ' / ' . $arrusuarios[$i]['celular']; ?></td>
-					<td class="con0"><?php echo $arrusuarios[$i]['pais']; ?></td>
+					<td class="con1"><?php echo $arrusuarios[$i]['id']; ?></td>
+					<td class="con0"><?php echo $arrusuarios[$i]['nombre']; ?></td>
+					<td class="con1"><?php echo $arrusuarios[$i]['correo']; ?></td>
+					<td class="con0"><?php echo $arrusuarios[$i]['telefono']; ?></td>
+                        <td class="con0"><?php echo $arrusuarios[$i]['cargo']; ?></td>
+                        <td class="con0"><?php echo $arrusuarios[$i]['sucnombre']; ?></td>
 				    </tr>
 				    <?php
 				}
