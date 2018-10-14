@@ -41,7 +41,7 @@ $arrclientes = $arrclientes['output']['response'];
 		<?php
 		if ($create) {
 		    ?>
-    		<a href="#" id="crearcliente" class="btn btn-info botoncrear">Crear</a>
+    		<a href="#" id="crearcliente" class="btn btn-info botoncrear">Crear cliente</a>
 		    <?php
 		} else {
 		    ?>
