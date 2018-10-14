@@ -148,6 +148,7 @@ var ELEGIR_SUCURSAL = {
         UTIL.cursorNormal();
         if (data.output.valid) {
             var res = data.output.response;
+            alert(res.nombre);
             var option = '<option value="seleccione">Seleccione...</option>';
             for (var i in res){
                 option += '<option value="'+res[i].id+'">'+res[i].nombre+'</option>';
