@@ -49,7 +49,6 @@ class ControllerCustomer {
      * Metodo para guardar y actualizar
      */
     private function clisave() {
-        $id = 0;
         if($this->estado == 'Activo'){
            $estado2=1;
         }
@@ -58,55 +57,54 @@ class ControllerCustomer {
         }
         if ($this->id > 0) {
             //actualiza la informacion
-            $q = "SELECT cli_id FROM dmt_cliente WHERE cli_id = " . $this->id;
-            $con = mysql_query($q, $this->conexion) or die(mysql_error() . "***ERROR: " . $q);
-            while ($obj = mysql_fetch_object($con)) {
+            $q = "SELECT cli_id FROM am_clientes WHERE cli_id = " . $this->id;
+            $con = mysqli_query($this->conexion, $q) or die(mysqli_error() . "***ERROR: " . $q);
+            while ($obj = mysqli_fetch_object($con)) {
                 $id = $obj->cli_id;
-                $table = "dmt_cliente";
+                $table = "am_clientes";
                 $arrfieldscomma = array(
                     'cli_nombre' => $this->nombre,
-                    'cli_estado' => $this->estado,
-                    'cli_email' => $this->email,
-                    'cli_url' => $this->url,
-                    'cli_fecha_inicio' => $this->fechainicio,
-                    'cli_fecha_fin' => $this->fechafin,
+                    'cli_estado' => $estado2,
                     'cli_nit' => $this->nit,
-                    'cli_telefono' => $this->telefono,
-                    'cli_pais' => $this->pais,
-                    'cli_departamento' => $this->departamento,
-                    'cli_ciudad' => $this->ciudad,
-                    'cli_direccion' => $this->direccion);
-                $arrfieldsnocomma = array('cli_dtcreate' => $this->UTILITY->date_now_server());
+                    'cli_tipo' => $this->tipo,
+                    'cli_url' => $this->url);
+                $arrfieldsnocomma = array('cli_actualizado' => $this->UTILITY->date_now_server());
                 $q = $this->UTILITY->make_query_update($table, "cli_id = '$id'", $arrfieldscomma, $arrfieldsnocomma);
-                mysql_query($q, $this->conexion) or die(mysql_error() . "***ERROR: " . $q);
+                mysqli_query($this->conexion, $q) or die(mysqli_error() . "***ERROR: " . $q);
                 $arrjson = array('output' => array('valid' => true, 'id' => $id));
             }
         } else {
-            $q = "INSERT INTO am_clientes (cli_nombre, cli_nit, cli_tiipo, cli_url, cli_estado, cli_actualizado, cli_borrado) VALUES (" . $this->nombre . ", ". $this->nit . "," .  $this->tipo . "," . $this->url . "," . $estado2 . "," . $this->UTILITY->date_now_server() . ", " . 0 . ")";
+            $q = "INSERT INTO am_clientes (cli_nombre, cli_nit, cli_tipo, cli_url, cli_estado, cli_actualizado, cli_borrado) VALUES ('" . $this->nombre . "', '". $this->nit . "','" .  $this->tipo . "','" . $this->url . "','" . $estado2 . "'," . $this->UTILITY->date_now_server() . ", " . 0 . ")";
             mysqli_query($this->conexion, $q) or die(mysqli_error() . "***ERROR: " . $q);
-            $id = mysqli_insert_id();
+            $id = mysqli_insert_id($this->conexion);
             $arrjson = array('output' => array('valid' => true, 'id' => $id));
         }
         $this->response = ($arrjson);
     }
 
     public function cliget() {
-        $q = "SELECT * FROM am_clientes ORDER BY cli_nombre AND cli_borrado = 0";
+        $q = "SELECT * FROM am_clientes WHERE cli_borrado = 0 ORDER BY cli_nombre ";
         if ($this->id > 0) {
-            $q = "SELECT * FROM am_clientes WHERE cli_id = " . $this->id;
+            $q = "SELECT * FROM am_clientes WHERE cli_borrado = 0 AND cli_id = " . $this->id;
         }
         $con = mysqli_query($this->conexion,$q) or die(mysqli_error() . "***ERROR: " . $q);
         $resultado = mysqli_num_rows($con);
 
         $arr = array();
-        while ($obj = mysqli_fetch_object($con)) {
+        while ($obj = mysqli_fetch_object($con)){
+            if($obj->cli_estado){
+                $estado2= 'Activo';
+            }
+            else{
+                $estado2='Inactivo';
+            }
             $arr[] = array(
                 'id' => $obj->cli_id,
                 'nombre' => ($obj->cli_nombre),
                 'nit' => ($obj->cli_nit),
                 'tipo' => ($obj->cli_tipo),
                 'url' => ($obj->cli_url),
-                'estado' => ($obj->cli_estado),
+                'estado' => ($estado2),
                 'clinit' => ($obj->cli_nit),
                 'dtcreate' => ($obj->cli_actualizado));
         }
@@ -120,8 +118,10 @@ class ControllerCustomer {
 
     private function clidelete() {
         if ($this->id > 0) {
-            $q = "DELETE FROM dmt_cliente WHERE cli_id = " . $this->id;
-            mysql_query($q, $this->conexion) or die(mysql_error() . "***ERROR: " . $q);
+            $q = "UPDATE am_clientes SET cli_borrado = 1 WHERE cli_id = $this->id";
+            mysqli_query($this->conexion,$q) or die(mysqli_error() . "***ERROR: " . $q);
+            $q = "UPDATE am_sucursales SET suc_borrado = 1 WHERE am_clientes_cli_id = $this->id";
+            mysqli_query($this->conexion,$q) or die(mysqli_error() . "***ERROR: " . $q);
             $arrjson = array('output' => array('valid' => true, 'id' => $this->id));
         } else {
             $arrjson = $this->UTILITY->error_missing_data();

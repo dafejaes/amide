@@ -16,7 +16,11 @@ if ($op == 'clisave' || $op == 'cliget' || $op == 'clidelete') {
     include '../lib/ControllerUser.php';
     $CONTROL = new ControllerUser();
     echo $CONTROL->getResponseJSON();
-} else {
+} else if($op == 'sucget'){
+    include '../lib/ControllerBranchOffice.php';
+    $CONTROL = new ControllerBranchOffice();
+    echo $CONTROL->getResponseJSON();
+} else{
     echo 'OPERACION NO DISPONIBLE';
 }
 ?>

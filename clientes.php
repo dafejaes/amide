@@ -139,7 +139,7 @@ $arrclientes = $arrclientes['output']['response'];
                         <select name="tipo" id="tipo" class="text ui-widget-content ui-corner-all">
                             <option value="seleccione">Seleccione...</option>
                             <option value="Interno">Interno</option>
-                            <option value="externo">Externo</option>
+                            <option value="Externo">Externo</option>
                         </select>
                     </div>
                 </div>

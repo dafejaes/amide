@@ -32,7 +32,7 @@ function initcliente() {
             "Guardar": function() {
                 var bValid = true;
                 allFields.removeClass("ui-state-error");
-                bValid = bValid && checkLength(nombre, "nombre", 3, 30);
+                bValid = bValid && checkLength(nombre, "nombre", 3, 80);
 
                 if (bValid) {
                     CLIENTE.savedata();
@@ -77,16 +77,9 @@ var CLIENTE = {
             var res = data.output.response[0];
             $('#nombre').val(res.nombre);
             $('#estado').val(res.estado);
-            $('#email').val(res.email);
+            $('#tipo').val(res.tipo);
             $('#url').val(res.url);
-            $('#fechainicio').val(res.fechainicio);
-            $('#fechafin').val(res.fechafin);
             $('#nit').val(res.nit);
-            $('#telefono').val(res.telefono);
-            $('#pais').val(res.pais);
-            $('#departamento').val(res.departamento);
-            $('#ciudad').val(res.ciudad);
-            $('#direccion').val(res.direccion);
             $("#dialog-form").dialog("open");
         } else {
             alert('Error: ' + data.output.response.content);
