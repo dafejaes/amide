@@ -4,7 +4,7 @@ include 'Util.php';
 /**
  * Clase que contiene todas las operaciones utilizadas sobre la base de datos
  */
-class ControllerLocation {
+class ControllerEquipments {
 
     private $conexion, $CDB, $op, $id, $euid, $sdid;
     private $UTILITY;
@@ -23,7 +23,7 @@ class ControllerLocation {
         if (!$this->UTILITY->validate_key($this->ke, $this->ti, $this->lu)) {
             $this->op = 'noautorizado';
         }
-        if ($this->op == 'locatsave') {
+        if ($this->op == 'sersave') {
             $this->idcli = isset($rqst['idcli']) ? $rqst['idcli'] : 0;
             $this->nombre = isset($rqst['nombre']) ? $rqst['nombre'] : '';
             $this->apellido = isset($rqst['apellido']) ? $rqst['apellido'] : '';
@@ -38,14 +38,14 @@ class ControllerLocation {
             $this->ciudad = isset($rqst['ciudad']) ? $rqst['ciudad'] : '';
             $this->direccion = isset($rqst['direccion']) ? $rqst['direccion'] : '';
             $this->habilitado = isset($rqst['habilitado']) ? intval($rqst['habilitado']) : 0;
-            $this->usrsave();
-        } else if ($this->op == 'locatget') {
-            $this->locatget();
-        } else if ($this->op == 'locatsave') {
+            $this->sersave();
+        } else if ($this->op == 'serget') {
+            $this->serget();
+        } else if ($this->op == 'sersave') {
             $this->chk = isset($rqst['chk']) ? $rqst['chk'] : '';
             $this->usrprfsave();
-        } else if ($this->op == 'locatdelete') {
-            $this->usrdelete();
+        } else if ($this->op == 'serdelete') {
+            $this->serdelete();
         } else if ($this->op == 'noautorizado') {
             $this->response = $this->UTILITY->error_invalid_authorization();
         } else {
@@ -56,10 +56,10 @@ class ControllerLocation {
 
     /**  Función para obtener las ubicaciones */
 
-    public function locatget() {
-        $q = "SELECT * FROM am_ubicaciones, am_ubicaciones_has_am_areas, am_areas WHERE am_ubicaciones_ubi_id = ubi_id AND am_areas_are_id = are_id AND ubi_borrado = 0 ORDER BY ubi_id";
+    public function serget() {
+        $q = "SELECT * FROM am_servicio, am_departamento, am_areas WHERE am_departamento_dep_id = dep_id AND am_areas_are_id = are_id AND ser_borrado = 0 ORDER BY ser_nombre";
         if ($this->id > 0) {
-            $q = "SELECT * FROM am_ubicaciones, am_ubicaciones_has_am_areas, am_areas WHERE am_ubicaciones_ubi_id = ubi_id AND am_areas_are_id= are_id AND ubi_borrado = 0 AND  ubi_id = ". $this->id;
+            $q = "SELECT * FROM am_servicio, am_departamento, am_areas WHERE suc_id = " . $this->id . "AND am_departamento_dep_id=dep_id AND am_areas_are_id=are_id";
         }
         $con = mysqli_query($this->conexion,$q) or die(mysqli_error() . "***ERROR: " . $q);
         $resultado = mysqli_num_rows($con);
@@ -68,13 +68,11 @@ class ControllerLocation {
         while ($obj = mysqli_fetch_object($con)) {
             $arr[] = array(
                 'id' => $obj->ser_id,
-                'sucnombre' => $obj->suc_nombre,
-                'torre'=>$obj->ubi_torre,
-                'piso'=>$obj->ubi_piso,
-                'ubicacion'=>$obj->ubi_ubicacion,
-                'extension'=>$obj->ubi_extension,
-                'dtcreate'=>$obj->ubi_actualizado
-            );
+                'dep_id' => $obj->am_departamento_dep_id,
+                'area_id' => $obj->are_id,
+                'sernombre' => ($obj->ser_nombre),
+                'arenombre' => ($obj->are_nombre),
+                'dtcreate' => ($obj->ser_actualizado));
         }
         if ($resultado > 0) {
             $arrjson = array('output' => array('valid' => true, 'response' => $arr));

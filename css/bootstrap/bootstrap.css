@@ -6157,3 +6157,9 @@ a.badge:focus {
 .affix {
   position: fixed;
 }
+
+.borderexample
+{
+  border-style:solid;
+  border-color:#287EC7;
+}

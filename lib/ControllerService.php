@@ -5,11 +5,9 @@ include 'Util.php';
  * Clase que contiene todas las operaciones utilizadas sobre la base de datos
  */
 class ControllerService {
-
     private $conexion, $CDB, $op, $id, $euid, $sdid;
     private $UTILITY;
     private $response;
-
     function __construct() {
         $this->CDB = new ConectionDb();
         $this->UTILITY = new Util();
@@ -53,17 +51,14 @@ class ControllerService {
         }
         //$this->CDB->closeConect();
     }
-
     /**  Función para obtener las ubicaciones */
-
     public function serget() {
-        $q = "SELECT * FROM am_servicio, am_departamento, am_areas WHERE am_departamento_dep_id = dep_id AND am_areas_are_id = are_id AND ser_borrado = 0 ORDER BY ser_nombre";
+        $q = "SELECT * FROM am_servicio, am_departamento, am_areas, am_sucursales WHERE am_sucursales_suc_id = suc_id AND am_departamento_dep_id = dep_id AND am_areas_are_id = are_id AND ser_borrado = 0 ORDER BY ser_nombre";
         if ($this->id > 0) {
             $q = "SELECT * FROM am_servicio, am_departamento, am_areas WHERE suc_id = " . $this->id . "AND am_departamento_dep_id=dep_id AND am_areas_are_id=are_id";
         }
         $con = mysqli_query($this->conexion,$q) or die(mysqli_error() . "***ERROR: " . $q);
         $resultado = mysqli_num_rows($con);
-
         $arr = array();
         while ($obj = mysqli_fetch_object($con)) {
             $arr[] = array(
@@ -72,6 +67,7 @@ class ControllerService {
                 'area_id' => $obj->are_id,
                 'sernombre' => ($obj->ser_nombre),
                 'arenombre' => ($obj->are_nombre),
+                'sucnombre'=> ($obj->suc_nombre),
                 'dtcreate' => ($obj->ser_actualizado));
         }
         if ($resultado > 0) {
@@ -81,12 +77,9 @@ class ControllerService {
         }
         $this->response = ($arrjson);
     }
-
     public function getResponse() {
         $this->CDB->closeConect();
         return $this->response;
     }
-
 }
-
 ?>

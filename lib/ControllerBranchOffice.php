@@ -31,8 +31,13 @@ class ControllerBranchOffice
             $this->sucsave();
         } else if ($this->op == 'sucget') {
             $this->sucget();
+        } else if($this->op == 'suc2get'){
+            $this->idcli = isset($rqst['idcli']) ? $rqst['idcli'] : 0;
+            $this->suc2get();
         } else if ($this->op == 'sucdelete') {
             $this->sucdelete();
+        } else if ($this->op == 'asisget') {
+            $this->asisget();
         } else if ($this->op == 'noautorizado') {
             $this->response = $this->UTILITY->error_invalid_authorization();
         } else {
@@ -45,7 +50,7 @@ class ControllerBranchOffice
     public function sucget() {
         $q = "SELECT * FROM am_sucursales, am_clientes where am_clientes_cli_id = cli_id  AND suc_borrado = 0 ORDER BY suc_nombre";
         if ($this->id > 0) {
-            $q = "SELECT * FROM am_sucursales, am_clientes WHERE am_clientes_cli_id = cli_id AND suc_id = " . $this->id;
+            $q = "SELECT * FROM am_sucursales, am_clientes WHERE am_clientes_cli_id = cli_id AND suc_borrado = 0 AND suc_id = " . $this->id;
         }
         $con = mysqli_query($this->conexion,$q) or die(mysqli_error() . "***ERROR: " . $q);
         $resultado = mysqli_num_rows($con);
@@ -72,6 +77,26 @@ class ControllerBranchOffice
         $this->response = ($arrjson);
     }
 
+    public function suc2get(){
+        $q = "SELECT * FROM am_sucursales, am_clientes WHERE  suc_borrado = 0  AND am_clientes_cli_id = cli_id AND cli_id = " . $this->idcli;
+        $con = mysqli_query($this->conexion,$q) or die(mysqli_error() . "***ERROR: " . $q);
+        $resultado = mysqli_num_rows($con);
+
+        $arr = array();
+        while ($obj = mysqli_fetch_object($con)) {
+            $arr[] = array(
+                'id' => $obj->suc_id,
+                'cli_id' => $obj->am_clientes_cli_id,
+                'nombre' => ($obj->suc_nombre),
+                'dtcreate' => ($obj->suc_actualizado));
+        }
+        if ($resultado > 0) {
+            $arrjson = array('output' => array('valid' => true, 'response' => $arr));
+        } else {
+            $arrjson = $this->UTILITY->error_no_result();
+        }
+        $this->response = ($arrjson);
+    }
     private function sucsave() {
         if ($this->id > 0) {
             //actualiza la informacion
@@ -90,7 +115,7 @@ class ControllerBranchOffice
                 mysqli_query($this->conexion, $q) or die(mysqli_error() . "***ERROR: " . $q);
                 $arrjson = array('output' => array('valid' => true, 'id' => $id));
             }
-        } else {
+        }  else {
             $q = "INSERT INTO am_sucursales (am_clientes_cli_id, suc_nombre, suc_ciudad, suc_direccion, suc_telefono, suc_actualizado, suc_borrado) VALUES ('" . $this->idcli . "', '" . $this->nombre . "', '". $this->ciudad . "','" .  $this->direccion . "','" . $this->telefono . "'," . $this->UTILITY->date_now_server() . ", " . 0 . ")";
             mysqli_query($this->conexion, $q) or die(mysqli_error() . "***ERROR: " . $q);
             $id = mysqli_insert_id($this->conexion);
@@ -106,6 +131,40 @@ class ControllerBranchOffice
             $arrjson = array('output' => array('valid' => true, 'id' => $this->id));
         } else {
             $arrjson = $this->UTILITY->error_missing_data();
+        }
+        $this->response = ($arrjson);
+    }
+
+    private function asisget(){
+        $q = "SELECT * FROM am_areas WHERE are_borrado = 0 ORDER BY are_nombre ";
+        if ($this->id > 0) {
+            $q = "SELECT * FROM am_clientes WHERE cli_borrado = 0 AND cli_id = " . $this->id;
+        }
+        $con = mysqli_query($this->conexion,$q) or die(mysqli_error() . "***ERROR: " . $q);
+        $resultado = mysqli_num_rows($con);
+
+        $arr = array();
+        while ($obj = mysqli_fetch_object($con)){
+            if($obj->cli_estado){
+                $estado2= 'Activo';
+            }
+            else{
+                $estado2='Inactivo';
+            }
+            $arr[] = array(
+                'id' => $obj->cli_id,
+                'nombre' => ($obj->cli_nombre),
+                'nit' => ($obj->cli_nit),
+                'tipo' => ($obj->cli_tipo),
+                'url' => ($obj->cli_url),
+                'estado' => ($estado2),
+                'clinit' => ($obj->cli_nit),
+                'dtcreate' => ($obj->cli_actualizado));
+        }
+        if ($resultado > 0) {
+            $arrjson = array('output' => array('valid' => true, 'response' => $arr));
+        } else {
+            $arrjson = $this->UTILITY->error_no_result();
         }
         $this->response = ($arrjson);
     }
