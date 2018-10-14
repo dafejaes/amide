@@ -20,7 +20,19 @@
                 <li <?php if ($_ACTIVE_SIDEBAR == "ubicaciones") echo 'class="active"'; ?>><a href="ubicacion.php">Ubicacion</a></li>
                 <li class="divider-vertical"></li>
                 <?php
-            }if
+            }
+            if($SESSION_DATA->getPermission(13)){
+                ?>
+                <li <?php if ($_ACTIVE_SIDEBAR == "usuarios") echo 'class="active"'; ?>><a href="usuario.php">Usuarios</a></li>
+                <li class="divider-vertical"></li>
+                <?php
+            }
+            if($SESSION_DATA->getPermission(9)){
+                ?>
+                <li <?php if ($_ACTIVE_SIDEBAR == "equipos") echo 'class="active"'; ?>><a href="equipo.php">Equipos</a></li>
+                <li class="divider-vertical"></li>
+                <?php
+            }
             ?>
 
         </ul>

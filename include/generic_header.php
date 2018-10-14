@@ -3,7 +3,7 @@
 if (isset($_SESSION['usuario'])) {
     ?>
         <div align="left" class= "nav">
-        <img class="img-circle" src="images/prueba.jpg" width="150px">
+            <img class="img-rounded" src="images/prueba.jpg" width="150px">
             <?php
             echo($_SESSION['usuario']['nombre'] . "(" . $_SESSION['usuario']['cargo'] . ")");
             ?>

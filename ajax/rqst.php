@@ -16,7 +16,7 @@ if ($op == 'clisave' || $op == 'cliget' || $op == 'clidelete') {
     include '../lib/ControllerUser.php';
     $CONTROL = new ControllerUser();
     echo $CONTROL->getResponseJSON();
-} else if($op == 'sucget'){
+} else if($op == 'sucget' || $op == 'sucsave' || $op == 'sucdelete'){
     include '../lib/ControllerBranchOffice.php';
     $CONTROL = new ControllerBranchOffice();
     echo $CONTROL->getResponseJSON();
