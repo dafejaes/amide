@@ -36,8 +36,6 @@ class ControllerBranchOffice
             $this->suc2get();
         } else if ($this->op == 'sucdelete') {
             $this->sucdelete();
-        } else if ($this->op == 'asisget') {
-            $this->asisget();
         } else if ($this->op == 'noautorizado') {
             $this->response = $this->UTILITY->error_invalid_authorization();
         } else {
@@ -135,39 +133,6 @@ class ControllerBranchOffice
         $this->response = ($arrjson);
     }
 
-    private function asisget(){
-        $q = "SELECT * FROM am_areas WHERE are_borrado = 0 ORDER BY are_nombre ";
-        if ($this->id > 0) {
-            $q = "SELECT * FROM am_clientes WHERE cli_borrado = 0 AND cli_id = " . $this->id;
-        }
-        $con = mysqli_query($this->conexion,$q) or die(mysqli_error() . "***ERROR: " . $q);
-        $resultado = mysqli_num_rows($con);
-
-        $arr = array();
-        while ($obj = mysqli_fetch_object($con)){
-            if($obj->cli_estado){
-                $estado2= 'Activo';
-            }
-            else{
-                $estado2='Inactivo';
-            }
-            $arr[] = array(
-                'id' => $obj->cli_id,
-                'nombre' => ($obj->cli_nombre),
-                'nit' => ($obj->cli_nit),
-                'tipo' => ($obj->cli_tipo),
-                'url' => ($obj->cli_url),
-                'estado' => ($estado2),
-                'clinit' => ($obj->cli_nit),
-                'dtcreate' => ($obj->cli_actualizado));
-        }
-        if ($resultado > 0) {
-            $arrjson = array('output' => array('valid' => true, 'response' => $arr));
-        } else {
-            $arrjson = $this->UTILITY->error_no_result();
-        }
-        $this->response = ($arrjson);
-    }
 
     public function getResponse() {
         $this->CDB->closeConect();

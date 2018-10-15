@@ -16,9 +16,13 @@ if ($op == 'clisave' || $op == 'cliget' || $op == 'clidelete') {
     include '../lib/ControllerUser.php';
     $CONTROL = new ControllerUser();
     echo $CONTROL->getResponseJSON();
-} else if($op == 'sucget' || $op == 'sucsave' || $op == 'sucdelete' || $op == 'asisget' || $op == 'suc2get'){
+} else if($op == 'sucget' || $op == 'sucsave' || $op == 'sucdelete' || $op == 'suc2get'){
     include '../lib/ControllerBranchOffice.php';
     $CONTROL = new ControllerBranchOffice();
+    echo $CONTROL->getResponseJSON();
+} else if($op == 'asisget' || $op == 'asissave'){
+    include '../lib/ControllerHealthcareArea.php';
+    $CONTROL = new ControllerHealthcareArea();
     echo $CONTROL->getResponseJSON();
 } else{
     echo 'OPERACION NO DISPONIBLE';

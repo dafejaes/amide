@@ -57,7 +57,7 @@ $arrusuarios = $arrusuarios['output']['response'];
                     <th class="head0">Servicio</th>
                     <th class="head1">Departamento</th>
                     <th class="head0">Area asistencial</th>
-                    <th clasç="head1">Sucursal</th>
+                    <th class="head1">Sucursal</th>
                 </tr>
                 </thead>
                 <colgroup>
@@ -122,7 +122,7 @@ $arrusuarios = $arrusuarios['output']['response'];
                     <div class="control-group">
                         <label class="control-label">Cliente</label>
                         <div class="controls">
-                            <select name="idcli" id="idcli" onchange="ELEGIR_SUCURSAL.getsuc(this)" class="text ui-widget-content ui-corner-all">
+                            <select name="idcli" id="idcli" onchange="ELEGIR_SUCURSAL.getsuc($(this).val())" class="text ui-widget-content ui-corner-all">
                             </select>
                         </div>
                     </div>
@@ -142,43 +142,6 @@ $arrusuarios = $arrusuarios['output']['response'];
     </table>
 </div>
 <div id="dialog-form2" title="Servicios" style="display: none;">
-    <p class="validateTips1"></p>
-    <table>
-        <tr>
-            <td>
-                <form id="formcreate1" class="form-horizontal">
-                    <form>
-                        <fieldset>
-                            <h4>Area asistencial</h4>
-                            <br/>
-                            <select style="height: 300px" id="selectasistencial" multiple>
-
-                            </select>
-                            <div>
-                                <input type="text" name="asistencial" id="asistencial" class="text ui-widget-content ui-corner-all" />
-                            </div>
-                            <div>
-                                <a href="#" id="crearasistencial" class="btn btn-info">Crear</a>
-                                <a href="#" id="eliminarasistencial" class="btn btn-info">Eliminar</a>
-                            </div>
-
-                        </fieldset>
-                    </form>
-                </form>
-            </td>
-            <td>
-                <form id="formcreate2" class="form-horizontal">
-                    <form>
-                        <fieldset>
-                            <a href="#" id="verdepartamento" class="btn btn-info">>></a>
-                        </fieldset>
-                    </form>
-                </form>
-            </td>
-        </tr>
-    </table>
-</div>
-<div id="dialog-form3" title="Servicios" style="display: none;">
     <p class="validateTips"></p>
     <table>
         <tr>
@@ -194,7 +157,7 @@ $arrusuarios = $arrusuarios['output']['response'];
                                 <input type="text" name="asistencial" id="asistencial" class="text ui-widget-content ui-corner-all" />
                             </div>
                             <div>
-                                <a href="#" id="crearasistencial" class="btn btn-info">Crear</a>
+                                <a href="#" id="nuevoasistencial" class="btn btn-info">Crear</a>
                                 <a href="#" id="eliminarasistencial" class="btn btn-info">Eliminar</a>
                             </div>
 
@@ -272,7 +235,6 @@ $arrusuarios = $arrusuarios['output']['response'];
 <script type="text/javascript" src="js/lib/data-sha1.js"></script>
 <script type="text/javascript" src="js/areas_asistenciales.js"></script>
 <script type="text/javascript" src="js/departamento.js"></script>
-<script type="text/javascript" src="js/servicios.js"></script>
 <script type="text/javascript" src="js/elegir_sucursal.js"></script>
 </body>
 </html>
