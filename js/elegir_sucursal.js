@@ -56,6 +56,14 @@ function initservicio() {
         }
     });
 
+    $("#eliminarasistencial").button().click(function() {
+        q.id = $('#selectasistencial').val();
+        if(q.id == null){
+            alert('Debe seleccionar un area asistencial')
+        }else{
+            ELEGIR_SUCURSAL.deleteasistencial();
+        }
+    });
 
     $("#dialog-form2").dialog({
         autoOpen: false,
@@ -92,10 +100,12 @@ var ELEGIR_SUCURSAL = {
         }
 
     },
-    saveasisHandler:function(){
-        UTIL.cursorNormal();
-        if (data.output.valid) {
+    saveasisHandler:function(data){
+        UTIL.cursorNormal()
+        if (data.output.valid){
+            $('#asistencial').val('');
             ELEGIR_SUCURSAL.getasistencial();
+
         } else {
             alert('Error: ' + data.output.response.content);
         }
