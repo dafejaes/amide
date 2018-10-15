@@ -57,11 +57,20 @@ function initservicio() {
     });
 
     $("#eliminarasistencial").button().click(function() {
-        q.id = $('#selectasistencial').val();
-        if(q.id == null){
-            alert('Debe seleccionar un area asistencial')
+        idasis=$('#selectasistencial').val();
+        if($('#selectasistencial').val() == null){
+            alert('Debe seleccionar un area asistencial');
         }else{
-            ELEGIR_SUCURSAL.deleteasistencial();
+            ELEGIR_SUCURSAL.deleteasistencial(idasis);
+        }
+    });
+
+    $("#verdepartamento").button().click(function() {
+        idasis=$('#selectasistencial').val();
+        if($('#selectasistencial').val() == null){
+            alert('Debe seleccionar un area asistencial');
+        }else{
+            ELEGIR_SUCURSAL.getdep(idasis);
         }
     });
 
@@ -75,11 +84,13 @@ function initservicio() {
                 UTIL.clearForm('formcreate1');
                 updateTips('');
                 $(this).dialog("close");
+                window.location='servicio.php';
             }
         },
         close: function() {
             UTIL.clearForm('formcreate1');
             updateTips('');
+            window.location='servicio.php';
         }
     });
     ELEGIR_SUCURSAL.getcustomer();
@@ -89,6 +100,7 @@ function initservicio() {
 
 var ELEGIR_SUCURSAL = {
     saveasis:function(){
+        q.id=0;
         nombre = $("#asistencial").val();
         if(nombre!=''){
             q.nombre = nombre;
@@ -137,9 +149,9 @@ var ELEGIR_SUCURSAL = {
     },
     getasistencialHandler:function(data){
         UTIL.cursorNormal();
+        var option = '';
         if (data.output.valid) {
             var res = data.output.response;
-            var option =  '';
                 for (var i in res){
                     option += '<option value="'+res[i].id+'">'+res[i].nombre+'</option>';
                 }
@@ -148,7 +160,7 @@ var ELEGIR_SUCURSAL = {
             $("#selectasistencial").append(option);
         } else {
             if(data.output.response.content == ' Sin resultados.') {
-                var option = '<option value="vacio">No hay informacion</option>';
+                option = '<option value="vacio">No hay informacion</option>';
                 $("#selectasistencial").empty();
                 $("#selectasistencial").append(option);
             }else{
@@ -175,5 +187,26 @@ var ELEGIR_SUCURSAL = {
         } else {
             alert('Error: ' + data.output.response.content);
         }
+    },
+    deleteasistencial: function (idasis) {
+        q.op = 'asisdelete';
+        q.id = parseInt(idasis);
+        UTIL.callAjaxRqst(q, this.deleteasistencialHandler);
+    },
+    deleteasistencialHandler: function (data) {
+        UTIL.cursorNormal();
+        if (data.output.valid){
+            $('#asistencial').val('');
+            $("#selectasistencial").empty();
+            window.location = 'servicio.php';
+
+        } else {
+            alert('Error: ' + data.output.response.content);
+        }
+    },
+    getdep: function (idasis) {
+        q.op = 'depget';
+        q.id = parseInt(idasis);
+        UTIL.callAjaxRqst(q, this.deleteasistencialHandler);
     }
 }

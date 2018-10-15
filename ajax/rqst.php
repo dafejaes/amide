@@ -20,7 +20,7 @@ if ($op == 'clisave' || $op == 'cliget' || $op == 'clidelete') {
     include '../lib/ControllerBranchOffice.php';
     $CONTROL = new ControllerBranchOffice();
     echo $CONTROL->getResponseJSON();
-} else if($op == 'asisget' || $op == 'asissave'){
+} else if($op == 'asisget' || $op == 'asissave' || $op == 'asisdelete'){
     include '../lib/ControllerHealthcareArea.php';
     $CONTROL = new ControllerHealthcareArea();
     echo $CONTROL->getResponseJSON();

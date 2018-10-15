@@ -26,7 +26,7 @@ class ControllerHealthcareArea {
             $this->idsuc = isset($rqst['idsuc']) ? $rqst['idsuc'] : 0;
             $this->asissave();
         } else if ($this->op == 'asisget') {
-            $this->idsuc = isset($rqst['idsuc']) ? $rqst['idsuc'] : 0;
+            $this->idsuc = isset($rqst['idsuc']) ? intval($rqst['idsuc']) : 0;
             $this->asisget();
         } else if ($this->op == 'asisdelete') {
             $this->asisdelete();
@@ -99,7 +99,11 @@ class ControllerHealthcareArea {
     }
     public function asisdelete(){
             if ($this->id > 0) {
-                $q = "UPDATE am_areas,am_departamento,am_servicio SET are_borrado = 1, dep_borrado=1, ser_borrado=1 WHERE ((am_ areas_are_id = are_id AND are_id='" . $this->id . "') OR (am_departamento_dep_id =  dep_id AND am_areas_are_id ='" . $this->id . "') OR (are_id = '" . $this->id . "'))";
+                $q = "UPDATE am_servicio, am_departamento SET ser_borrado = 1 WHERE am_departamento_dep_id=am_areas_are_id AND am_areas_are_id= $this->id";
+                mysqli_query($this->conexion,$q) or die(mysqli_error() . "***ERROR: " . $q);
+                $q = "UPDATE am_departamento SET dep_borrado = 1 WHERE am_areas_are_id =$this->id";
+                mysqli_query($this->conexion,$q) or die(mysqli_error() . "***ERROR: " . $q);
+                $q = "UPDATE am_areas SET are_borrado = 1 WHERE are_id = $this->id";
                 mysqli_query($this->conexion,$q) or die(mysqli_error() . "***ERROR: " . $q);
                 $arrjson = array('output' => array('valid' => true, 'id' => $this->id));
             } else {
