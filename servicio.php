@@ -44,7 +44,7 @@ $arrusuarios = $arrusuarios['output']['response'];
         <?php
         if ($create) {
             ?>
-            <a href="#" id="crearasistencial" class="btn btn-info botoncrear">Crear servicios</a>
+            <a href="#" id="crearasistencial" class="btn btn-info botoncrear">Config servicios</a>
             <?php
         }
         ?>
@@ -52,7 +52,7 @@ $arrusuarios = $arrusuarios['output']['response'];
             <table class="table table-hover dyntable" id="dynamictable">
                 <thead>
                 <tr>
-                    <th class="head0" style="width: 70px;">Acciones</th>
+                    <!--<th class="head0" style="width: 70px;">Acciones</th>-->
                     <th class="head1">ID</th>
                     <th class="head0">Servicio</th>
                     <th class="head1">Departamento</th>
@@ -61,7 +61,7 @@ $arrusuarios = $arrusuarios['output']['response'];
                 </tr>
                 </thead>
                 <colgroup>
-                    <col class="con0" />
+                    <!--<col class="con0" />-->
                     <col class="con1" />
                     <col class="con0" />
                     <col class="con1" />
@@ -76,20 +76,6 @@ $arrusuarios = $arrusuarios['output']['response'];
                     for ($i = 0; $i < $c; $i++) {
                         ?>
                         <tr class="gradeC">
-                            <td class="con0">
-                                <?php
-                                if ($delete) {
-                                    ?>
-                                    <a href="#" onclick="USUARIO.editdata(<?php echo $arrusuarios[$i]['id']; ?>);"><span class="icon-pencil"></span></a><span>&nbsp;&nbsp;</span>
-                                    <?php
-                                }
-                                if ($edit) {
-                                    ?>
-                                    <a href="#" onclick="USUARIO.deletedata(<?php echo $arrusuarios[$i]['id']; ?>);"><span class="icon-trash"></span></a><span>&nbsp;&nbsp;</span>
-                                    <?php
-                                }
-                                ?>
-                            </td>
                             <td class="con1"><?php echo $arrusuarios[$i]['id']; ?></td>
                             <td class="con0"><?php echo $arrusuarios[$i]['sernombre']; ?></td>
                             <td class="con1"><?php echo $arrusuarios[$i]['depnombre']; ?></td>
