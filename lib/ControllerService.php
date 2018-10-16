@@ -65,6 +65,7 @@ class ControllerService {
                 'id' => $obj->ser_id,
                 'dep_id' => $obj->am_departamento_dep_id,
                 'area_id' => $obj->are_id,
+                'depnombre'=> $obj->dep_nombre,
                 'sernombre' => ($obj->ser_nombre),
                 'arenombre' => ($obj->are_nombre),
                 'sucnombre'=> ($obj->suc_nombre),
