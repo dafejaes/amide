@@ -20,6 +20,16 @@ function initservicio() {
         $("#dialog-form1").dialog("open");
     });
 
+    $("#creardepartamento").button().click(function() {
+        q.id=0;
+        ELEGIR_SUCURSAL.savedep();
+    });
+
+    $("#crearservicio").button().click(function() {
+        q.id=0;
+        ELEGIR_SUCURSAL.saveser();
+    });
+
     $("#nuevoasistencial").button().click(function() {
         q.id=0;
         ELEGIR_SUCURSAL.saveasis();
@@ -65,12 +75,39 @@ function initservicio() {
         }
     });
 
+    $("#eliminardepartamento").button().click(function() {
+        iddep =$('#selectdepartamento').val();
+        if($('#selectdepartamento').val() == null){
+            alert('Debe seleccionar un area asistencial');
+        }else{
+            ELEGIR_SUCURSAL.deletedepartamento(iddep);
+        }
+    });
+
+    $("#eliminarservicio").button().click(function() {
+        idser =$('#selectservicio').val();
+        if($('#selectservicio').val() == null){
+            alert('Debe seleccionar un area asistencial');
+        }else{
+            ELEGIR_SUCURSAL.deleteservicio(idser);
+        }
+    });
+
     $("#verdepartamento").button().click(function() {
         idasis=$('#selectasistencial').val();
         if($('#selectasistencial').val() == null){
             alert('Debe seleccionar un area asistencial');
         }else{
             ELEGIR_SUCURSAL.getdep(idasis);
+        }
+    });
+
+    $("#verservicio").button().click(function() {
+        iddep=$('#selectdepartamento').val();
+        if($('#selectdepartamento').val() == null){
+            alert('Debe seleccionar un departamento');
+        }else{
+            ELEGIR_SUCURSAL.getser(iddep);
         }
     });
 
@@ -113,7 +150,7 @@ var ELEGIR_SUCURSAL = {
 
     },
     saveasisHandler:function(data){
-        UTIL.cursorNormal()
+        UTIL.cursorNormal();
         if (data.output.valid){
             $('#asistencial').val('');
             ELEGIR_SUCURSAL.getasistencial();
@@ -204,9 +241,143 @@ var ELEGIR_SUCURSAL = {
             alert('Error: ' + data.output.response.content);
         }
     },
+    deletedepartamento: function (iddep) {
+        q.op = 'depdelete';
+        q.id = parseInt(iddep);
+        UTIL.callAjaxRqst(q, this.deletedepartamentoHandler);
+    },
+    deletedepartamentoHandler: function (data) {
+        UTIL.cursorNormal();
+        if (data.output.valid){
+            $('#asistencial').val('');
+            $("#selectasistencial").empty();
+            window.location = 'servicio.php';
+
+        } else {
+            alert('Error: ' + data.output.response.content);
+        }
+    },
+    deleteservicio: function (idser) {
+        q.op = 'serdelete';
+        q.id = parseInt(idser);
+        UTIL.callAjaxRqst(q, this.deleteservicioHandler);
+    },
+    deleteservicioHandler: function (data) {
+        UTIL.cursorNormal();
+        if (data.output.valid){
+            $('#servicio').val('');
+            $("#selectservicio").empty();
+            window.location = 'servicio.php';
+
+        } else {
+            alert('Error: ' + data.output.response.content);
+        }
+    },
     getdep: function (idasis) {
+        q.id=0;
         q.op = 'depget';
-        q.id = parseInt(idasis);
-        UTIL.callAjaxRqst(q, this.deleteasistencialHandler);
-    }
+        q.idasis = parseInt(idasis);
+        UTIL.callAjaxRqst(q, this.getdepHandler);
+    },
+    getdepHandler: function (data) {
+        UTIL.cursorNormal();
+        var option = '';
+        if (data.output.valid) {
+            var res = data.output.response;
+            for (var i in res){
+                option += '<option value="'+res[i].id+'">'+res[i].nombre+'</option>';
+            }
+
+            $("#selectdepartamento").empty();
+            $("#selectdepartamento").append(option);
+        } else {
+            if(data.output.response.content == ' Sin resultados.') {
+                option = '<option value="vacio">No hay informacion</option>';
+                $("#selectdepartamento").empty();
+                $("#selectdepartamento").append(option);
+            }else{
+                alert('Error: ' + data.output.response.content);
+            }
+
+        }
+    },
+    savedep:function(){
+        q.id=0;
+        nombre = $("#departamento").val();
+        if(nombre!=''){
+            q.nombre = nombre;
+            q.op = 'depsave';
+            q.idasis = parseInt($('#selectasistencial').val());
+            UTIL.callAjaxRqst(q, this.savedepHandler);
+        }else{
+            alert('Campo vacío');
+        }
+
+    },
+    savedepHandler:function(data){
+        UTIL.cursorNormal();
+        if (data.output.valid){
+            $('#departamento').val('');
+            ELEGIR_SUCURSAL.getdep(q.idasis);
+
+        } else {
+            alert('Error: ' + data.output.response.content);
+        }
+
+    },
+    getser: function (iddep) {
+        q.id=0;
+        q.op = 'serget';
+        q.idasis=0;
+        q.idcli=0;
+        q.iddep = parseInt(iddep)
+        UTIL.callAjaxRqst(q, this.getserHandler);
+    },
+    getserHandler: function (data) {
+        UTIL.cursorNormal();
+        var option = '';
+        debugger
+        if (data.output.valid) {
+            var res = data.output.response;
+            for (var i in res){
+                option += '<option value="'+res[i].id+'">'+res[i].nombre+'</option>';
+            }
+
+            $("#selectservicio").empty();
+            $("#selectservicio").append(option);
+        } else {
+            if(data.output.response.content == ' Sin resultados.') {
+                option = '<option value="vacio">No hay informacion</option>';
+                $("#selectservicio").empty();
+                $("#selectservicio").append(option);
+            }else{
+                alert('Error: ' + data.output.response.content);
+            }
+
+        }
+    },
+    saveser:function(){
+        q.id=0;
+        nombre = $("#servicio").val();
+        if(nombre!=''){
+            q.nombre = nombre;
+            q.op = 'sersave';
+            q.iddep = parseInt($('#selectdepartamento').val());
+            UTIL.callAjaxRqst(q, this.saveserHandler)
+        }else{
+            alert('Campo vacío');
+        }
+
+    },
+    saveserHandler:function(data){
+        UTIL.cursorNormal();
+        if (data.output.valid){
+            $('#servicio').val('');
+            ELEGIR_SUCURSAL.getser(q.iddep);
+
+        } else {
+            alert('Error: ' + data.output.response.content);
+        }
+
+    },
 }

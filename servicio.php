@@ -219,8 +219,6 @@ $arrusuarios = $arrusuarios['output']['response'];
 <link rel="stylesheet" media="screen" href="../danmet/css/dynamictable.css" type="text/css" />
 <script type="text/javascript" src="js/jquery/jquery-dataTables.js"></script>
 <script type="text/javascript" src="js/lib/data-sha1.js"></script>
-<script type="text/javascript" src="js/areas_asistenciales.js"></script>
-<script type="text/javascript" src="js/departamento.js"></script>
 <script type="text/javascript" src="js/elegir_sucursal.js"></script>
 </body>
 </html>
