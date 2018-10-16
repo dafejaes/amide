@@ -42,7 +42,7 @@ $arrusuarios = $arrusuarios['output']['response'];
         <?php
         if ($create) {
             ?>
-            <a href="#" id="crearubicacion" class="btn btn-info botoncrear">Crear</a>
+            <a href="#" id="crearubicacion" class="btn btn-info botoncrear">Crear ubicación</a>
             <?php
         }
         ?>
@@ -76,14 +76,14 @@ $arrusuarios = $arrusuarios['output']['response'];
                         <tr class="gradeC">
                             <td class="con0">
                                 <?php
-                                if ($delete) {
-                                    ?>
-                                    <a href="#" onclick="USUARIO.editdata(<?php echo $arrusuarios[$i]['id']; ?>);"><span class="icon-pencil"></span></a><span>&nbsp;&nbsp;</span>
-                                    <?php
-                                }
                                 if ($edit) {
                                     ?>
-                                    <a href="#" onclick="USUARIO.deletedata(<?php echo $arrusuarios[$i]['id']; ?>);"><span class="icon-trash"></span></a><span>&nbsp;&nbsp;</span>
+                                    <a href="#" onclick="UBICACION.editubidata(<?php echo $arrusuarios[$i]['id']; ?>);"><span class="icon-pencil"></span></a><span>&nbsp;&nbsp;</span>
+                                    <?php
+                                }
+                                if ($delete) {
+                                    ?>
+                                    <a href="#" onclick="UBICACION.deletedata(<?php echo $arrusuarios[$i]['id']; ?>);"><span class="icon-trash"></span></a><span>&nbsp;&nbsp;</span>
                                     <?php
                                 }
                                 ?>
@@ -106,102 +106,58 @@ $arrusuarios = $arrusuarios['output']['response'];
 <footer id="footer_wrap">
     <?php include 'include/generic_footer.php'; ?>
 </footer>
-<div id="dialog-form" title="Usuario" style="display: none;">
+<div id="dialog-form" title="Ubicación" style="display: none;">
     <p class="validateTips"></p>
     <table>
         <tr>
             <td>
                 <form id="formcreate1" class="form-horizontal">
                     <div class="control-group">
-                        <label class="control-label">Pertenenece a</label>
+                        <label class="control-label">Cliente</label>
                         <div class="controls">
-                            <select name="idcli" id="idcli" class="text ui-widget-content ui-corner-all">
+                            <select name="idcli" id="idcli" onchange="UBICACION.getsuc($(this).val())" class="text ui-widget-content ui-corner-all">
                             </select>
                         </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label">Nombres</label>
-                        <div class="controls"><input type="text" name="nombre" id="nombre" class="text ui-widget-content ui-corner-all" /></div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label">Apellidos</label>
-                        <div class="controls"><input type="text" name="apellido" id="apellido" class="text ui-widget-content ui-corner-all" /></div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label">Email</label>
-                        <div class="controls"><input type="email" name="email" id="email" class="text ui-widget-content ui-corner-all" /></div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label">Contraseña</label>
-                        <div class="controls"><input type="password" name="pass" id="pass" class="text ui-widget-content ui-corner-all" /></div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label">Repita Contraseña</label>
-                        <div class="controls"><input type="password" name="pass1" id="pass1" class="text ui-widget-content ui-corner-all" /></div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label">Identificación</label>
-                        <div class="controls"><input type="text" name="identificacion" id="identificacion" class="text ui-widget-content ui-corner-all" /></div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label">Cargo</label>
-                        <div class="controls"><input type="text" name="cargo" id="cargo" class="text ui-widget-content ui-corner-all" /></div>
-                    </div>
-                </form>
-            </td>
-            <td>
-                <form id="formcreate2" class="form-horizontal">
-                    <div class="control-group">
-                        <label class="control-label">Celular</label>
-                        <div class="controls"><input type="text" name="celular" id="celular" class="text ui-widget-content ui-corner-all" /></div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label">Telefono</label>
-                        <div class="controls"><input type="text" name="telefono" id="telefono" class="text ui-widget-content ui-corner-all" /></div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label">País</label>
-                        <div class="controls"><input type="text" name="pais" id="pais" class="text ui-widget-content ui-corner-all" /></div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label">Departamento</label>
-                        <div class="controls"><input type="text" name="departamento" id="departamento" class="text ui-widget-content ui-corner-all" /></div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label">Ciudad</label>
-                        <div class="controls"><input type="text" name="ciudad" id="ciudad" class="text ui-widget-content ui-corner-all" /></div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label">Dirección</label>
-                        <div class="controls"><input type="text" name="direccion" id="direccion" class="text ui-widget-content ui-corner-all" /></div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label">Habilitado</label>
-                        <div class="controls"><select name="habilitado" id="habilitado" class="text ui-widget-content ui-corner-all">
-                                <option value="1">Sí</option>
-                                <option value="2">No</option>
+                        <label class="control-label">Sucursal</label>
+                        <div class="controls">
+                            <select name="idsu" id="idsu" onchange="UBICACION.getasis($(this).val())" class="text ui-widget-content ui-corner-all">
                             </select>
                         </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label">&nbsp;</label>
-                        <div class="controls">&nbsp;</div>
+                        <label class="control-label">Area asistencial</label>
+                        <div class="controls">
+                            <select name="idsare" id="idsare" class="text ui-widget-content ui-corner-all">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Torre</label>
+                        <div class="controls"><input type="text" name="torre" id="torre" class="text ui-widget-content ui-corner-all" /></div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Piso</label>
+                        <div class="controls"><input type="text" name="piso" id="piso" class="text ui-widget-content ui-corner-all" /></div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Ubicación</label>
+                        <div class="controls"><input type="text" name="ubicacion" id="ubicacion" class="text ui-widget-content ui-corner-all" /></div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Extensión telefónica</label>
+                        <div class="controls"><input type="text" name="extension" id="extension" class="text ui-widget-content ui-corner-all" /></div>
                     </div>
                 </form>
             </td>
         </tr>
     </table>
 </div>
-<div id="dialog-permission" title="Permisos">
-    <p class="validateTips"></p>
-    <form class="form-horizontal" id="formpermission">
-        <div class="check"><input type="checkbox" checked="true" name="chk1" id="chk1" class="text ui-widget-content ui-corner-all" /><span>&nbsp;&nbsp;</span><label>Franquicia</label></div>
-    </form>
-</div>
 <?php include 'include/generic_script.php'; ?>
 <link rel="stylesheet" media="screen" href="../danmet/css/dynamictable.css" type="text/css" />
 <script type="text/javascript" src="js/jquery/jquery-dataTables.js"></script>
 <script type="text/javascript" src="js/lib/data-sha1.js"></script>
-<script type="text/javascript" src="js/usuario.js"></script>
+<script type="text/javascript" src="js/ubicacion.js"></script>
 </body>
 </html>
