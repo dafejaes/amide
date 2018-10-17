@@ -29,6 +29,12 @@
             }
             if($SESSION_DATA->getPermission(9)){
                 ?>
+                <li <?php if ($_ACTIVE_SIDEBAR == "tipoequipos") echo 'class="active"'; ?>><a href="TipoEquipo.php">Tipo Equipos</a></li>
+                <li class="divider-vertical"></li>
+                <?php
+            }
+            if($SESSION_DATA->getPermission(9)){
+                ?>
                 <li <?php if ($_ACTIVE_SIDEBAR == "equipos") echo 'class="active"'; ?>><a href="equipo.php">Equipos</a></li>
                 <li class="divider-vertical"></li>
                 <?php
