@@ -115,27 +115,32 @@ var USUARIO = {
     },
     editdatahandler: function(data) {
 		UTIL.cursorNormal();
-		debugger
 		if (data.output.valid) {
 	    	var res = data.output.response[0];
+			$('#nombre').val(res.nombre);
+			$('#email').val(res.correo);
+			$('#identificacion').val(res.identificacion);
+			$('#telefono').val(res.telefono);
+			$('#cargo').val(res.cargo);
+			$('#estado').val(res.estado);
 	    	$("#dialog-form").dialog("open");
 		} else {
 	    	alert('Error: ' + data.output.response.content);
 		}
     },
     editpermission: function(id) {
-	q.op = 'usrprfget';
-	q.id = id;
-	UTIL.callAjaxRqst(q, this.editpermissionhandler);
+		q.op = 'usrprfget';
+		q.id = id;
+		UTIL.callAjaxRqst(q, this.editpermissionhandler);
     },
     editpermissionhandler: function(data) {
-	UTIL.cursorNormal();
-	if (data.output.valid) {
-	    var ava = data.output.available;
-	    var ass = data.output.assigned;
-	    var chks = '';
-	    for (var i in ava){
-		chks += '<div class="check"><input type="checkbox" name="chk'+ava[i].id+'" id="chk'+ava[i].id+'" value="'+ava[i].id+'" class="text ui-widget-content ui-corner-all" /><span>&nbsp;&nbsp;</span><label>'+ava[i].nombre+'</label></div>';
+		UTIL.cursorNormal();
+		if (data.output.valid) {
+			var ava = data.output.available;
+	    	var ass = data.output.assigned;
+	    	var chks = '';
+	    	for (var i in ava){
+			chks += '<div class="check"><input type="checkbox" name="chk'+ava[i].id+'" id="chk'+ava[i].id+'" value="'+ava[i].id+'" class="text ui-widget-content ui-corner-all" /><span>&nbsp;&nbsp;</span><label>'+ava[i].nombre+'</label></div>';
 	    }
 	    $("#formpermission").empty();
 	    $("#formpermission").append(chks);
@@ -143,6 +148,7 @@ var USUARIO = {
 		var p = $(this).attr('id');
 		for (var j in ass){
 		    var idchk = 'chk'+ass[j].id;
+
 		    if (p == idchk){
 			$(this).attr('checked', 'true')
 		    }

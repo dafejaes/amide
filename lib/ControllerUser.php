@@ -79,35 +79,30 @@ class ControllerUser {
         } else {
             if ($this->id > 0) {
                 //se verifica que el email está disponible
-                $q = "SELECT usr_id FROM dmt_usuario WHERE usr_email = '" . $this->email . "' AND usr_id != $this->id ";
-                $con = mysql_query($q, $this->conexion) or die(mysql_error() . "***ERROR: " . $q);
-                $resultado = mysql_num_rows($con);
+                $q = "SELECT usr_id FROM am_usuarios WHERE usr_correo = '" . $this->email . "' AND usr_id != $this->id ";
+                $con = mysqli_query($this->conexion, $q) or die(mysqli_error() . "***ERROR: " . $q);
+                $resultado = mysqli_num_rows($con);
                 if ($resultado == 0) {
                     //actualiza la informacion
-                    $q = "SELECT usr_id FROM dmt_usuario WHERE usr_id = " . $this->id;
-                    $con = mysql_query($q, $this->conexion) or die(mysql_error() . "***ERROR: " . $q);
-                    while ($obj = mysql_fetch_object($con)) {
+                    $q = "SELECT usr_id FROM am_usuarios WHERE usr_id = " . $this->id;
+                    $con = mysqli_query($this->conexion, $q) or die(mysqli_error() . "***ERROR: " . $q);
+                    while ($obj = mysqli_fetch_object($con)) {
                         $id = $obj->usr_id;
                         if (strlen($this->pass) > 2) {
                             $pass = $this->UTILITY->make_hash_pass($this->email, $this->pass);
                         }
-                        $table = "dmt_usuario";
+                        $table = "am_usuarios";
                         $arrfieldscomma = array(
                             'usr_nombre' => $this->nombre,
-                            'usr_apellido' => $this->apellido,
-                            'usr_email' => $this->email,
-                            'usr_pass' => $pass,
+                            'usr_correo' => $this->email,
+                            'usr_contrasena' => $pass,
                             'usr_cargo' => $this->cargo,
                             'usr_identificacion' => $this->identificacion,
-                            'usr_celular' => $this->celular,
                             'usr_telefono' => $this->telefono,
-                            'usr_pais' => $this->pais,
-                            'usr_departamento' => $this->departamento,
-                            'usr_ciudad' => $this->ciudad,
-                            'usr_direccion' => $this->direccion);
-                        $arrfieldsnocomma = array('dmt_cliente_cli_id' => $this->idcli,'usr_dtcreate' => $this->UTILITY->date_now_server(), 'usr_habilitado' => $this->habilitado);
+                            'usr_estado' => $estado2);
+                        $arrfieldsnocomma = array('am_sucursales_suc_id' => $this->idsuc,'usr_actualizado' => $this->UTILITY->date_now_server());
                         $q = $this->UTILITY->make_query_update($table, "usr_id = '$id'", $arrfieldscomma, $arrfieldsnocomma);
-                        mysql_query($q, $this->conexion) or die(mysql_error() . "***ERROR: " . $q);
+                        mysqli_query($this->conexion,$q) or die(mysqli_error() . "***ERROR: " . $q);
                         $arrjson = array('output' => array('valid' => true, 'id' => $id));
                     }
                 } else {
@@ -136,11 +131,41 @@ class ControllerUser {
     }
 
     public function usrget() {
-        $q = "SELECT * FROM am_usuarios, am_sucursales WHERE am_sucursales_suc_id = suc_id AND usr_borrado = 0 ORDER BY usr_nombre ASC";
         if ($this->id > 0) {
             $q = "SELECT * FROM am_usuarios WHERE usr_id = " . $this->id . " AND usr_borrado = 0";
-        }else{
+            $con = mysqli_query($this->conexion,$q) or die(mysqli_error() . "***ERROR: " . $q);
+            $resultado = mysqli_num_rows($con);
+            $arr = array();
+            while ($obj = mysqli_fetch_object($con)) {
+                $arr[] = array(
+                    'id' => $obj->usr_id,
+                    'idsuc'=> $obj->am_sucursales_suc_id,
+                    'nombre'=> $obj->usr_nombre,
+                    'correo' => $obj->usr_correo,
+                    'telefono' => $obj->usr_telefono,
+                    'cargo' => $obj->usr_cargo,
+                    'identificacion'=> $obj->usr_identificacion,
+                    'pass'=>$obj->usr_contrasena,
+                    'dtcreate' => $obj->usr_actualizado);
 
+            }
+        }else{
+            $q = "SELECT * FROM am_usuarios, am_sucursales WHERE am_sucursales_suc_id = suc_id AND usr_borrado = 0 ORDER BY usr_nombre ASC";
+            $con = mysqli_query($this->conexion,$q) or die(mysqli_error() . "***ERROR: " . $q);
+            $resultado = mysqli_num_rows($con);
+            $arr = array();
+            while ($obj = mysqli_fetch_object($con)) {
+                $arr[] = array(
+                    'id' => $obj->usr_id,
+                    'idsuc'=> $obj->am_sucursales_suc_id,
+                    'nombre'=> $obj->usr_nombre,
+                    'correo' => $obj->usr_correo,
+                    'telefono' => $obj->usr_telefono,
+                    'cargo' => $obj->usr_cargo,
+                    'sucnombre'=> $obj->suc_nombre,
+                    'dtcreate' => $obj->usr_actualizado);
+
+            }
         }
         //if ($this->sdid > 0) {
         //    $q = "SELECT * FROM fir_usuario WHERE fir_sede_sde_id = " . $this->sdid;
@@ -148,21 +173,7 @@ class ControllerUser {
         //if ($this->euid > 0) {
         //    $q = "SELECT * FROM fir_usuario WHERE fir_empresa_emp_id = " . $this->euid;
         //}
-        $con = mysqli_query($this->conexion,$q) or die(mysqli_error() . "***ERROR: " . $q);
-        $resultado = mysqli_num_rows($con);
-        $arr = array();
-        while ($obj = mysqli_fetch_object($con)) {
-            $arr[] = array(
-                'id' => $obj->usr_id,
-                'idsuc'=> $obj->am_sucursales_suc_id,
-                'nombre'=> $obj->usr_nombre,
-                'correo' => $obj->usr_correo,
-                'telefono' => $obj->usr_telefono,
-                'cargo' => $obj->usr_cargo,
-                'sucnombre'=> $obj->suc_nombre,
-                'dtcreate' => $obj->usr_actualizado);
 
-        }
         if ($resultado > 0) {
             $arrjson = array('output' => array('valid' => true, 'response' => $arr));
         } else {
