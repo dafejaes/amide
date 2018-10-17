@@ -32,20 +32,14 @@ class ControllerUser {
             }
         }
         if ($this->op == 'usrsave') {
-            $this->idcli = isset($rqst['idcli']) ? $rqst['idcli'] : 0;
+            $this->idsuc = isset($rqst['idsuc']) ? $rqst['idsuc'] : 0;
             $this->nombre = isset($rqst['nombre']) ? $rqst['nombre'] : '';
-            $this->apellido = isset($rqst['apellido']) ? $rqst['apellido'] : '';
             $this->email = isset($rqst['email']) ? $rqst['email'] : '';
             $this->pass = isset($rqst['pass']) ? $rqst['pass'] : '';
             $this->identificacion = isset($rqst['identificacion']) ? $rqst['identificacion'] : '';
             $this->cargo = isset($rqst['cargo']) ? $rqst['cargo'] : '';
             $this->telefono = isset($rqst['telefono']) ? $rqst['telefono'] : '';
-            $this->celular = isset($rqst['celular']) ? $rqst['celular'] : '';
-            $this->pais = isset($rqst['pais']) ? $rqst['pais'] : '';
-            $this->departamento = isset($rqst['departamento']) ? $rqst['departamento'] : '';
-            $this->ciudad = isset($rqst['ciudad']) ? $rqst['ciudad'] : '';
-            $this->direccion = isset($rqst['direccion']) ? $rqst['direccion'] : '';
-            $this->habilitado = isset($rqst['habilitado']) ? intval($rqst['habilitado']) : 0;
+            $this->estado = isset($rqst['estado']) ? $rqst['estado'] : '';
             $this->usrsave();
         } else if ($this->op == 'usrlogin') {
             $this->email = isset($rqst['email']) ? $rqst['email'] : '';
@@ -75,6 +69,11 @@ class ControllerUser {
         $id = 0;
         $resultado = 0;
         $pass = '';
+        if($this->estado == 'Activo'){
+            $estado2=1;
+        }else if($this->estado == 'Inactivo'){
+            $estado2=0;
+        }
         if ($this->UTILITY->validate_email($this->email)) {
             $arrjson = $this->UTILITY->error_wrong_email();
         } else {
@@ -116,17 +115,17 @@ class ControllerUser {
                 }
             } else {
                 //se verifica que el email está disponible
-                $q = "SELECT usr_id FROM dmt_usuario WHERE usr_email = '" . $this->email . "'";
-                $con = mysql_query($q, $this->conexion) or die(mysql_error() . "***ERROR: " . $q);
-                $resultado = mysql_num_rows($con);
+                $q = "SELECT usr_id FROM am_usuarios WHERE usr_correo = '" . $this->email . "'";
+                $con = mysqli_query($this->conexion, $q) or die(mysqli_error() . "***ERROR: " . $q);
+                $resultado = mysqli_num_rows($con);
                 if ($resultado == 0) {
                     if (strlen($this->pass) > 2) {
                         $pass = $this->UTILITY->make_hash_pass($this->email, $this->pass);
                     }
                     $this->pass = $pass;
-                    $q = "INSERT INTO dmt_usuario (usr_dtcreate, dmt_cliente_cli_id, usr_habilitado, usr_nombre, usr_apellido, usr_cargo, usr_email, usr_pass, usr_identificacion, usr_celular, usr_telefono, usr_pais, usr_departamento, usr_ciudad, usr_direccion) VALUES (" . $this->UTILITY->date_now_server() . ", $this->idcli, $this->habilitado, '$this->nombre', '$this->apellido', '$this->cargo', '$this->email', '$this->pass', '$this->identificacion', '$this->celular', '$this->telefono', '$this->pais', '$this->departamento', '$this->ciudad', '$this->direccion')";
-                    mysql_query($q, $this->conexion) or die(mysql_error() . "***ERROR: " . $q);
-                    $id = mysql_insert_id();
+                    $q = "INSERT INTO am_usuarios (am_sucursales_suc_id, usr_nombre, usr_correo, usr_contrasena,usr_telefono, usr_cargo, usr_estado, usr_identificacion, usr_actualizado, usr_borrado ) VALUES (" . $this->idsuc . ",'" . $this->nombre . "','" . $this->email . "','" . $this->pass . "','" . $this->telefono . "','". $this->cargo . "'," . $estado2 . ",'" . $this->identificacion . "'," . $this->UTILITY->date_now_server() . ",". 0 . ")";
+                    mysqli_query($this->conexion, $q) or die(mysqli_error() . "***ERROR: " . $q);
+                    $id = mysqli_insert_id($this->conexion);
                     $arrjson = array('output' => array('valid' => true, 'id' => $id));
                 } else {
                     $arrjson = $this->UTILITY->error_user_already_exist();
@@ -139,7 +138,9 @@ class ControllerUser {
     public function usrget() {
         $q = "SELECT * FROM am_usuarios, am_sucursales WHERE am_sucursales_suc_id = suc_id AND usr_borrado = 0 ORDER BY usr_nombre ASC";
         if ($this->id > 0) {
-            $q = "SELECT * FROM am_usuarios WHERE usr_id = " . $this->id . "AND usr_borrado = 0";
+            $q = "SELECT * FROM am_usuarios WHERE usr_id = " . $this->id . " AND usr_borrado = 0";
+        }else{
+
         }
         //if ($this->sdid > 0) {
         //    $q = "SELECT * FROM fir_usuario WHERE fir_sede_sde_id = " . $this->sdid;
@@ -153,7 +154,7 @@ class ControllerUser {
         while ($obj = mysqli_fetch_object($con)) {
             $arr[] = array(
                 'id' => $obj->usr_id,
-                'idsuc'=> $obj->suc_id,
+                'idsuc'=> $obj->am_sucursales_suc_id,
                 'nombre'=> $obj->usr_nombre,
                 'correo' => $obj->usr_correo,
                 'telefono' => $obj->usr_telefono,
