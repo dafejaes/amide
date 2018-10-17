@@ -67,13 +67,10 @@ function initusuario() {
 	modal: true,
 	buttons: {
 	    "Guardar": function() {
-		var bValid = true;
-		allFields.removeClass("ui-state-error");
 
-		if (bValid) {
 		    USUARIO.savepermission();
 		//$(this).dialog("close");
-		}
+
 	    },
 	    "Cancelar": function() {
 		UTIL.clearForm('formpermission');
@@ -133,7 +130,7 @@ var USUARIO = {
 		q.id = id;
 		UTIL.callAjaxRqst(q, this.editpermissionhandler);
     },
-    editpermissionhandler: function(data) {
+    editpermissionhandler: function(data){
 		UTIL.cursorNormal();
 		if (data.output.valid) {
 			var ava = data.output.available;

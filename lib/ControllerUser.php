@@ -185,8 +185,8 @@ class ControllerUser {
     private function usrdelete() {
         if ($this->id > 0) {
             //actualiza la informacion
-            $q = "DELETE FROM dmt_usuario WHERE usr_id = " . $this->id;
-            mysql_query($q, $this->conexion) or die(mysql_error() . "***ERROR: " . $q);
+            $q = "UPDATE am_usuarios SET usr_borrado = 1 WHERE usr_id=" . $this->id;
+            mysqli_query($this->conexion, $q) or die(mysqli_error() . "***ERROR: " . $q);
             $arrjson = array('output' => array('valid' => true, 'id' => $this->id));
         } else {
             $arrjson = $this->UTILITY->error_missing_data();
@@ -251,21 +251,20 @@ class ControllerUser {
 
     private function usrprfget() {
         //se consultan los perfiles asignados
-        $q = "SELECT * FROM dmt_usuario_has_dmt_perfiles WHERE dmt_usuario_usr_id = $this->id ORDER BY dmt_perfiles_prf_id ASC";
-        $con = mysql_query($q, $this->conexion) or die(mysql_error() . "***ERROR: " . $q);
-        $arrassigned = array();
+        $q = "SELECT * FROM am_usuarios_has_am_perfiles WHERE am_usuarios_usr_id = $this->id ORDER BY am_perfiles_prf_id ASC";
+        $con = mysqli_query($this->conexion, $q) or die(mysqli_error() . "***ERROR: " . $q);
         $arravailable = array();
-        while ($obj = mysql_fetch_object($con)) {
-            $arrassigned[] = array('id' => $obj->dmt_perfiles_prf_id);
+        $arrassigned = array();
+        while ($obj = mysqli_fetch_object($con)) {
+            $arrassigned[] = array('id' => $obj->am_perfiles_prf_id);
         }
         //se consultan los perfiles disponibles
-        $q = "SELECT * FROM dmt_perfiles ORDER BY prf_nombre ASC";
-        $con = mysql_query($q, $this->conexion) or die(mysql_error() . "***ERROR: " . $q);
-        while ($obj = mysql_fetch_object($con)) {
+        $q = "SELECT prf_id, prf_nombre, prf_actualizado FROM am_perfiles WHERE prf_borrado = 0 ORDER BY prf_nombre ASC";
+        $con = mysqli_query($this->conexion, $q) or die(mysqli_error() . "***ERROR: " . $q);
+        while ($obj = mysqli_fetch_object($con)) {
             $arravailable[] = array(
                 'id' => $obj->prf_id,
-                'nombre' => $obj->prf_nombre,
-                'descripcion' => $obj->prf_descripcion);
+                'nombre' => $obj->prf_nombre);
         }
 
         $arrjson = array('output' => array('valid' => true, 'available' => $arravailable, 'assigned' => $arrassigned));
@@ -275,14 +274,14 @@ class ControllerUser {
     private function usrprfsave() {
         if ($this->id > 0) {
             //actualiza la informacion
-            $q = "DELETE FROM dmt_usuario_has_dmt_perfiles WHERE dmt_usuario_usr_id = " . $this->id;
-            mysql_query($q, $this->conexion) or die(mysql_error() . "***ERROR: " . $q);
+            $q = "DELETE FROM am_usuarios_has_am_perfiles WHERE am_usuarios_usr_id = $this->id";
+            mysqli_query($this->conexion, $q) or die(mysqli_error() . "***ERROR: " . $q);
             $arrchk = explode('-', $this->chk);
             for ($i = 0; $i < count($arrchk); $i++) {
                 $prf_id = intval($arrchk[$i]);
                 if ($prf_id > 0) {
-                    $q = "INSERT INTO dmt_usuario_has_dmt_perfiles (dmt_usuario_usr_id, dmt_perfiles_prf_id, dtcreate) VALUES ($this->id, $prf_id, " . $this->UTILITY->date_now_server() . ")";
-                    mysql_query($q, $this->conexion) or die(mysql_error() . "***ERROR: " . $q);
+                    $q = "INSERT INTO am_usuarios_has_am_perfiles (am_usuarios_usr_id, am_perfiles_prf_id) VALUES ($this->id, $prf_id)";
+                    mysqli_query($this->conexion, $q) or die(mysqli_error() . "***ERROR: " . $q);
                 }
             }
             $arrjson = array('output' => array('valid' => true, 'id' => $this->id));
