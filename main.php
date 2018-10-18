@@ -27,5 +27,8 @@ include 'include/generic_validate_session.php';
 	<footer id="footer_wrap">
 	<?php include 'include/generic_footer.php'; ?>
 	</footer>
+        <script type="text/javascript" src="js/opcionusr.js"></script>
     </body>
+
+
 </html>

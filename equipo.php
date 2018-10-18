@@ -1,21 +1,20 @@
 <?php
 include 'include/generic_validate_session.php';
-include 'lib/ControllerUser.php';
+include 'lib/ControllerEquipments.php';
 /**
  * se cargan los permisos
  */
-if (!$SESSION_DATA->getPermission(13)){
+if (!$SESSION_DATA->getPermission(9)){
     header('Location: main.php');
 }
-$create = $SESSION_DATA->getPermission(15);
-$edit = $SESSION_DATA->getPermission(14);
-$delete = $SESSION_DATA->getPermission(16);
-$editpermission = $SESSION_DATA->getPermission(17);
+$create = $SESSION_DATA->getPermission(11);
+$edit = $SESSION_DATA->getPermission(10);
+$delete = $SESSION_DATA->getPermission(12);
 /**
  * se cargan datos
  */
-$USUARIO = new ControllerUser();
-$USUARIO->usrget();
+$USUARIO = new ControllerEquipments();
+$USUARIO->eqget();
 $arrusuarios = $USUARIO->getResponse();
 $isvalid = $arrusuarios['output']['valid'];
 $arrusuarios = $arrusuarios['output']['response'];
@@ -34,7 +33,7 @@ $arrusuarios = $arrusuarios['output']['response'];
 <section id="section_wrap">
     <div class="container">
         <?php
-        $_ACTIVE_SIDEBAR = 'usuarios';
+        $_ACTIVE_SIDEBAR = 'equipos';
         include 'include/generic_navbar.php';
         ?>
     </div>
@@ -42,7 +41,7 @@ $arrusuarios = $arrusuarios['output']['response'];
         <?php
         if ($create) {
             ?>
-            <a href="#" id="crearusuario" class="btn btn-info botoncrear">Crear</a>
+            <a href="#" id="crearusuario" class="btn btn-info botoncrear">Crear equipo</a>
             <?php
         }
         ?>
@@ -53,10 +52,11 @@ $arrusuarios = $arrusuarios['output']['response'];
                     <th class="head0" style="width: 70px;">Acciones</th>
                     <th class="head1">id</th>
                     <th class="head0">Nombre</th>
-                    <th class="head1">Correo</th>
-                    <th class="head0">Telefono</th>
-                    <th class="head1">Cargo</th>
-                    <th class="head0">Sucursal</th>
+                    <th class="head1">Marca</th>
+                    <th class="head0">Serie</th>
+                    <th class="head1">Placa</th>
+                    <th class="head0">Codigo</th>
+                    <th class="head1">Ubicacion</th>
                 </tr>
                 </thead>
                 <colgroup>
@@ -67,6 +67,7 @@ $arrusuarios = $arrusuarios['output']['response'];
                     <col class="con0" />
                     <col class="cono1"/>
                     <col class="cono0"/>
+                    <col class="head1">
                 </colgroup>
                 <!--                                    <td class="con0"><a href="#" onclick="editdata();"><span class="ui-icon ui-icon-pencil"></span></a><a href="#"><span class="ui-icon ui-icon-trash"></span></a></td>-->
                 <tbody>
@@ -97,10 +98,13 @@ $arrusuarios = $arrusuarios['output']['response'];
                             </td>
                             <td class="con1"><?php echo $arrusuarios[$i]['id']; ?></td>
                             <td class="con0"><?php echo $arrusuarios[$i]['nombre']; ?></td>
-                            <td class="con1"><?php echo $arrusuarios[$i]['correo']; ?></td>
-                            <td class="con0"><?php echo $arrusuarios[$i]['telefono']; ?></td>
-                            <td class="con0"><?php echo $arrusuarios[$i]['cargo']; ?></td>
-                            <td class="con0"><?php echo $arrusuarios[$i]['sucnombre']; ?></td>
+                            <td class="con1"><?php echo $arrusuarios[$i]['marca']; ?></td>
+                            <td class="con0"><?php echo $arrusuarios[$i]['modelo']; ?></td>
+                            <td class="con1"><?php echo $arrusuarios[$i]['serie']; ?></td>
+                            <td class="con0"><?php echo $arrusuarios[$i]['placa']; ?></td>
+                            <td class="con1"><?php echo $arrusuarios[$i]['placa']; ?></td>
+                            <td class="con0"><?php echo $arrusuarios[$i]['codigo']; ?></td>
+                            <td class="con1"><?php echo $arrusuarios[$i]['ubicacion']; ?></td>
                         </tr>
                         <?php
                     }
@@ -208,5 +212,6 @@ $arrusuarios = $arrusuarios['output']['response'];
 <script type="text/javascript" src="js/jquery/jquery-dataTables.js"></script>
 <script type="text/javascript" src="js/lib/data-sha1.js"></script>
 <script type="text/javascript" src="js/usuario.js"></script>
+<script type="text/javascript" src="js/opcionusr.js"></script>
 </body>
 </html>

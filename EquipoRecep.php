@@ -168,7 +168,7 @@ $arrusuarios = $arrusuarios['output']['response'];
                                 <option value="Recepcionista">Recepcionista</option>
                                 <option value="Tecnico lider">Técnico líder</option>
                                 <option value="Tecnico">Técnico</option>
-                                <option value="Tecnologo">Metrólogo</option>
+                                <option value="Tecnologo">Tecnólogo</option>
                             </select>
                         </div>
                     </div>

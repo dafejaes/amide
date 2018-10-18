@@ -185,5 +185,6 @@ $arrclientes = $arrclientes['output']['response'];
         <link rel="stylesheet" media="screen" href="../danmet/css/dynamictable.css" type="text/css" />
         <script type="text/javascript" src="js/jquery/jquery-dataTables.js"></script>
         <script type="text/javascript" src="js/clientes.js"></script>
+        <script type="text/javascript" src="js/opcionusr.js"></script>
     </body>
 </html>

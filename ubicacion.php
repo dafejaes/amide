@@ -159,5 +159,6 @@ $arrusuarios = $arrusuarios['output']['response'];
 <script type="text/javascript" src="js/jquery/jquery-dataTables.js"></script>
 <script type="text/javascript" src="js/lib/data-sha1.js"></script>
 <script type="text/javascript" src="js/ubicacion.js"></script>
+<script type="text/javascript" src="js/opcionusr.js"></script>
 </body>
 </html>

@@ -32,7 +32,9 @@ INSERT INTO `am_perfiles` (`prf_id`, `prf_nombre`, `prf_descripcion`, `prf_actua
 (14, 'Usuarios - editar', 'El usuario podrá editar otros usuarios', NOW(), 0),
 (15, 'Usuarios - crear', 'El usuario podrá crear otros usuarios', NOW(), 0),
 (16, 'Usuarios - borrar', 'El usuario podrá borrar otros usuarios', NOW(), 0),
-(17, 'Usuarios - perfiles', 'El usuario podrá editar los perfiles de otros usuarios', NOW(), 0);
+(17, 'Usuarios - perfiles', 'El usuario podrá editar los perfiles de otros usuarios', NOW(), 0),
+(18, 'Recepcion equipos - ver', 'El usuario puede ver los equipos en recepcion', NOW(), 0),
+(19, 'Recepcion equipos - crear', 'El usuario puede crear repecion de equipos', NOW(), 0);
 
 INSERT INTO `am_usuarios_has_am_perfiles` (`am_usuarios_usr_id`, `am_perfiles_prf_id`) VALUES
 (1,1),

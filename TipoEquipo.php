@@ -118,76 +118,73 @@ $arrusuarios = $arrusuarios['output']['response'];
 <footer id="footer_wrap">
     <?php include 'include/generic_footer.php'; ?>
 </footer>
-</div><div id="dialog-form" title="Usuario" style="display: none;">
+</div><div id="dialog-form" title="Tipo de equipo" style="display: none;">
     <p class="validateTips"></p>
     <table>
         <tr>
             <td>
                 <form id="formcreate1" class="form-horizontal">
                     <div class="control-group">
-                        <label class="control-label">Cliente</label>
+                        <label class="control-label">Clase</label>
                         <div class="controls">
-                            <select onchange="USUARIO.getsuc($(this).val())"name="idcli" id="idcli" class="text ui-widget-content ui-corner-all">
+                            <select name="clase" id="clase" class="text ui-widget-content ui-corner-all">
+                                <option value="seleccione">Seleccione...</option>
+                                <option value="Biomedico">Biomedico</option>
+                                <option value="Patron">Patron</option>
+                                <option value="Simulador">Simulador</option>
+                                <option value="Comunicacion">Comunicacion</option>
+                                <option value="Industrial">Industrial</option>
+                                <option value="Infraestructura">Infraestructura</option>
+                                <option value="Sistemas">Sistemas</option>
+                                <option value="Sonido">Sonido</option>
+                                <option value="Video">Video</option>
                             </select>
                         </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label">Sucursal</label>
-                        <div class="controls">
-                            <select name="idsuc" id="idsuc" class="text ui-widget-content ui-corner-all">
-                            </select>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label">Nombre completo</label>
+                        <label class="control-label">Nombre</label>
                         <div class="controls"><input type="text" name="nombre" id="nombre" class="text ui-widget-content ui-corner-all" /></div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label">Email</label>
-                        <div class="controls"><input type="email" name="email" id="email" class="text ui-widget-content ui-corner-all" /></div>
+                        <label class="control-label">Alias</label>
+                        <div class="controls"><input type="text" name="alias" id="alias" class="text ui-widget-content ui-corner-all" /></div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label">Contraseña</label>
-                        <div class="controls"><input type="password" name="pass" id="pass" class="text ui-widget-content ui-corner-all" /></div>
+                        <label class="control-label">Marca</label>
+                        <div class="controls"><input type="text" name="marca" id="marca" class="text ui-widget-content ui-corner-all" /></div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label">Repita Contraseña</label>
-                        <div class="controls"><input type="password" name="pass1" id="pass1" class="text ui-widget-content ui-corner-all" /></div>
+                        <label class="control-label">Modelo</label>
+                        <div class="controls"><input type="text" name="modelo" id="modelo" class="text ui-widget-content ui-corner-all" /></div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label">Identificacion</label>
-                        <div class="controls"><input type="text" name="identificacion" id="identificacion" class="text ui-widget-content ui-corner-all" /></div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label">Telefono</label>
-                        <div class="controls"><input type="text" name="telefono" id="telefono" class="text ui-widget-content ui-corner-all" /></div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label">Cargo</label>
+                        <label class="control-label">Clasificacion</label>
                         <div class="controls">
-                            <select name="cargo" id="cargo" class="text ui-widget-content ui-corner-all">
+                            <select name="clase" id="clase" class="text ui-widget-content ui-corner-all">
                                 <option value="seleccione">Seleccione...</option>
-                                <option value="Administrador">Administrador</option>
-                                <option value="Recepcionista">Recepcionista</option>
-                                <option value="Tecnico lider">Técnico líder</option>
-                                <option value="Tecnico">Técnico</option>
-                                <option value="Tecnologo">Tecnólogo</option>
+                                <option value="Biomedico">Clase I</option>
+                                <option value="Patron">Clase IIA</option>
+                                <option value="Comunicacion">Clase IIB</option>
+                                <option value="Industrial">CLASE III</option>
                             </select>
                         </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label">Habilitado</label>
+                        <label class="control-label">Tipo</label>
                         <div class="controls">
-                            <select name="estado" id="estado" class="text ui-widget-content ui-corner-all">
-                                <option value="seleccione">Seleccione...</option>
-                                <option value="Activo">Si</option>
-                                <option value="Inactivo">No</option>
+                            <select name="clase" id="clase" class="text ui-widget-content ui-corner-all">
+                                <option
                             </select>
                         </div>
                     </div>
                 </form>
             </td>
-
+            <td>
+                <form id="formcreate2" class="form-horizontal">
+                    <table border="1" cellpadding="0" cellspacing="0" class="tabla">
+                    </table>
+                </form>
+            </td>
         </tr>
     </table>
 </div>
@@ -195,6 +192,7 @@ $arrusuarios = $arrusuarios['output']['response'];
 <link rel="stylesheet" media="screen" href="../danmet/css/dynamictable.css" type="text/css" />
 <script type="text/javascript" src="js/jquery/jquery-dataTables.js"></script>
 <script type="text/javascript" src="js/lib/data-sha1.js"></script>
-<script type="text/javascript" src="js/usuario.js"></script>
+<script type="text/javascript" src="js/tipoequipo.js"></script>
+<script type="text/javascript" src="js/opcionusr.js"></script>
 </body>
 </html>

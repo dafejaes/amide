@@ -79,12 +79,12 @@ class ControllerUser {
         } else {
             if ($this->id > 0) {
                 //se verifica que el email está disponible
-                $q = "SELECT usr_id FROM am_usuarios WHERE usr_correo = '" . $this->email . "' AND usr_id != $this->id ";
+                $q = "SELECT usr_id FROM am_usuarios WHERE usr_correo = '" . $this->email . "' AND usr_id != $this->id  AND usr_borrado = 0";
                 $con = mysqli_query($this->conexion, $q) or die(mysqli_error() . "***ERROR: " . $q);
                 $resultado = mysqli_num_rows($con);
                 if ($resultado == 0) {
                     //actualiza la informacion
-                    $q = "SELECT usr_id FROM am_usuarios WHERE usr_id = " . $this->id;
+                    $q = "SELECT usr_id FROM am_usuarios WHERE usr_id = " . $this->id . "AND usr_borrado=0";
                     $con = mysqli_query($this->conexion, $q) or die(mysqli_error() . "***ERROR: " . $q);
                     while ($obj = mysqli_fetch_object($con)) {
                         $id = $obj->usr_id;
@@ -233,6 +233,7 @@ class ControllerUser {
                             'id' => $obj->usr_id,
                             'idsuc' => ($sucursal),
                             'sucursalnombre' => ($sucursalnombre),
+                            'identificacion' => $obj->usr_identificacion,
                             'nombre' => ($obj->usr_nombre),
                             'cargo' => ($obj->usr_cargo),
                             'email' => ($obj->usr_correo),

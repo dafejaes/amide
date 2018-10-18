@@ -56,23 +56,25 @@ class ControllerEquipments {
 
     /**  Función para obtener las ubicaciones */
 
-    public function serget() {
-        $q = "SELECT * FROM am_servicio, am_departamento, am_areas WHERE am_departamento_dep_id = dep_id AND am_areas_are_id = are_id AND ser_borrado = 0 ORDER BY ser_nombre";
+    public function eqget() {
+        $q = "SELECT * FROM am_equipos, am_equipos_tipo, am_ubicaciones WHERE eq_borrado =  0 AND  am_equipos_tipo_eqt_id = eqt_id AND am_ubicaciones_ubi_id = ubi_id ORDER BY eqt_nombre ASC";
         if ($this->id > 0) {
-            $q = "SELECT * FROM am_servicio, am_departamento, am_areas WHERE suc_id = " . $this->id . "AND am_departamento_dep_id=dep_id AND am_areas_are_id=are_id";
+            $q = "SELECT * FROM am_equipos, am_equipos_tipo, am_ubicaciones  WHERE eq_id = " . $this->id . " AND am_equipos_tipo_eqt_id = eqt_id AND eq_borrado = 0 AND  am_ubicaciones_ubi_id = ubi_id ORDER BY eqt_nombre ASC";
         }
-        $con = mysqli_query($this->conexion,$q) or die(mysqli_error() . "***ERROR: " . $q);
+        $con = mysqli_query($this->conexion,$q) or die(mysqli_error($this->conexion) . "***ERROR: " . $q);
         $resultado = mysqli_num_rows($con);
 
         $arr = array();
         while ($obj = mysqli_fetch_object($con)) {
             $arr[] = array(
-                'id' => $obj->ser_id,
-                'dep_id' => $obj->am_departamento_dep_id,
-                'area_id' => $obj->are_id,
-                'sernombre' => ($obj->ser_nombre),
-                'arenombre' => ($obj->are_nombre),
-                'dtcreate' => ($obj->ser_actualizado));
+                'id' => $obj->eq_id,
+                'nombre' => $obj->eqt_nombre,
+                'marca' => $obj->eqt_marca,
+                'modelo' => $obj->eqt_modelo,
+                'serie' => $obj->eq_serie,
+                'placa' => $obj->eq_placa,
+                'codigo' => $obj->eq_codigo,
+                'ubicacion' => $obj->ubi_ubicacion);
         }
         if ($resultado > 0) {
             $arrjson = array('output' => array('valid' => true, 'response' => $arr));
