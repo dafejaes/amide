@@ -28,6 +28,10 @@ if ($op == 'clisave' || $op == 'cliget' || $op == 'clidelete') {
     include '../lib/ControllerLocation.php';
     $CONTROL = new ControllerLocation();
     echo $CONTROL->getResponseJSON();
+} else if($op=='tipoeqsave' || $op == 'tipoeqget' || $op == 'tipoeqdelete' || $op=='partecget' || $op == 'partecsave' || $op=='partecdelete' || $p=='magcalisave' || $op=='magcaliget'){
+    include '../lib/ControllerTypeEquipment.php';
+    $CONTROL = new ControllerTypeEquipment();
+    echo $CONTROL->getResponseJSON();
 } else{
     echo 'OPERACION NO DISPONIBLE';
 }

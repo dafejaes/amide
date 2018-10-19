@@ -1,6 +1,7 @@
 <?php
 include 'include/generic_validate_session.php';
 include 'lib/ControllerTypeEquipment.php';
+
 /**
  * se cargan los permisos
  */
@@ -10,12 +11,14 @@ if (!$SESSION_DATA->getPermission(9)){
 $create = $SESSION_DATA->getPermission(11);
 $edit = $SESSION_DATA->getPermission(10);
 $delete = $SESSION_DATA->getPermission(12);
+
 /**
  * se cargan datos
  */
-$EQUIPO = new ControllerTypeEquipment();
-$EQUIPO->tequiget();
-$arrusuarios = $EQUIPO->getResponse();
+
+$SERVICIO = new ControllerTypeEquipment();
+$SERVICIO->tequiget();
+$arrusuarios = $SERVICIO->getResponse();
 $isvalid = $arrusuarios['output']['valid'];
 $arrusuarios = $arrusuarios['output']['response'];
 ?>
@@ -41,7 +44,7 @@ $arrusuarios = $arrusuarios['output']['response'];
         <?php
         if ($create) {
             ?>
-            <a href="#" id="crearusuario" class="btn btn-info botoncrear">Crear</a>
+            <a href="#" id="creartipoequipo" class="btn btn-info botoncrear">Crear tipo equi</a>
             <?php
         }
         ?>
@@ -50,14 +53,16 @@ $arrusuarios = $arrusuarios['output']['response'];
                 <thead>
                 <tr>
                     <th class="head0" style="width: 70px;">Acciones</th>
-                    <th class="head1">id</th>
+                    <th class="head1">ID</th>
                     <th class="head0">Nombre</th>
                     <th class="head1">Clase</th>
                     <th class="head0">Alias</th>
                     <th class="head1">Marca</th>
-                    <th class="head0">Modelo</th>
-                    <th class="head1">Clasificacion</th>
-                    <th class="head0">Tipo</th>
+                    <th class="head0">Clasificacion</th>
+                    <th class="head1">Tipo</th>
+                    <th class="head0" style="width: 70px;">Parametros Técnicos</th>
+                    <th class="head0" style="width: 70px;">Magnitudes calibracion</th>
+
                 </tr>
                 </thead>
                 <colgroup>
@@ -66,10 +71,13 @@ $arrusuarios = $arrusuarios['output']['response'];
                     <col class="con0" />
                     <col class="con1" />
                     <col class="con0" />
-                    <col class="cono1"/>
-                    <col class="cono0"/>
-                    <col class="cono1"/>
-                    <col class="cono0"/>
+                    <col class="con1" />
+                    <col class="con0" />
+                    <col class="con1" />
+                    <col class="con0" />
+                    <col class="con1" />
+
+
                 </colgroup>
                 <!--                                    <td class="con0"><a href="#" onclick="editdata();"><span class="ui-icon ui-icon-pencil"></span></a><a href="#"><span class="ui-icon ui-icon-trash"></span></a></td>-->
                 <tbody>
@@ -81,29 +89,31 @@ $arrusuarios = $arrusuarios['output']['response'];
                         <tr class="gradeC">
                             <td class="con0">
                                 <?php
-                                if ($edit) {
-                                    ?>
-                                    <a href="#" onclick="USUARIO.editdata(<?php echo $arrusuarios[$i]['id']; ?>);"><span class="icon-pencil"></span></a><span>&nbsp;&nbsp;</span>
-                                    <?php
-                                }
                                 if ($delete) {
                                     ?>
-                                    <a href="#" onclick="USUARIO.deletedata(<?php echo $arrusuarios[$i]['id']; ?>);"><span class="icon-trash"></span></a><span>&nbsp;&nbsp;</span>
+                                    <a href="#" onclick="TIPO_EQUIPO.editdata(<?php echo $arrusuarios[$i]['id']; ?>);"><span class="icon-pencil"></span></a><span>&nbsp;&nbsp;</span>
                                     <?php
                                 }
-                                if ($editpermission) {
+                                if ($edit) {
                                     ?>
-                                    <a href="#" onclick="USUARIO.editpermission(<?php echo $arrusuarios[$i]['id']; ?>);"><span class="icon-ban-circle"></span></a>
+                                    <a href="#" onclick="TIPO_EQUIPO.deletedata(<?php echo $arrusuarios[$i]['id']; ?>);"><span class="icon-trash"></span></a><span>&nbsp;&nbsp;</span>
                                     <?php
                                 }
                                 ?>
                             </td>
-                            <td class="con1"><?php echo $arrusuarios[$i]['id']; ?></td>
+                            <td class="con1"><?php echo $arrusuarios[$i]['id2']; ?></td>
                             <td class="con0"><?php echo $arrusuarios[$i]['nombre']; ?></td>
-                            <td class="con1"><?php echo $arrusuarios[$i]['correo']; ?></td>
-                            <td class="con0"><?php echo $arrusuarios[$i]['telefono']; ?></td>
-                            <td class="con0"><?php echo $arrusuarios[$i]['cargo']; ?></td>
-                            <td class="con0"><?php echo $arrusuarios[$i]['sucnombre']; ?></td>
+                            <td class="con1"><?php echo $arrusuarios[$i]['clase']; ?></td>
+                            <td class="con0"><?php echo $arrusuarios[$i]['alias']; ?></td>
+                            <td class="con1"><?php echo $arrusuarios[$i]['marca']; ?></td>
+                            <td class="con0"><?php echo $arrusuarios[$i]['clasificacion']; ?></td>
+                            <td class="con1"><?php echo $arrusuarios[$i]['tipo']; ?></td>
+                            <td class="con0">
+                                <a href="#" onclick="TIPO_EQUIPO.verpartec(<?php echo $arrusuarios[$i]['id']; ?>);"><span class="icon-folder-open"></span></a><span>&nbsp;&nbsp;</span>
+                            </td>
+                            <td class="con0">
+                                <a href="#" onclick="TIPO_EQUIPO.vermagcali(<?php echo $arrusuarios[$i]['id']; ?>);"><span class="icon-folder-open"></span></a><span>&nbsp;&nbsp;</span>
+                            </td>
                         </tr>
                         <?php
                     }
@@ -114,12 +124,11 @@ $arrusuarios = $arrusuarios['output']['response'];
         </div>
     </div>
 </section>
-
 <footer id="footer_wrap">
     <?php include 'include/generic_footer.php'; ?>
 </footer>
-</div><div id="dialog-form" title="Tipo de equipo" style="display: none;">
-    <p class="validateTips"></p>
+<div id="dialog-form1" title="Tipo de equipo" style="display: none;">
+    <p class="validateTips1"></p>
     <table>
         <tr>
             <td>
@@ -129,15 +138,16 @@ $arrusuarios = $arrusuarios['output']['response'];
                         <div class="controls">
                             <select name="clase" id="clase" class="text ui-widget-content ui-corner-all">
                                 <option value="seleccione">Seleccione...</option>
-                                <option value="Biomedico">Biomedico</option>
-                                <option value="Patron">Patron</option>
-                                <option value="Simulador">Simulador</option>
+                                <option value="Apoyo">Apoyo</option>
+                                <option value="Biomedico">Biomédico</option>
+                                <option value="Patron">Patrón</option>
                                 <option value="Comunicacion">Comunicacion</option>
                                 <option value="Industrial">Industrial</option>
                                 <option value="Infraestructura">Infraestructura</option>
                                 <option value="Sistemas">Sistemas</option>
                                 <option value="Sonido">Sonido</option>
                                 <option value="Video">Video</option>
+                                <option value="Simulador">Simulador</option>
                             </select>
                         </div>
                     </div>
@@ -160,29 +170,163 @@ $arrusuarios = $arrusuarios['output']['response'];
                     <div class="control-group">
                         <label class="control-label">Clasificacion</label>
                         <div class="controls">
-                            <select name="clase" id="clase" class="text ui-widget-content ui-corner-all">
+                            <select name="clase" id="clasificacion" class="text ui-widget-content ui-corner-all">
                                 <option value="seleccione">Seleccione...</option>
-                                <option value="Biomedico">Clase I</option>
-                                <option value="Patron">Clase IIA</option>
-                                <option value="Comunicacion">Clase IIB</option>
-                                <option value="Industrial">CLASE III</option>
+                                <option value="clase I">Clase I</option>
+                                <option value="clase IIA">Clase IIA</option>
+                                <option value="clase IIB">Clase IIB</option>
+                                <option value="clase III">Clase III</option>
                             </select>
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label">Tipo</label>
                         <div class="controls">
-                            <select name="clase" id="clase" class="text ui-widget-content ui-corner-all">
-                                <option
+                            <select name="clase" id="tipo" class="text ui-widget-content ui-corner-all">
+                                <option value="seleccione">Seleccione...</option>
+                                <option value="Electrico">Electrico</option>
+                                <option value="Electronico">Electrónico</option>
+                                <option value="Electroneumático">Electroneumático</option>
+                                <option value="Electromecánico">Electromecánico</option>
+                                <option value="Hidraulico">Hidraulico</option>
+                                <option value="Mecanico">Mecánico</option>
+                                <option value="Neumatico">Neumático</option>
+                                <option value="Optico">Optico</option>
                             </select>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">ID</label>
+                        <div class="controls"><input type="text" name="id2" id="id2" class="text ui-widget-content ui-corner-all" /></div>
+                    </div>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+<div id="dialog-form2" title="Parámetros ténicos" style="display: none;">
+    <p class="validateTips1"></p>
+    <table>
+        <tr>
+            <td>
+                <form id="formcreate2" class="form-horizontal">
+                    <div class="container">
+                        <a href="#" id="crearpartec" class="btn btn-info botoncrear">Crear</a>
+                        <div>
+                            <table class="table table-hover dyntable" id="dynamictable">
+                                <thead>
+                                <tr>
+                                    <th class="head0" style="width: 70px;">Acciones</th>
+                                    <th class="head1">Nombre</th>
+                                    <th class="head0">Valor</th>
+                                    <th class="head1">Unidad</th>
+
+                                </tr>
+                                </thead>
+                                <colgroup>
+                                    <col class="con0" />
+                                    <col class="con1" />
+                                    <col class="con0" />
+                                </colgroup>
+                                <!--                                    <td class="con0"><a href="#" onclick="editdata();"><span class="ui-icon ui-icon-pencil"></span></a><a href="#"><span class="ui-icon ui-icon-trash"></span></a></td>-->
+                                <tbody id="listapartec">
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </form>
             </td>
+        </tr>
+    </table>
+</div>
+<div id="dialog-form3" title="Nuevo parametro tecnico" style="display: none;">
+    <p class="validateTips1"></p>
+    <table>
+        <tr>
             <td>
-                <form id="formcreate2" class="form-horizontal">
-                    <table border="1" cellpadding="0" cellspacing="0" class="tabla">
-                    </table>
+                <form id="formcreate3 " class="form-horizontal">
+                    <div class="control-group">
+                        <label class="control-label">Nombre</label>
+                        <div class="controls"><input type="text" name="namepartec" id="namepartec" class="text ui-widget-content ui-corner-all" /></div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Valor</label>
+                        <div class="controls"><input type="text" name="valor" id="valor" class="text ui-widget-content ui-corner-all" /></div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Unidad</label>
+                        <div class="controls"><input type="text" name="unidad" id="unidad" class="text ui-widget-content ui-corner-all" /></div>
+                    </div>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+<div id="dialog-form4" title="Magnitudes de calibracion" style="display: none;">
+    <p class="validateTips1"></p>
+    <table>
+        <tr>
+            <td>
+                <form id="formcreate4" class="form-horizontal">
+                    <div class="container">
+                        <a href="#" id="crearmargcali" class="btn btn-info botoncrear">Crear</a>
+                        <div>
+                            <table class="table table-hover dyntable" id="dynamictable">
+                                <thead>
+                                <tr>
+                                    <th class="head0" style="width: 70px;">Acciones</th>
+                                    <th class="head1">Nombre</th>
+                                    <th class="head0">Limite inferior</th>
+                                    <th class="head1">Limite superior</th>
+                                    <th class="head0">Error maximo</th>
+                                    <th class="head1">Unidad</th>
+                                </tr>
+                                </thead>
+                                <colgroup>
+                                    <col class="con0" />
+                                    <col class="con1" />
+                                    <col class="con0" />
+                                    <col class="con1" />
+                                    <col class="con0" />
+                                    <col class="con1" />
+                                </colgroup>
+                                <!--                                    <td class="con0"><a href="#" onclick="editdata();"><span class="ui-icon ui-icon-pencil"></span></a><a href="#"><span class="ui-icon ui-icon-trash"></span></a></td>-->
+                                <tbody id="listamagcali">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+<div id="dialog-form5" title="Nueva magnitud de calibracion" style="display: none;">
+    <p class="validateTips1"></p>
+    <table>
+        <tr>
+            <td>
+                <form id="formcreate5 " class="form-horizontal">
+                    <div class="control-group">
+                        <label class="control-label">Nombre</label>
+                        <div class="controls"><input type="text" name="namemagcali" id="namemagcali" class="text ui-widget-content ui-corner-all" /></div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Limite inferior</label>
+                        <div class="controls"><input type="text" name="inferior" id="inferior" class="text ui-widget-content ui-corner-all" /></div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Limite superior</label>
+                        <div class="controls"><input type="text" name="superior" id="superior" class="text ui-widget-content ui-corner-all" /></div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Error maximo</label>
+                        <div class="controls"><input type="text" name="emax" id="emax" class="text ui-widget-content ui-corner-all" /></div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Unidad</label>
+                        <div class="controls"><input type="text" name="unidadmagcali" id="unidadmagcali" class="text ui-widget-content ui-corner-all" /></div>
+                    </div>
                 </form>
             </td>
         </tr>

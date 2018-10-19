@@ -31,25 +31,18 @@
                 ?>
                 <li <?php if ($_ACTIVE_SIDEBAR == "tipoequipos") echo 'class="active"'; ?>><a href="TipoEquipo.php">Tipo Equipos</a></li>
                 <li class="divider-vertical"></li>
-                <li <?php if ($_ACTIVE_SIDEBAR == "equipos") echo 'class="active"'; ?>><a href="equipo.php">Equipos</a>
-                </li>
+                <li <?php if ($_ACTIVE_SIDEBAR == "equipos") echo 'class="active"'; ?>><a href="equipo.php">Equipos</a></li>
+                <li class="divider-vertical"></li>
+                <?php
+            }
+            if($SESSION_DATA->getPermission(18)) {
+                ?>
+                <li <?php if ($_ACTIVE_SIDEBAR == "equiporecep") echo 'class="active"'; ?>><a href="EquipoRecep.php">Equipos</a></li>
                 <li class="divider-vertical"></li>
                 <?php
             }
             ?>
 
-        </ul>
-        <ul class="nav pull-right">
-            <li><a href="logout.php">Salir</a></li>
-            <li class="divider-vertical"></li>
-            <!--            <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mi cuenta <b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">Editar cuenta</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#">Cerrar Sesión</a></li>
-                            </ul>
-                        </li>-->
         </ul>
     </div>
     <!--    <ul class="breadcrumb">

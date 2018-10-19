@@ -1,59 +1,52 @@
-$(document).on('ready', initusuario);
+$(document).on('ready', inittipoequipo);
 var q, nombre,  allFields, tips;
 
 /**
  * se activa para inicializar el documento
  */
-function initusuario() {
+function inittipoequipo() {
     q = {};
     q.ke = _ucode;
     q.lu = _ulcod;
     q.ti = _utval;
+    tips = $(".validateTips");
     nombre = $("#nombre");
     allFields = $([]).add(nombre);
-    tips = $(".validateTips");
 
     $('#dynamictable').dataTable({
         "sPaginationType": "full_numbers"
     });
-    $('#dynamictable2').dataTable({
-        "sPaginationType": "full_numbers"
-    });
 
-    $("#crearusuario").button().click(function() {
+    $("#creartipoequipo").button().click(function() {
         q.id = 0;
-        $("#dialog-form").dialog("open");
+        $("#dialog-form1").dialog("open");
+    });
+    $("#crearpartec").button().click(function() {
+        q.idpartec = 0;
+        $("#dialog-form3").dialog("open");
     });
 
-    $("#dialog-form").dialog({
+    $("#crearmargcali").button().click(function() {
+        q.idmagcali = 0;
+        $("#dialog-form5").dialog("open");
+    });
+    $("#dialog-form1").dialog({
         autoOpen: false,
-        height: 900,
-        width: 900,
+        height: 520,
+        width: 500,
         modal: true,
         buttons: {
-            "Guardar": function() {
-                var bValid = true;
+            "Guardar": function () {
+                var valido = true;
                 allFields.removeClass("ui-state-error");
-                bValid = bValid && checkLength(nombre, "nombre", 3, 40);
-                if ("seleccione" == $("#idcli").val()){
-                    bValid = false;
-                    updateTips('Seleccione el cliente al cual pertenece el usuario.');
-                }
-                if("seleccione" == $('#idsuc').val()){
-                    bValid = false;
-                    updateTips('Seleccione la sucursal a la cual pertenece el usario.');
-                }
-                if($('#pass').val() != $('#pass1').val()){
-                    bValid=false;
-                    updateTips('Las contraseñas no concuerdan');
-                }
-                if (bValid) {
-                    USUARIO.savedata();
-                    //$(this).dialog("close");
+                valido = valido && checkLength(nombre, "nombre", 3, 50);
+                if(valido){
+                    TIPO_EQUIPO.savedata();
                 }
             },
-            "Cancelar": function() {
+            "Cerrar": function() {
                 UTIL.clearForm('formcreate1');
+                updateTips('');
                 $(this).dialog("close");
             }
         },
@@ -62,185 +55,298 @@ function initusuario() {
             updateTips('');
         }
     });
-
-    $("#dialog-permission").dialog({
+    $("#dialog-form2").dialog({
         autoOpen: false,
-        height: 700,
-        width: 230,
+        height: 500,
+        width: 1000,
         modal: true,
         buttons: {
-            "Guardar": function() {
-
-                USUARIO.savepermission();
-                //$(this).dialog("close");
-
-            },
-            "Cancelar": function() {
-                UTIL.clearForm('formpermission');
+            "Cerrar": function() {
+                UTIL.clearForm('formcreate2');
+                updateTips('');
                 $(this).dialog("close");
             }
         },
         close: function() {
-            UTIL.clearForm('formpermission');
+            UTIL.clearForm('formcreate2');
             updateTips('');
         }
     });
-
-    USUARIO.getcustomer();
+    $("#dialog-form3").dialog({
+        autoOpen: false,
+        height: 300,
+        width: 500,
+        modal: true,
+        buttons: {
+            "Guardar":function () {
+                TIPO_EQUIPO.savepartec();
+                UTIL.clearForm('fomrcreate3');
+            },
+            "Cerrar": function() {
+                UTIL.clearForm('formcreate3');
+                updateTips('');
+                $(this).dialog("close");
+            }
+        },
+        close: function() {
+            UTIL.clearForm('formcreate3');
+            updateTips('');
+        }
+    });
+    $("#dialog-form4").dialog({
+        autoOpen: false,
+        height: 500,
+        width: 1000,
+        modal: true,
+        buttons: {
+            "Cerrar": function() {
+                UTIL.clearForm('formcreate4');
+                updateTips('');
+                $(this).dialog("close");
+            }
+        },
+        close: function() {
+            UTIL.clearForm('formcreate4');
+            updateTips('');
+        }
+    });
+    $("#dialog-form5").dialog({
+        autoOpen: false,
+        height: 300,
+        width: 500,
+        modal: true,
+        buttons: {
+            "Guardar":function () {
+                TIPO_EQUIPO.savemagcali();
+                UTIL.clearForm('fomrcreate5');
+            },
+            "Cerrar": function() {
+                UTIL.clearForm('formcreate5');
+                updateTips('');
+                $(this).dialog("close");
+            }
+        },
+        close: function() {
+            UTIL.clearForm('formcreate5');
+            updateTips('');
+        }
+    });
 }
 
 
 
-var USUARIO = {
-    deletedata: function(id) {
-        var continuar = confirm('Va a eliminar información de forma irreversible.\n¿Desea continuar?');
-        if (continuar) {
-            q.op = 'usrdelete';
-            q.id = id;
-            UTIL.callAjaxRqst(q, this.deletedatahandler);
-        }
+var TIPO_EQUIPO = {
+    savepartec: function () {
+        q.op = 'partecsave';
+        q.nombrepartec = $('#namepartec').val();
+        q.valor = $('#valor').val();
+        q.unidad = $('#unidad').val();
+        UTIL.callAjaxRqst(q, this.savepartecHandler);
     },
-    deletedatahandler: function(data) {
+    savepartecHandler: function (data) {
         UTIL.cursorNormal();
         if (data.output.valid) {
-            window.location = 'usuario.php';
+            UTIL.clearForm('formcreate3');
+            updateTips('');
+            $('#dialog-form3').dialog("close");
+            UTIL.clearForm('formcreate2');
+            updateTips('');
+            $('#dialog-form2').dialog("close");
+            this.verpartec(q.id);
         } else {
             alert('Error: ' + data.output.response.content);
         }
     },
-    editdata: function(id) {
-        q.op = 'usrget';
-        q.id = id;
-        UTIL.callAjaxRqst(q, this.editdatahandler);
+    savemagcali: function () {
+        q.op = 'magcalisave';
+        q.nombremagcali = $('#namemagcali').val();
+        q.inferior = $('#inferior').val();
+        q.superior = $('#superior').val();
+        q.emax = $('#emax').val();
+        q.unidad = $('#unidadmagcali').val();
+        UTIL.callAjaxRqst(q, this.savemagcaliHandler);
     },
-    editdatahandler: function(data) {
+    savemagcaliHandler: function (data) {
+        UTIL.cursorNormal();
+        if (data.output.valid) {
+            UTIL.clearForm('formcreate3');
+            updateTips('');
+            $('#dialog-form3').dialog("close");
+            UTIL.clearForm('formcreate2');
+            updateTips('');
+            $('#dialog-form2').dialog("close");
+            this.verpartec(q.id);
+        } else {
+            alert('Error: ' + data.output.response.content);
+        }
+    },
+    savedata: function () {
+        q.op = 'tipoeqsave'
+        q.clase = $('#clase').val();
+        q.nombre = $('#nombre').val();
+        q.alias = $('#alias').val();
+        q.marca = $('#marca').val();
+        q.modelo = $('#modelo').val();
+        q.clasificacion = $('#clasificacion').val();
+        q.tipo = $('#tipo').val()
+        q.id2 = $('#id2').val();
+        UTIL.callAjaxRqst(q, this.savedataHandler);
+    },
+    savedataHandler: function (data) {
+        UTIL.cursorNormal();
+        if (data.output.valid) {
+            window.location = 'TipoEquipo.php'
+        } else {
+            alert('Error: ' + data.output.response.content);
+        }
+
+    },
+    editdata: function (id) {
+        q.id = id;
+        q.op = 'tipoeqget';
+        UTIL.callAjaxRqst(q, this.editdataHandler);
+    },
+    editdataHandler: function (data) {
         UTIL.cursorNormal();
         if (data.output.valid) {
             var res = data.output.response[0];
             $('#nombre').val(res.nombre);
-            $('#email').val(res.correo);
-            $('#identificacion').val(res.identificacion);
-            $('#telefono').val(res.telefono);
-            $('#cargo').val(res.cargo);
-            $('#estado').val(res.estado);
-            $("#dialog-form").dialog("open");
+            $('#alias').val(res.alias);
+            $('#marca').val(res.marca);
+            $('#modelo').val(res.modelo);
+            $('#id2').val(res.id2);
+            $("#dialog-form1").dialog("open");
         } else {
             alert('Error: ' + data.output.response.content);
         }
     },
-    editpermission: function(id) {
-        q.op = 'usrprfget';
+    deletedata: function (id) {
+        var continuar = confirm('Va a eliminar información de forma irreversible.\n¿Desea continuar?');
+        if (continuar) {
+            q.id = id;
+            q.op = 'tipoeqdelete'
+            UTIL.callAjaxRqst(q, this.deletedataHandler);
+        }
+    },
+    deletedataHandler: function (data) {
+        UTIL.cursorNormal();
+        if (data.output.valid) {
+            window.location = 'TipoEquipo.php';
+        } else {
+            alert('Error: ' + data.output.response.content);
+        }
+    },
+    verpartec: function (id) {
         q.id = id;
-        UTIL.callAjaxRqst(q, this.editpermissionhandler);
+        q.op = 'partecget';
+        UTIL.callAjaxRqst(q, this.verpartecHandler);
     },
-    editpermissionhandler: function(data){
+    verpartecHandler: function (data) {
         UTIL.cursorNormal();
         if (data.output.valid) {
-            var ava = data.output.available;
-            var ass = data.output.assigned;
-            var chks = '';
-            for (var i in ava){
-                chks += '<div class="check"><input type="checkbox" name="chk'+ava[i].id+'" id="chk'+ava[i].id+'" value="'+ava[i].id+'" class="text ui-widget-content ui-corner-all" /><span>&nbsp;&nbsp;</span><label>'+ava[i].nombre+'</label></div>';
+            var res = data.output.response;
+            var option = '';
+            for (var i in res) {
+                option += '<tr class="gradeC">';
+                option += '<td class="con0">';
+                option += '<a href="#" onclick="TIPO_EQUIPO.editdatapartec(' + res[i].idpartec + ');"><span class="icon-pencil"></span></a><span>&nbsp;&nbsp;</span>';
+                option += '<a href="#" onclick="TIPO_EQUIPO.deletedatapartec(' + res[i].idpartec + ');"><span class="icon-trash"></span></a><span>&nbsp;&nbsp;</span>';
+                option += '</td>';
+                option += '<td class="con1">' + res[i].namepartec + '</td><td class="con0">' + res[i].valor + '</td><td class="con1">' + res[i].unidad + '</td>';
+                option += '</tr>';
             }
-            $("#formpermission").empty();
-            $("#formpermission").append(chks);
-            $("#formpermission :input").each(function() {
-                var p = $(this).attr('id');
-                for (var j in ass){
-                    var idchk = 'chk'+ass[j].id;
+            $("#listapartec").empty();
+            $("#listapartec").append(option);
+            $("#dialog-form2").dialog("open");
+        } else {
+            if (data.output.response.content == " Sin resultados.") {
+                option = " Sin resultados.";
+                $("#listapartec").empty();
+                $("#listapartec").append(option);
+                $("#dialog-form2").dialog("open");
+            } else {
+                alert('Error: ' + data.output.response.content);
+            }
 
-                    if (p == idchk){
-                        $(this).attr('checked', 'true')
-                    }
-                }
-            });
-            $("#dialog-permission").dialog("open");
-        } else {
-            alert('Error: ' + data.output.response.content);
         }
     },
-    getcustomer:function(){
-        q.op = 'cliget';
-        UTIL.callAjaxRqst(q, this.getcustomerHandler);
+    vermagcali: function (id) {
+        q.id = id;
+        q.op = 'magcaliget';
+        UTIL.callAjaxRqst(q, this.vermagcaliHandler);
     },
-    getcustomerHandler : function(data) {
+    vermagcaliHandler: function (data) {
         UTIL.cursorNormal();
         if (data.output.valid) {
             var res = data.output.response;
-            var option = '<option value="seleccione">Seleccione...</option>';
-            for (var i in res){
-                option += '<option value="'+res[i].id+'">'+res[i].nombre+'</option>';
+            var option = '';
+            for (var i in res) {
+                option += '<tr class="gradeC">';
+                option += '<td class="con0">';
+                option += '<a href="#" onclick="TIPO_EQUIPO.editdatamagcali(' + res[i].idmagcali + ');"><span class="icon-pencil"></span></a><span>&nbsp;&nbsp;</span>';
+                option += '<a href="#" onclick="TIPO_EQUIPO.deletedatamagcali(' + res[i].idmagcali + ');"><span class="icon-trash"></span></a><span>&nbsp;&nbsp;</span>';
+                option += '</td>';
+                option += '<td class="con1">' + res[i].namemagcali + '</td><td class="con0">' + res[i].inferior + '</td><td class="con1">' + res[i].superior + '</td><td class="con0">' + res[i].emax + '</td><td class="con1">' + res[i].unidadmagcali + '</td>';
+                option += '</tr>';
             }
-            $("#idcli").empty();
-            $("#idcli").append(option);
+            $("#listamagcali").empty();
+            $("#listamagcali").append(option);
+            $("#dialog-form4").dialog("open");
+        } else {
+            if (data.output.response.content == " Sin resultados.") {
+                option = " Sin resultados.";
+                $("#listamagcali").empty();
+                $("#listamagcali").append(option);
+                $("#dialog-form4").dialog("open");
+            } else {
+                alert('Error: ' + data.output.response.content);
+            }
+
+        }
+    },
+    editdatapartec: function (idpartec) {
+        q.idpartec = idpartec;
+        q.op = 'partecget';
+
+        UTIL.callAjaxRqst(q, this.editdatapartecHandler);
+    },
+    editdatapartecHandler: function (data) {
+        UTIL.cursorNormal();
+        if (data.output.valid) {
+            var res = data.output.response[0];
+            $('#namepartec').val(res.namepartec);
+            $('#valor').val(res.valor);
+            $('#unidad').val(res.unidad);
+            $("#dialog-form3").dialog("open");
         } else {
             alert('Error: ' + data.output.response.content);
         }
     },
-    savepermission: function() {
-        var chk = '';
-        var inputs = document.getElementById('formpermission').getElementsByTagName("input"); // get element by tag name
-        for (var i in inputs) {
-            if (inputs[i].type == "checkbox") {
-                if($("#"+inputs[i].id).is(':checked')) {
-                    chk += $("#"+inputs[i].id).val()+'-';
-                }
-            }
-        }
-        q.op = 'usrprfsave';
-        q.chk = chk;
-        UTIL.callAjaxRqst(q, this.savepermissionhandler);
+    deletedatapartec: function (idpartec) {
+        q.idpartec = idpartec;
+        q.op = 'partecdelete';
+        UTIL.callAjaxRqst(q, this.deletedatapartecHandler);
     },
-    savepermissionhandler: function(data) {
+    deletedatapartecHandler: function (data) {
         UTIL.cursorNormal();
         if (data.output.valid) {
-            updateTips('Información guardada correctamente');
-            $("#dialog-permission").dialog("close");
+            window.location = 'TipoEquipo.php';
         } else {
             alert('Error: ' + data.output.response.content);
         }
     },
-    savedata: function() {
-        q.op = 'usrsave';
-        q.idsuc = $('#idsuc').val();
-        q.nombre = $('#nombre').val();
-        q.email = $('#email').val();
-        q.pass = '';
-        if ($('#pass').val().length > 1){
-            q.pass = hex_sha1($('#pass').val());
-        }
-        q.identificacion = $('#identificacion').val();
-        q.cargo = $('#cargo').val();
-        q.estado = $('#estado').val();
-        q.telefono = $('#telefono').val();
-        UTIL.callAjaxRqst(q, this.savedatahandler);
+    editdatamagcali: function (idmagcali) {
+
+        UTIL.callAjaxRqst(q, this.editdatamagcaliHandler);
     },
-    savedatahandler: function(data) {
-        UTIL.cursorNormal();
-        if (data.output.valid) {
-            updateTips('Información guardada correctamente');
-            window.location = 'usuario.php';
-        } else {
-            updateTips('Error: ' + data.output.response.content);
-        }
+    editdatamagcaliHandler: function (data) {
+
     },
-    getsuc: function(idcli){
-        q.op = 'suc2get';
-        q.idcli=idcli;
-        UTIL.callAjaxRqst(q, this.getsucHandler);
+    deletedatamagcali: function (idpartec) {
+
+        UTIL.callAjaxRqst(q, this.deletedatamagcaliHandler);
     },
-    getsucHandler : function(data) {
-        UTIL.cursorNormal();
-        if (data.output.valid) {
-            var res = data.output.response;
-            var option = '<option value="seleccione">Seleccione...</option>';
-            for (var i in res){
-                option += '<option value="'+res[i].id+'">'+res[i].nombre+'</option>';
-            }
-            $("#idsuc").empty();
-            $("#idsuc").append(option);
-        } else {
-            alert('Error: ' + data.output.response.content);
-        }
+    deletedatamagcaliHandler: function (data) {
+
     }
 }

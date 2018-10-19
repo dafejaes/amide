@@ -1,21 +1,19 @@
 <?php
 include 'include/generic_validate_session.php';
-include 'lib/ControllerUser.php';
+include 'lib/ControllerEquipRecep.php';
 /**
  * se cargan los permisos
  */
-if (!$SESSION_DATA->getPermission(13)){
+if (!$SESSION_DATA->getPermission(18)){
     header('Location: main.php');
 }
-$create = $SESSION_DATA->getPermission(15);
-$edit = $SESSION_DATA->getPermission(14);
-$delete = $SESSION_DATA->getPermission(16);
-$editpermission = $SESSION_DATA->getPermission(17);
+$create = $SESSION_DATA->getPermission(19 );
+
 /**
  * se cargan datos
  */
-$USUARIO = new ControllerUser();
-$USUARIO->usrget();
+$USUARIO = new ControllerEquipRecep();
+$USUARIO->eqrecepget();
 $arrusuarios = $USUARIO->getResponse();
 $isvalid = $arrusuarios['output']['valid'];
 $arrusuarios = $arrusuarios['output']['response'];
@@ -34,7 +32,7 @@ $arrusuarios = $arrusuarios['output']['response'];
 <section id="section_wrap">
     <div class="container">
         <?php
-        $_ACTIVE_SIDEBAR = 'usuarios';
+        $_ACTIVE_SIDEBAR = 'equiporecep';
         include 'include/generic_navbar.php';
         ?>
     </div>
@@ -50,23 +48,23 @@ $arrusuarios = $arrusuarios['output']['response'];
             <table class="table table-hover dyntable" id="dynamictable">
                 <thead>
                 <tr>
-                    <th class="head0" style="width: 70px;">Acciones</th>
-                    <th class="head1">id</th>
+                    <th class="head1">Consecutivo</th>
                     <th class="head0">Nombre</th>
-                    <th class="head1">Correo</th>
-                    <th class="head0">Telefono</th>
-                    <th class="head1">Cargo</th>
-                    <th class="head0">Sucursal</th>
+                    <th class="head1">Ubicacion</th>
+                    <th class="head0">Extension</th>
+                    <th class="head1">Estado</th>
+                    <th class="head0">Fecha de recepcion</th>
+                    <th class="head1">Observaciones</th>
                 </tr>
                 </thead>
                 <colgroup>
-                    <col class="con0" />
                     <col class="con1" />
                     <col class="con0" />
                     <col class="con1" />
                     <col class="con0" />
                     <col class="cono1"/>
                     <col class="cono0"/>
+                    <col class="cono1" />
                 </colgroup>
                 <!--                                    <td class="con0"><a href="#" onclick="editdata();"><span class="ui-icon ui-icon-pencil"></span></a><a href="#"><span class="ui-icon ui-icon-trash"></span></a></td>-->
                 <tbody>
@@ -76,31 +74,12 @@ $arrusuarios = $arrusuarios['output']['response'];
                     for ($i = 0; $i < $c; $i++) {
                         ?>
                         <tr class="gradeC">
-                            <td class="con0">
-                                <?php
-                                if ($edit) {
-                                    ?>
-                                    <a href="#" onclick="USUARIO.editdata(<?php echo $arrusuarios[$i]['id']; ?>);"><span class="icon-pencil"></span></a><span>&nbsp;&nbsp;</span>
-                                    <?php
-                                }
-                                if ($delete) {
-                                    ?>
-                                    <a href="#" onclick="USUARIO.deletedata(<?php echo $arrusuarios[$i]['id']; ?>);"><span class="icon-trash"></span></a><span>&nbsp;&nbsp;</span>
-                                    <?php
-                                }
-                                if ($editpermission) {
-                                    ?>
-                                    <a href="#" onclick="USUARIO.editpermission(<?php echo $arrusuarios[$i]['id']; ?>);"><span class="icon-ban-circle"></span></a>
-                                    <?php
-                                }
-                                ?>
-                            </td>
-                            <td class="con1"><?php echo $arrusuarios[$i]['id']; ?></td>
-                            <td class="con0"><?php echo $arrusuarios[$i]['nombre']; ?></td>
-                            <td class="con1"><?php echo $arrusuarios[$i]['correo']; ?></td>
-                            <td class="con0"><?php echo $arrusuarios[$i]['telefono']; ?></td>
-                            <td class="con0"><?php echo $arrusuarios[$i]['cargo']; ?></td>
-                            <td class="con0"><?php echo $arrusuarios[$i]['sucnombre']; ?></td>
+                            <td class="con1"><?php echo $arrusuarios[$i]['consecutivo']; ?></td>
+                            <td class="con0"><?php echo $arrusuarios[$i]['nombreequipo']; ?></td>
+                            <td class="con1"><?php echo 'Servicio: ' . $arrusuarios[$i]['nombreser'] . 'En: ' . 'Torre ' . $arrusuarios[$i]['torre'] . ' piso ' . $arrusuarios[$i]['piso'] . ' ' . $arrusuarios[$i]['ubicacion']; ?></td>
+                            <td class="con0"><?php echo $arrusuarios[$i]['extension']; ?></td>
+                            <td class="con0"><?php echo $arrusuarios[$i]['estado']; ?></td>
+                            <td class="con0"><a href="#" onclick="CLIENTE.editdata(<?php echo $arrclientes[$i]['id']; ?>);"><span class="icon-pencil"></span></a><span>&nbsp;&nbsp;</span>/td>
                         </tr>
                         <?php
                     }
@@ -115,7 +94,7 @@ $arrusuarios = $arrusuarios['output']['response'];
 <footer id="footer_wrap">
     <?php include 'include/generic_footer.php'; ?>
 </footer>
-</div><div id="dialog-form" title="Usuario" style="display: none;">
+</div><div id="dialog-form" title="Ingreso de equipo" style="display: none;">
     <p class="validateTips"></p>
     <table>
         <tr>
@@ -188,17 +167,11 @@ $arrusuarios = $arrusuarios['output']['response'];
         </tr>
     </table>
 </div>
-<div id="dialog-permission" title="Permisos">
-    <p class="validateTips"></p>
-    <form class="form-horizontal" id="formpermission">
-        <div class="check"><input type="checkbox" checked="true" name="chk1" id="chk1" class="text ui-widget-content ui-corner-all" /><span>&nbsp;&nbsp;</span><label>Franquicia</label></div>
-    </form>
-</div>
 <?php include 'include/generic_script.php'; ?>
 <link rel="stylesheet" media="screen" href="../danmet/css/dynamictable.css" type="text/css" />
 <script type="text/javascript" src="js/jquery/jquery-dataTables.js"></script>
 <script type="text/javascript" src="js/lib/data-sha1.js"></script>
-<script type="text/javascript" src="js/usuario.js"></script>
+<script type="text/javascript" src="js/tipoequipo.js"></script>
 <script type="text/javascript" src="js/opcionusr.js"></script>
 </body>
 </html>

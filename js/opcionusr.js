@@ -25,14 +25,13 @@ function initopciones() {
             }
         },
         close: function() {
-            UTIL.clearForm('formcreateheader');
+            UTIL.clearForm('formcreate1');
             updateTips('');
         }
     });
 }
 var OPCION_USUARIO = {
     opciones: function (operacion, id){
-        debugger
         if(operacion == "editarinfo"){
             $('#dialog-formheader').dialog('open')
         }else if(operacion == "cerrarsesion"){
