@@ -53,7 +53,7 @@ class ControllerTypeEquipment {
             $this->unidad=isset($rqst['unidad']) ? $rqst['unidad'] : '';
             $this->partecsave();
         } else if ($this->op == 'magcalisave'){
-            $this->idmagcali=isset($rqst['idmagcali']) ? $rqst['idmagcali'] : 0;
+            $this->idmagcali=isset($rqst['idmagcali']) ? intval($rqst['idmagcali']) : 0;
             $this->namemagcali=isset($rqst['nombremagcali']) ? $rqst['nombremagcali'] : '';
             $this->inferior=isset($rqst['inferior']) ? $rqst['inferior'] : '';
             $this->superior=isset($rqst['superior']) ? $rqst['superior'] : '';
@@ -144,29 +144,29 @@ class ControllerTypeEquipment {
     }
 
     public function partecget() {
-    $q = "SELECT * FROM am_partec WHERE partec_borrado = 0 ORDER BY eqt_nombre ASC ";
-    if ($this->id > 0) {
-        $q = "SELECT * FROM am_partec WHERE partec_borrado = 0 AND am_equipos_tipo_eqt_id = " . $this->id;
-    }
-    $con = mysqli_query($this->conexion,$q) or die(mysqli_error() . "***ERROR: " . $q);
-    $resultado = mysqli_num_rows($con);
+        $q = "SELECT * FROM am_partec WHERE partec_borrado = 0 ORDER BY eqt_nombre ASC ";
+        if ($this->id > 0) {
+            $q = "SELECT * FROM am_partec WHERE partec_borrado = 0 AND am_equipos_tipo_eqt_id = " . $this->id;
+        }
+        $con = mysqli_query($this->conexion,$q) or die(mysqli_error() . "***ERROR: " . $q);
+        $resultado = mysqli_num_rows($con);
 
-    $arr = array();
-    while ($obj = mysqli_fetch_object($con)){
-        $arr[] = array(
-            'idpartec' => $obj->partec_id,
-            'namepartec' => $obj->partec_nombre,
-            'valor' =>$obj->partec_valor,
-            'unidad' => $obj->partec_unidad,
-            'datecreate' => $obj->partec_actualizado);
+        $arr = array();
+        while ($obj = mysqli_fetch_object($con)){
+            $arr[] = array(
+                'idpartec' => $obj->partec_id,
+                'namepartec' => $obj->partec_nombre,
+                'valor' =>$obj->partec_valor,
+                'unidad' => $obj->partec_unidad,
+                'datecreate' => $obj->partec_actualizado);
+        }
+        if ($resultado > 0) {
+            $arrjson = array('output' => array('valid' => true, 'response' => $arr));
+        } else {
+            $arrjson = $this->UTILITY->error_no_result();
+        }
+        $this->response = ($arrjson);
     }
-    if ($resultado > 0) {
-        $arrjson = array('output' => array('valid' => true, 'response' => $arr));
-    } else {
-        $arrjson = $this->UTILITY->error_no_result();
-    }
-    $this->response = ($arrjson);
-}
     public function magcaliget() {
         $q = "SELECT * FROM am_magcali WHERE mc_borrado = 0 ORDER BY mc_nombre ASC ";
         if ($this->id > 0) {
@@ -228,7 +228,7 @@ class ControllerTypeEquipment {
         $this->response = ($arrjson);
     }
     private function magcalisave() {
-        if ($this->idpmagcali > 0) {
+        if ($this->idmagcali > 0) {
             //actualiza la informacion
             $q = "SELECT mc_id FROM am_magcali WHERE mc_id = " . $this->idmagcali;
             $con = mysqli_query($this->conexion, $q) or die(mysqli_error() . "***ERROR: " . $q);
@@ -247,9 +247,9 @@ class ControllerTypeEquipment {
                 $arrjson = array('output' => array('valid' => true, 'id' => $idmagcali));
             }
         } else {
-            $q = "INSERT INTO am_magcali (am_equipos_tipo_eqt_id, mc_nombre, mc_inferior, mc_superior, mc_emax, mc_unidad, mc_borrado, mc_actualizado) VALUES (". $this->id . ",'" . $this->namemagcali . "', '". $this->inferior . "','" .  $this->superior . "','" . $this->emax . "','". $this->unidadmagcali . "', " . $this->UTILITY->date_now_server() . ", " . 0 . ")";
+            $q = "INSERT INTO am_magcali (am_equipos_tipo_eqt_id, mc_nombre, mc_inferior, mc_superior, mc_emax, mc_unidad, mc_actualizado, mc_borrado) VALUES (" . $this->id . ",'" . $this->namemagcali . "', ". $this->inferior . "," .  $this->superior . "," . $this->emax . ",'". $this->unidadmagcali . "', " . $this->UTILITY->date_now_server() . ", " . 0 . ")";
             mysqli_query($this->conexion, $q) or die(mysqli_error() . "***ERROR: " . $q);
-            $id = mysqli_insert_id($this->conexion);
+            $idmagcali = mysqli_insert_id($this->conexion);
             $arrjson = array('output' => array('valid' => true, 'id' => $idmagcali));
         }
         $this->response = ($arrjson);

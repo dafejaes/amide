@@ -32,6 +32,10 @@ if ($op == 'clisave' || $op == 'cliget' || $op == 'clidelete') {
     include '../lib/ControllerTypeEquipment.php';
     $CONTROL = new ControllerTypeEquipment();
     echo $CONTROL->getResponseJSON();
+} else if($op == 'serget2'){
+    include '../lib/ControllerService.php';
+    $CONTROL = new ControllerService();
+    echo $CONTROL->getResponseJSON();
 } else{
     echo 'OPERACION NO DISPONIBLE';
 }

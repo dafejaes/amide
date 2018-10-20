@@ -41,7 +41,7 @@ $arrusuarios = $arrusuarios['output']['response'];
         <?php
         if ($create) {
             ?>
-            <a href="#" id="crearusuario" class="btn btn-info botoncrear">Crear equipo</a>
+            <a href="#" id="crearequipo" class="btn btn-info botoncrear">Crear equipo</a>
             <?php
         }
         ?>
@@ -119,99 +119,106 @@ $arrusuarios = $arrusuarios['output']['response'];
 <footer id="footer_wrap">
     <?php include 'include/generic_footer.php'; ?>
 </footer>
-<div id="dialog-form" title="Usuario" style="display: none;">
+<div id="dialog-form" title="Equipo" style="display: none;">
     <p class="validateTips"></p>
     <table>
         <tr>
             <td>
                 <form id="formcreate1" class="form-horizontal">
                     <div class="control-group">
-                        <label class="control-label">Pertenenece a</label>
                         <div class="controls">
-                            <select name="idcli" id="idcli" class="text ui-widget-content ui-corner-all">
-                            </select>
+                            <a href="#" id="agregartipoequipo" class="btn btn-info">Agregar tipo de equipo</a>
                         </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label">Nombres</label>
-                        <div class="controls"><input type="text" name="nombre" id="nombre" class="text ui-widget-content ui-corner-all" /></div>
+                        <label class="control-label">Nombre equipo</label>
+                        <div class="controls">
+                            <input type="text" name="nombreequipo" id="nombreequipo"  readonly="readonly" />
+                        </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label">Email</label>
-                        <div class="controls"><input type="email" name="email" id="email" class="text ui-widget-content ui-corner-all" /></div>
+                        <label class="control-label">Marca</label>
+                        <div class="controls">
+                            <input type="text" name="marca" id="marca"  readonly="readonly" />
+                        </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label">Contraseña</label>
-                        <div class="controls"><input type="password" name="pass" id="pass" class="text ui-widget-content ui-corner-all" /></div>
+                        <label class="control-label">Modelo</label>
+                        <div class="controls">
+                            <input type="text" name="modelo" id="modelo"  readonly="readonly" />
+                        </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label">Repita Contraseña</label>
-                        <div class="controls"><input type="password" name="pass1" id="pass1" class="text ui-widget-content ui-corner-all" /></div>
+                        <div class="controls">
+                            <a href="#" id="agregarservicio" class="btn btn-info ">Agregar servicio</a>
+                        </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label">Identificación</label>
-                        <div class="controls"><input type="text" name="identificacion" id="identificacion" class="text ui-widget-content ui-corner-all" /></div>
+                        <label class="control-label">Servicio</label>
+                        <div class="controls">
+                            <input type="text" name="servicio" id="servicio"  readonly="readonly" />
+                        </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label">Cargo</label>
-                        <div class="controls"><input type="text" name="cargo" id="cargo" class="text ui-widget-content ui-corner-all" /></div>
+                        <div class="controls">
+                            <a href="#" id="agregarubicacion" class="btn btn-info">Agregar ubicacion</a>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Ubicacion</label>
+                        <div class="controls">
+                            <input type="text" name="ubicacion" id="ubicacion"  readonly="readonly" />
+                        </div>
                     </div>
                 </form>
             </td>
             <td>
                 <form id="formcreate2" class="form-horizontal">
-                    <div class="control-group">
-                        <label class="control-label">Celular</label>
-                        <div class="controls"><input type="text" name="celular" id="celular" class="text ui-widget-content ui-corner-all" /></div>
+                    <div>
+                        <h3 class="controls">Información básica</h3>
                     </div>
                     <div class="control-group">
-                        <label class="control-label">Telefono</label>
-                        <div class="controls"><input type="text" name="telefono" id="telefono" class="text ui-widget-content ui-corner-all" /></div>
+                        <label class="control-label">Serie</label>
+                        <div class="controls"><input type="text" name="serie" id="serie" class="text ui-widget-content ui-corner-all" /></div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label">País</label>
-                        <div class="controls"><input type="text" name="pais" id="pais" class="text ui-widget-content ui-corner-all" /></div>
+                        <label class="control-label">Registro INVIMA</label>
+                        <div class="controls"><input type="text" name="invima" id="invima" class="text ui-widget-content ui-corner-all" /></div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label">Departamento</label>
-                        <div class="controls"><input type="text" name="departamento" id="departamento" class="text ui-widget-content ui-corner-all" /></div>
+                        <label class="control-label">Placa</label>
+                        <div class="controls"><input type="text" name="placa" id="placa" class="text ui-widget-content ui-corner-all" /></div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label">Ciudad</label>
-                        <div class="controls"><input type="text" name="ciudad" id="ciudad" class="text ui-widget-content ui-corner-all" /></div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label">Dirección</label>
-                        <div class="controls"><input type="text" name="direccion" id="direccion" class="text ui-widget-content ui-corner-all" /></div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label">Habilitado</label>
-                        <div class="controls"><select name="habilitado" id="habilitado" class="text ui-widget-content ui-corner-all">
-                                <option value="1">Sí</option>
-                                <option value="2">No</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label">&nbsp;</label>
-                        <div class="controls">&nbsp;</div>
+                        <label class="control-label">Codigo</label>
+                        <div class="controls"><input type="text" name="codigo" id="codigo" class="text ui-widget-content ui-corner-all" /></div>
                     </div>
                 </form>
             </td>
         </tr>
     </table>
 </div>
-<div id="dialog-permission" title="Permisos">
-    <p class="validateTips"></p>
-    <form class="form-horizontal" id="formpermission">
-        <div class="check"><input type="checkbox" checked="true" name="chk1" id="chk1" class="text ui-widget-content ui-corner-all" /><span>&nbsp;&nbsp;</span><label>Franquicia</label></div>
-    </form>
+<div id="dialog-form2" title="Buscar tipo de equipo" style="display: none;">
+    <section id="section_wrap2">
+
+    </section>
 </div>
+<div id="dialog-form3" title="Buscar servicio" style="display: none;">
+    <section id="section_wrap3">
+
+    </section>
+</div>
+<div id="dialog-form4" title="Buscar servicio" style="display: none;">
+    <section id="section_wrap4">
+
+    </section>
+</div>
+
 <?php include 'include/generic_script.php'; ?>
 <link rel="stylesheet" media="screen" href="../danmet/css/dynamictable.css" type="text/css" />
 <script type="text/javascript" src="js/jquery/jquery-dataTables.js"></script>
 <script type="text/javascript" src="js/lib/data-sha1.js"></script>
-<script type="text/javascript" src="js/usuario.js"></script>
+<script type="text/javascript" src="js/equipo.js"></script>
 <script type="text/javascript" src="js/opcionusr.js"></script>
 </body>
 </html>

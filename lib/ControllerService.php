@@ -37,7 +37,7 @@ class ControllerService {
             $this->direccion = isset($rqst['direccion']) ? $rqst['direccion'] : '';
             $this->habilitado = isset($rqst['habilitado']) ? intval($rqst['habilitado']) : 0;
             $this->sersave();
-        } else if ($this->op == 'serget') {
+        } else if ($this->op == 'serget2') {
             $this->serget();
         } else if ($this->op == 'sersave') {
             $this->chk = isset($rqst['chk']) ? $rqst['chk'] : '';
@@ -55,7 +55,7 @@ class ControllerService {
     public function serget() {
         $q = "SELECT * FROM am_servicio, am_departamento, am_areas, am_sucursales WHERE am_sucursales_suc_id = suc_id AND am_departamento_dep_id = dep_id AND am_areas_are_id = are_id AND ser_borrado = 0 ORDER BY ser_nombre";
         if ($this->id > 0) {
-            $q = "SELECT * FROM am_servicio, am_departamento, am_areas WHERE suc_id = " . $this->id . "AND am_departamento_dep_id=dep_id AND am_areas_are_id=are_id";
+            $q = "SELECT * FROM am_servicio, am_departamento, am_areas, am_sucursales WHERE ser_id = " . $this->id . " AND am_departamento_dep_id=dep_id AND am_areas_are_id=are_id AND am_sucursales_suc_id = suc_id AND ser_borrado = 0";
         }
         $con = mysqli_query($this->conexion,$q) or die(mysqli_error() . "***ERROR: " . $q);
         $resultado = mysqli_num_rows($con);
@@ -81,6 +81,10 @@ class ControllerService {
     public function getResponse() {
         $this->CDB->closeConect();
         return $this->response;
+    }
+    public function getResponseJSON() {
+        $this->CDB->closeConect();
+        return json_encode($this->response);
     }
 }
 ?>

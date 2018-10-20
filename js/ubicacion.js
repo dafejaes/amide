@@ -97,7 +97,7 @@ var UBICACION = {
         UTIL.callAjaxRqst(q, this.getasisHandler);
     },
     getasisHandler : function(data) {
-        UTIL.cursorNormal()
+        UTIL.cursorNormal();
         if (data.output.valid) {
             var res = data.output.response;
             var option = '<option value="seleccione">Seleccione...</option>';
