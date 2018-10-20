@@ -47,7 +47,7 @@ class ControllerTypeEquipment {
         }else if ($this->op == 'magcaliget'){
             $this->magcaliget();
         }else if ($this->op == 'partecsave'){
-            $this->idpartec=isset($rqst['idpartec']) ? $rqst['idpartec'] : 0;
+            $this->idpartec=isset($rqst['idpartec']) ? intval($rqst['idpartec']) : 0;
             $this->namepartec=isset($rqst['nombrepartec']) ? $rqst['nombrepartec'] : '';
             $this->valor=isset($rqst['valor']) ? $rqst['valor'] : '';
             $this->unidad=isset($rqst['unidad']) ? $rqst['unidad'] : '';
@@ -240,10 +240,10 @@ class ControllerTypeEquipment {
                     'mc_inferior' => $this->inferior,
                     'mc_superior' => $this->superior,
                     'mc_emax' => $this->emax,
-                    'mc_unidad' => $this->unidadpartec);
+                    'mc_unidad' => $this->unidadmagcali);
                 $arrfieldsnocomma = array('mc_actualizado' => $this->UTILITY->date_now_server());
                 $q = $this->UTILITY->make_query_update($table, "mc_id = '$idmagcali'", $arrfieldscomma, $arrfieldsnocomma);
-                mysqli_query($this->conexion, $q) or die(mysqli_error() . "***ERROR: " . $q);
+                mysqli_query($this->conexion, $q) or die(mysqli_error($this->conexion) . "***ERROR: " . $q);
                 $arrjson = array('output' => array('valid' => true, 'id' => $idmagcali));
             }
         } else {

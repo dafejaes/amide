@@ -211,7 +211,7 @@ $arrusuarios = $arrusuarios['output']['response'];
             <td>
                 <form id="formcreate2" class="form-horizontal">
                     <div class="container">
-                        <a href="#" id="crearpartec" class="btn btn-info botoncrear">Crear</a>
+                        <a href="#" id="crearpartec" class="btn btn-info ">Crear</a>
                         <div>
                             <table class="table table-hover dyntable" id="dynamictable">
                                 <thead>
@@ -269,7 +269,7 @@ $arrusuarios = $arrusuarios['output']['response'];
             <td>
                 <form id="formcreate4" class="form-horizontal">
                     <div class="container">
-                        <a href="#" id="crearmargcali" class="btn btn-info botoncrear">Crear</a>
+                        <a href="#" id="crearmargcali" class="btn btn-info ">Crear</a>
                         <div>
                             <table class="table table-hover dyntable" id="dynamictable">
                                 <thead>

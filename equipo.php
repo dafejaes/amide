@@ -53,10 +53,11 @@ $arrusuarios = $arrusuarios['output']['response'];
                     <th class="head1">id</th>
                     <th class="head0">Nombre</th>
                     <th class="head1">Marca</th>
-                    <th class="head0">Serie</th>
-                    <th class="head1">Placa</th>
-                    <th class="head0">Codigo</th>
-                    <th class="head1">Ubicacion</th>
+                    <th class="head0">Modelo</th>
+                    <th class="head1">Serie</th>
+                    <th class="head0">Placa</th>
+                    <th class="head1">Codigo</th>
+                    <th class="head0">Ubicacion</th>
                 </tr>
                 </thead>
                 <colgroup>
@@ -65,9 +66,10 @@ $arrusuarios = $arrusuarios['output']['response'];
                     <col class="con0" />
                     <col class="con1" />
                     <col class="con0" />
-                    <col class="cono1"/>
-                    <col class="cono0"/>
-                    <col class="head1">
+                    <col class="con1" />
+                    <col class="con0" />
+                    <col class="con1" />
+                    <col class="con0" />
                 </colgroup>
                 <!--                                    <td class="con0"><a href="#" onclick="editdata();"><span class="ui-icon ui-icon-pencil"></span></a><a href="#"><span class="ui-icon ui-icon-trash"></span></a></td>-->
                 <tbody>
@@ -81,17 +83,12 @@ $arrusuarios = $arrusuarios['output']['response'];
                                 <?php
                                 if ($delete) {
                                     ?>
-                                    <a href="#" onclick="USUARIO.editdata(<?php echo $arrusuarios[$i]['id']; ?>);"><span class="icon-pencil"></span></a><span>&nbsp;&nbsp;</span>
+                                    <a href="#" onclick="EQUIPO.editdata(<?php echo $arrusuarios[$i]['id']; ?>);"><span class="icon-pencil"></span></a><span>&nbsp;&nbsp;</span>
                                     <?php
                                 }
                                 if ($edit) {
                                     ?>
-                                    <a href="#" onclick="USUARIO.deletedata(<?php echo $arrusuarios[$i]['id']; ?>);"><span class="icon-trash"></span></a><span>&nbsp;&nbsp;</span>
-                                    <?php
-                                }
-                                if ($editpermission) {
-                                    ?>
-                                    <a href="#" onclick="USUARIO.editpermission(<?php echo $arrusuarios[$i]['id']; ?>);"><span class="icon-ban-circle"></span></a>
+                                    <a href="#" onclick="EQUIPO.deletedata(<?php echo $arrusuarios[$i]['id']; ?>);"><span class="icon-trash"></span></a><span>&nbsp;&nbsp;</span>
                                     <?php
                                 }
                                 ?>
@@ -102,9 +99,8 @@ $arrusuarios = $arrusuarios['output']['response'];
                             <td class="con0"><?php echo $arrusuarios[$i]['modelo']; ?></td>
                             <td class="con1"><?php echo $arrusuarios[$i]['serie']; ?></td>
                             <td class="con0"><?php echo $arrusuarios[$i]['placa']; ?></td>
-                            <td class="con1"><?php echo $arrusuarios[$i]['placa']; ?></td>
-                            <td class="con0"><?php echo $arrusuarios[$i]['codigo']; ?></td>
-                            <td class="con1"><?php echo $arrusuarios[$i]['ubicacion']; ?></td>
+                            <td class="con1"><?php echo $arrusuarios[$i]['codigo']; ?></td>
+                            <td class="con0"><?php echo $arrusuarios[$i]['ubicacion']; ?></td>
                         </tr>
                         <?php
                     }

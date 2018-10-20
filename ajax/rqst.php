@@ -36,7 +36,11 @@ if ($op == 'clisave' || $op == 'cliget' || $op == 'clidelete') {
     include '../lib/ControllerService.php';
     $CONTROL = new ControllerService();
     echo $CONTROL->getResponseJSON();
-} else{
+} else if($op == 'eqsave'){
+    include '../lib/ControllerEquipments.php';
+    $CONTROL = new ControllerEquipments();
+    echo $CONTROL->getResponseJSON();
+}else{
     echo 'OPERACION NO DISPONIBLE';
 }
 ?>

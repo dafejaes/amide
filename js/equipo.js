@@ -17,6 +17,12 @@ function initequipo() {
     $('#dynamictable2').dataTable({
         "sPaginationType": "full_numbers"
     });
+    $('#dynamictable3').dataTable({
+        "sPaginationType": "full_numbers"
+    });
+    $('#dynamictable4').dataTable({
+        "sPaginationType": "full_numbers"
+    });
 
     $("#crearequipo").button().click(function() {
         q.id = 0;
@@ -42,7 +48,7 @@ function initequipo() {
         modal: true,
         buttons: {
             "Guardar": function () {
-
+                EQUIPO.savedata();
             },
             "Cancelar": function() {
                 UTIL.clearForm('formcreate1');
@@ -89,6 +95,23 @@ function initequipo() {
             $(this).dialog("close");
         }
     });
+    $("#dialog-form4").dialog({
+        autoOpen: false,
+        height: 700,
+        width: 950,
+        modal: true,
+        buttons: {
+            "Cancelar": function() {
+                UTIL.clearForm('formcreate2');
+                $(this).dialog("close");
+            }
+        },
+        close: function() {
+            UTIL.clearForm('formcreate2');
+            updateTips('');
+            $(this).dialog("close");
+        }
+    });
 
 }
 
@@ -107,10 +130,10 @@ var EQUIPO = {
             var option = '';
             option += '<div class="container">';
             option += '<div>';
-            option += '<table class="table table-hover dyntable" id="dynamictable">';
+            option += '<table class="table table-hover dyntable" id="dynamictable2">';
             option += '<thead>';
             option += '<tr><th class="head0" style="width: 70px;">Select</th><th class="head1">ID</th><th class="head0">Nombre</th><th class="head1">Clase</th><th class="head0">Alias</th><th class="head1">Marca</th><th class="head0">Clasificacion</th><th class="head1">Tipo</th></tr></thead>';
-            option += '<colgroup><col class="con0" /><col class="con1" /><col class="con0" /><col class="con1" /><col class="con0" /><col class="con1" /><col class="con0" /><col class="con1" /><col class="con0" /><col class="con1" /></colgroup>';
+            option += '<colgroup><col class="con0" /><col class="con1" /><col class="con0" /><col class="con1" /><col class="con0" /><col class="con1" /><col class="con0" /><col class="con1" /><col class="con0" /></colgroup>';
             option += '<tbody>';
 
             for(var i in res){
@@ -169,9 +192,9 @@ var EQUIPO = {
             var option = '';
             option += '<div class="container">';
             option += '<div>';
-            option += '<table class="table table-hover dyntable" id="dynamictable">';
+            option += '<table class="table table-hover dyntable" id="dynamictable3">';
             option += '<thead>';
-            option += '<tr><th class="head0">Select</th><th class="head1">ID</th><th class="head0">Servicio</th><th class="head1">Departamento</th><th class="head0">Area asistencial</th></tr></thead>';
+            option += '<tr><th class="head0">Select</th><th class="head1">ID</th><th class="head0">Servicio</th><th class="head1">Departamento</th><th class="head0">Area asistencial</th><th class="head1">Sucursal</th></tr></thead>';
             option += '<colgroup><col class="con0" /><col class="con1" /><col class="con0" /><col class="con1" /><col class="con0" /><col class="con1" /></colgroup>';
             option += '<tbody>';
 
@@ -179,7 +202,7 @@ var EQUIPO = {
                 option += '<tr class="gradeC"><td class="con0">';
                 option += '<a href="#" onclick="EQUIPO.selectser(' + res[i].id + ');"><span class="icon-bookmark"></span></a><span>&nbsp;&nbsp;</span>';
                 option += '</td>';
-                option += '<td class="con1">' + res[i].id + '</td><td class="con0">' + res[i].sernombre + '</td><td class="con1">' + res[i].depnombre + '</td><td class="con0">' + res[i].arenombre + '</td>';
+                option += '<td class="con1">' + res[i].id + '</td><td class="con0">' + res[i].sernombre + '</td><td class="con1">' + res[i].depnombre + '</td><td class="con0">' + res[i].arenombre + '</td><td class="cono1">'+res[i].sucnombre+'</td>';
                 option += '</tr>';
             }
             option += '</tbody></table></div></div>';
@@ -214,6 +237,92 @@ var EQUIPO = {
         }else{
             alert('Error: ' + data.output.response.content);
         }
-    }
+    },
+    ubiget:function () {
+        q.id=0;
+        q.op='ubiget';
+        UTIL.callAjaxRqst(q,this.ubigetHandler);
+    },
+    ubigetHandler(data){
+        UTIL.cursorNormal();
+        if (data.output.valid) {
+            var res = data.output.response;
+            var option = '';
+            option += '<div class="container">';
+            option += '<div>';
+            option += '<table class="table table-hover dyntable" id="dynamictable4">';
+            option += '<thead>';
+            option += '<tr><th class="head0" style="width: 70px;">Select</th><th class="head1">Ubicacion</th><th class="head0">Piso</th><th class="head1">Torre</th><th class="head0">Area asistencial</th><th class="head1">Sucursal</th></tr></thead>';
+            option += '<colgroup><col class="con0" /><col class="con1" /><col class="con0" /><col class="con1" /><col class="con0" /><col class="con1" /></colgroup>';
+            option += '<tbody>';
 
+            for(var i in res){
+                option += '<tr class="gradeC"><td class="con0">';
+                option += '<a href="#" onclick="EQUIPO.selectubi(' + res[i].id + ');"><span class="icon-bookmark"></span></a><span>&nbsp;&nbsp;</span>';
+                option += '</td>';
+                option += '<td class="con1">' + res[i].ubicacion + '</td><td class="con0">'+res[i].piso+'</td><td class="con1">'+res[i].torre+'</td><td class="con0">'+res[i].areanombre+'</td><td class="con1">'+res[i].sucnombre+'</td>';
+                option += '</tr>';
+            }
+            option += '</tbody></table></div></div>';
+            $("#section_wrap4").empty();
+            $("#section_wrap4").append(option);
+            $("#dialog-form4").dialog("open");
+        } else {
+            if (data.output.response.content == " Sin resultados.") {
+                option = " Sin resultados.";
+                $("#section_wrap4").empty();
+                $("#section_wrap4").append(option);
+                $("#dialog-form4").dialog("open");
+            } else {
+                alert('Error: ' + data.output.response.content);
+            }
+
+        }
+    },
+    selectubi:function (id) {
+        q.id=id;
+        q.op='ubiget';
+        UTIL.callAjaxRqst(q,this.selectubiHandler)
+    },
+    selectubiHandler:function (data) {
+        UTIL.cursorNormal();
+        if(data.output.valid){
+            var res = data.output.response[0];
+            $('#ubicacion').empty();
+            $('#ubicacion').val(res.ubicacion);
+            q.idubi=res.id;
+            $('#dialog-form4').dialog('close');
+        }else{
+            alert('Error: ' + data.output.response.content);
+        }
+    },
+    savedata:function () {
+        q.id=0
+        q.op='eqsave';
+        q.serie=$('#serie').val();
+        q.invima=$('#invima').val();
+        q.placa=$('#placa').val();
+        q.codigo=$('#codigo').val();
+        UTIL.callAjaxRqst(q,this.savedataHandler);
+    },
+    savedataHandler:function (data) {
+        UTIL.cursorNormal();
+        if(data.output.valid){
+            window.location="equipo.php";
+        }else{
+            alert('Error: ' + data.output.response.content);
+        }
+    },
+    editdata:function (id) {
+        
+    },
+    editdataHandler:function (data) {
+        
+    },
+    deletedata:function (id) {
+        
+    },
+    deletedataHandler:function (data) {
+
+    }
 }

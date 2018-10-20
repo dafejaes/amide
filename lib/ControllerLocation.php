@@ -84,7 +84,7 @@ class ControllerLocation {
     public function locatget() {
         $q = "SELECT ubi_id, suc_id, suc_nombre, ubi_ubicacion, are_nombre, ubi_piso, ubi_torre, ubi_extension, ubi_actualizado FROM am_ubicaciones, am_areas, am_sucursales, am_ubicaciones_has_am_areas WHERE ubi_borrado = 0 AND am_ubicaciones.am_sucursales_suc_id = suc_id AND am_ubicaciones_ubi_id = ubi_id AND am_areas_are_id =are_id ORDER BY ubi_ubicacion ASC";
         if ($this->id > 0) {
-            $q = "SELECT ubi_id, suc_id, ubi_ubicacion, are_nombre, ubi_piso, ubi_torre, ubi_extension, ubi_actualizado FROM am_ubicaciones, am_areas, am_sucursales, am_ubicaciones_has_am_areas WHERE ubi_borrado = 0 AND am_ubicaciones.am_sucursales_suc_id = suc_id AND am_ubicaciones_ubi_id = ubi_id AND am_areas_are_id =are_id AND ubi_id=" . $this->id;
+            $q = "SELECT * FROM am_ubicaciones, am_areas, am_sucursales, am_ubicaciones_has_am_areas WHERE ubi_borrado = 0 AND am_ubicaciones.am_sucursales_suc_id = suc_id AND am_ubicaciones_ubi_id = ubi_id AND am_areas_are_id =are_id AND ubi_id=" . $this->id;
         }
         $con = mysqli_query($this->conexion,$q) or die(mysqli_error($this->conexion) . "***ERROR: " . $q);
         $resultado = mysqli_num_rows($con);

@@ -152,7 +152,7 @@ var TIPO_EQUIPO = {
             UTIL.clearForm('formcreate2');
             updateTips('');
             $('#dialog-form2').dialog("close");
-            this.verpartec(q.id);
+            TIPO_EQUIPO.verpartec(q.id);
         } else {
             alert('Error: ' + data.output.response.content);
         }
@@ -175,7 +175,7 @@ var TIPO_EQUIPO = {
             UTIL.clearForm('formcreate4');
             updateTips('');
             $('#dialog-form4').dialog("close");
-            this.vermagcali(q.id);
+            TIPO_EQUIPPO.vermagcali(q.id);
         } else {
             alert('Error: ' + data.output.response.content);
         }
@@ -336,13 +336,26 @@ var TIPO_EQUIPO = {
         }
     },
     editdatamagcali: function (idmagcali) {
-
+        q.idmagcali=parseInt(idmagcali);
+        q.op = 'magcalisave';
+        debugger
         UTIL.callAjaxRqst(q, this.editdatamagcaliHandler);
     },
     editdatamagcaliHandler: function (data) {
-
+        UTIL.cursorNormal();
+        if (data.output.valid) {
+            var res = data.output.response[0];
+            $('#namemagcali').val(res.namemagcali);
+            $('#inferior').val(res.inferior);
+            $('#superior').val(res.superior);
+            $('#emax').val(res.emax);
+            $('#unidadmagcali').val(res.unidadmagcali);
+            $("#dialog-form4").dialog("open");
+        } else {
+            alert('Error: ' + data.output.response.content);
+        }
     },
-    deletedatamagcali: function (idpartec) {
+    deletedatamagcali: function (idmagcali) {
 
         UTIL.callAjaxRqst(q, this.deletedatamagcaliHandler);
     },
