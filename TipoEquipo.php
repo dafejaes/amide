@@ -291,7 +291,7 @@ $arrusuarios = $arrusuarios['output']['response'];
                                     <col class="con1" />
                                 </colgroup>
                                 <!--                                    <td class="con0"><a href="#" onclick="editdata();"><span class="ui-icon ui-icon-pencil"></span></a><a href="#"><span class="ui-icon ui-icon-trash"></span></a></td>-->
-                                <tbody id="listamagcali">
+                                <tbody id='listamagcali'>
                                 </tbody>
                             </table>
                         </div>

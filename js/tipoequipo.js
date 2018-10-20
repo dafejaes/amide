@@ -160,22 +160,22 @@ var TIPO_EQUIPO = {
     savemagcali: function () {
         q.op = 'magcalisave';
         q.nombremagcali = $('#namemagcali').val();
-        q.inferior = $('#inferior').val();
-        q.superior = $('#superior').val();
-        q.emax = $('#emax').val();
-        q.unidad = $('#unidadmagcali').val();
+        q.inferior = parseInt($('#inferior').val());
+        q.superior = parseInt($('#superior').val());
+        q.emax = parseInt($('#emax').val());
+        q.unidadmagcali = $('#unidadmagcali').val();
         UTIL.callAjaxRqst(q, this.savemagcaliHandler);
     },
     savemagcaliHandler: function (data) {
         UTIL.cursorNormal();
         if (data.output.valid) {
-            UTIL.clearForm('formcreate3');
+            UTIL.clearForm('formcreate5');
             updateTips('');
-            $('#dialog-form3').dialog("close");
-            UTIL.clearForm('formcreate2');
+            $('#dialog-form5').dialog("close");
+            UTIL.clearForm('formcreate4');
             updateTips('');
-            $('#dialog-form2').dialog("close");
-            this.verpartec(q.id);
+            $('#dialog-form4').dialog("close");
+            this.vermagcali(q.id);
         } else {
             alert('Error: ' + data.output.response.content);
         }
