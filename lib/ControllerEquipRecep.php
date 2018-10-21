@@ -36,8 +36,9 @@ class ControllerEquipRecep {
         } else if ($this->op == 'obsget') {
             $this->idrecep2=isset($rqst['idrecep2']) ? intval($rqst['idrecep2']) : 0;
             $this->obsget();
-        } else if ($this->op == 'serdelete') {
-            $this->serdelete();
+        } else if ($this->op == 'recepget') {
+            $this->idrecep2=isset($rqst['idrecep2']) ? intval($rqst['idrecep2']) : 0;
+            $this->recepget();
         } else if ($this->op == 'noautorizado') {
             $this->response = $this->UTILITY->error_invalid_authorization();
         } else {
@@ -71,6 +72,40 @@ class ControllerEquipRecep {
                 'fecharecepcion' =>$obj->rcp_fechaingreso,
                 'obsrecep' =>$obj->rcp_obs_recepcion,
                 'obsentre' => $obj->rcp_obs_entrega);
+        }
+        if ($resultado > 0) {
+            $arrjson = array('output' => array('valid' => true, 'response' => $arr));
+        } else {
+            $arrjson = $this->UTILITY->error_no_result();
+        }
+        $this->response = ($arrjson);
+    }
+
+    public function recepget() {
+        if ($this->id > 0) {
+            $q = "SELECT * FROM am_clientes, am_sucursales, am_equipos_tipo, am_equipos, am_recepcion, am_ubicaciones WHERE recp_id = " . $this->id . " AND am_equipos_eq_id = eq_id AND am_equipos_tipo_eqt_id = eqt_id AND am_equipos.am_ubicaciones_ubi_id = ubi_id AND am_sucursales_suc_id = suc_id AND am_clientes_cli_id = cli_id";
+        }
+        $con = mysqli_query($this->conexion,$q) or die(mysqli_error($this->conexion) . "***ERROR: " . $q);
+        $resultado = mysqli_num_rows($con);
+
+        $arr = array();
+        while ($obj = mysqli_fetch_object($con)) {
+            $arr[] = array(
+                'consecutivo' => $obj->rcp_consecutivo,
+                'sucnombre' => $obj->suc_nombre,
+                'nit' => $obj->cli_nit,
+                'direccion' =>$obj->suc_direccion,
+                'fechaingreso' =>$obj->rcp_fechaingreso,
+                'equipo'=>$obj->eqt_nombre,
+                'marca' =>$obj->eqt_marca,
+                'modelo' => $obj->eqt_modelo,
+                'placa' => $obj->eq_placa,
+                'serie' =>$obj->eq_serie,
+                'golpes' =>$obj->rcp_golpes,
+                'manchas' =>$obj->rcp_manchas,
+                'prueba' =>$obj->rcp_prueba_encendido,
+                'obsentre' =>$obj->rcp_obs_entrega,
+                'obsrecep' =>$obj->rcp_obs_recepcion);
         }
         if ($resultado > 0) {
             $arrjson = array('output' => array('valid' => true, 'response' => $arr));

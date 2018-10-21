@@ -55,6 +55,7 @@ $arrusuarios = $arrusuarios['output']['response'];
                     <th class="head1">Estado</th>
                     <th class="head0">Fecha de recepcion</th>
                     <th class="head1">Observaciones</th>
+                    <th class="head0">Certificado recepcion</th>
                 </tr>
                 </thead>
                 <colgroup>
@@ -65,6 +66,7 @@ $arrusuarios = $arrusuarios['output']['response'];
                     <col class="cono1"/>
                     <col class="cono0"/>
                     <col class="cono1" />
+                    <col class="con0" />
                 </colgroup>
                 <!--                                    <td class="con0"><a href="#" onclick="editdata();"><span class="ui-icon ui-icon-pencil"></span></a><a href="#"><span class="ui-icon ui-icon-trash"></span></a></td>-->
                 <tbody>
@@ -81,6 +83,7 @@ $arrusuarios = $arrusuarios['output']['response'];
                             <td class="con0"><?php echo $arrusuarios[$i]['estado']; ?></td>
                             <td class="con0"><?php echo $arrusuarios[$i]['fecharecepcion']; ?></td>
                             <td class="con0"><a href="#" onclick="RECEPCION.getobservacion(<?php echo $arrusuarios[$i]['id']; ?>);"><span class="icon-book"></span></a><span>&nbsp;&nbsp;</span>
+                            <td class="con0"><a href="#" onclick="RECEPCION.getcertificado(<?php echo $arrusuarios[$i]['id']; ?>);"><span class="icon-print"></span></a><span>&nbsp;&nbsp;</span>
                         </tr>
                         <?php
                     }
@@ -195,7 +198,7 @@ $arrusuarios = $arrusuarios['output']['response'];
             <td>
                 <form id="formcreate3" class="form-horizontal">
                     <label class="controls">Observaciones de recepción</label>
-                    <div class="controls"><textarea id="obsrecep2" rows="10" cols="25" wrap="soft"></textarea></div>
+                    <div class="controls"><textarea id="obsrecep2" rows="10" cols="25" wrap="soft" readonly="readonly"></textarea></div>
 
                 </form>
                 </form>
@@ -203,7 +206,7 @@ $arrusuarios = $arrusuarios['output']['response'];
             <td>
                 <form id="formcreate5" class="form-horizontal">
                     <label class="controls">Observaciones de entrega</label>
-                    <div class="controls"><textarea id="obsentre2" rows="10" cols="25" wrap="soft"></textarea></div>
+                    <div class="controls"><textarea id="obsentre2" rows="10" cols="25" wrap="soft" readonly="readonly"></textarea></div>
                 </form>
             </td>
 

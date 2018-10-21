@@ -40,7 +40,7 @@ if ($op == 'clisave' || $op == 'cliget' || $op == 'clidelete') {
     include '../lib/ControllerEquipments.php';
     $CONTROL = new ControllerEquipments();
     echo $CONTROL->getResponseJSON();
-}else if($op == 'conseget' || $op == 'recepsave' || $op == 'obsget'){
+}else if($op == 'conseget' || $op == 'recepsave' || $op == 'obsget' || $op == 'recepget'){
     include '../lib/ControllerEquipRecep.php';
     $CONTROL = new ControllerEquipRecep();
     echo $CONTROL->getResponseJSON();
