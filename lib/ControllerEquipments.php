@@ -32,8 +32,8 @@ class ControllerEquipments {
             $this->placa = isset($rqst['placa']) ? $rqst['placa'] : '';
             $this->codigo = isset($rqst['codigo']) ? intval($rqst['codigo']) : 0;
             $this->eqsave();
-        } else if ($this->op == 'serget') {
-            $this->serget();
+        } else if ($this->op == 'eqget') {
+            $this->eqget();
         } else if ($this->op == 'sersave') {
             $this->chk = isset($rqst['chk']) ? $rqst['chk'] : '';
             $this->usrprfsave();
@@ -52,7 +52,7 @@ class ControllerEquipments {
     public function eqget() {
         $q = "SELECT * FROM am_equipos, am_equipos_tipo, am_ubicaciones WHERE eq_borrado =  0 AND  am_equipos_tipo_eqt_id = eqt_id AND am_ubicaciones_ubi_id = ubi_id ORDER BY eqt_nombre ASC";
         if ($this->id > 0) {
-            $q = "SELECT * FROM am_equipos, am_equipos_tipo, am_ubicaciones  WHERE eq_id = " . $this->id . " AND am_equipos_tipo_eqt_id = eqt_id AND eq_borrado = 0 AND  am_ubicaciones_ubi_id = ubi_id ORDER BY eqt_nombre ASC";
+            $q = "SELECT * FROM am_equipos, am_equipos_tipo, am_ubicaciones  WHERE eq_id = " . $this->id . " AND am_equipos_tipo_eqt_id = eqt_id AND eq_borrado = 0 AND  am_ubicaciones_ubi_id = ubi_id";
         }
         $con = mysqli_query($this->conexion,$q) or die(mysqli_error($this->conexion) . "***ERROR: " . $q);
         $resultado = mysqli_num_rows($con);

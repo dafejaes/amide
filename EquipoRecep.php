@@ -40,7 +40,7 @@ $arrusuarios = $arrusuarios['output']['response'];
         <?php
         if ($create) {
             ?>
-            <a href="#" id="crearusuario" class="btn btn-info botoncrear">Crear</a>
+            <a href="#" onclick="RECEPCION.getconsecutivo(<?php echo $_SESSION['usuario']['id']?>)" class="btn btn-info botoncrear">Crear</a>
             <?php
         }
         ?>
@@ -76,10 +76,11 @@ $arrusuarios = $arrusuarios['output']['response'];
                         <tr class="gradeC">
                             <td class="con1"><?php echo $arrusuarios[$i]['consecutivo']; ?></td>
                             <td class="con0"><?php echo $arrusuarios[$i]['nombreequipo']; ?></td>
-                            <td class="con1"><?php echo 'Servicio: ' . $arrusuarios[$i]['nombreser'] . 'En: ' . 'Torre ' . $arrusuarios[$i]['torre'] . ' piso ' . $arrusuarios[$i]['piso'] . ' ' . $arrusuarios[$i]['ubicacion']; ?></td>
+                            <td class="con1"><?php echo 'Servicio: ' . $arrusuarios[$i]['nombreser'] . '. En: ' . ' Torre ' . $arrusuarios[$i]['torre'] . ' piso ' . $arrusuarios[$i]['piso'] . ' ' . $arrusuarios[$i]['ubicacion']; ?></td>
                             <td class="con0"><?php echo $arrusuarios[$i]['extension']; ?></td>
                             <td class="con0"><?php echo $arrusuarios[$i]['estado']; ?></td>
-                            <td class="con0"><a href="#" onclick="CLIENTE.editdata(<?php echo $arrclientes[$i]['id']; ?>);"><span class="icon-pencil"></span></a><span>&nbsp;&nbsp;</span>/td>
+                            <td class="con0"><?php echo $arrusuarios[$i]['fecharecepcion']; ?></td>
+                            <td class="con0"><a href="#" onclick="RECEPCION.getobservacion(<?php echo $arrusuarios[$i]['id']; ?>);"><span class="icon-book"></span></a><span>&nbsp;&nbsp;</span>
                         </tr>
                         <?php
                     }
@@ -94,84 +95,127 @@ $arrusuarios = $arrusuarios['output']['response'];
 <footer id="footer_wrap">
     <?php include 'include/generic_footer.php'; ?>
 </footer>
-</div><div id="dialog-form" title="Ingreso de equipo" style="display: none;">
+</div>
+<div id="dialog-recepcion" title="Ingreso de equipo" style="display: none;">
     <p class="validateTips"></p>
     <table>
         <tr>
             <td>
                 <form id="formcreate1" class="form-horizontal">
                     <div class="control-group">
-                        <label class="control-label">Cliente</label>
                         <div class="controls">
-                            <select onchange="USUARIO.getsuc($(this).val())"name="idcli" id="idcli" class="text ui-widget-content ui-corner-all">
-                            </select>
+                            <a href="#" id="agregarequipo" class="btn btn-info ">Agregar equipo</a>
                         </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label">Sucursal</label>
+                        <label class="control-label">Nombre</label>
+                        <div class="controls"><input type="text" name="nombre" id="nombre" class="text ui-widget-content ui-corner-all"  readonly="readonly"/></div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Marca</label>
+                        <div class="controls"><input type="text" name="marca" id="marca" class="text ui-widget-content ui-corner-all"  readonly="readonly"/></div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Modelo</label>
+                        <div class="controls"><input type="text" name="modelo" id="modelo" class="text ui-widget-content ui-corner-all"  readonly="readonly"/></div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Placa</label>
+                        <div class="controls"><input type="text" name="placa" id="placa" class="text ui-widget-content ui-corner-all"  readonly="readonly"/></div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Codigo</label>
+                        <div class="controls"><input type="text" name="codigo" id="codigo" class="text ui-widget-content ui-corner-all"  readonly="readonly"/></div>
+                    </div>
+                    <label class="controls">Observaciones de recepción</label>
+                    <div class="controls"><textarea id="obsrecep" rows="10" cols="25" wrap="soft"></textarea></div>
+
+                </form>
+                </form>
+            </td>
+            <td>
+                <form id="formcreate2" class="form-horizontal">
+                    <div class="control-group">
+                        <label class="control-label">Consecutivo</label>
+                        <div class="controls"><input type="text" name="consecutivo" id="consecutivo" class="text ui-widget-content ui-corner-all"  readonly="readonly"/></div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Estado</label>
                         <div class="controls">
-                            <select name="idsuc" id="idsuc" class="text ui-widget-content ui-corner-all">
-                            </select>
+                            <input type="text" name="estado" id="estado"  readonly="readonly" />
                         </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label">Nombre completo</label>
-                        <div class="controls"><input type="text" name="nombre" id="nombre" class="text ui-widget-content ui-corner-all" /></div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label">Email</label>
-                        <div class="controls"><input type="email" name="email" id="email" class="text ui-widget-content ui-corner-all" /></div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label">Contraseña</label>
-                        <div class="controls"><input type="password" name="pass" id="pass" class="text ui-widget-content ui-corner-all" /></div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label">Repita Contraseña</label>
-                        <div class="controls"><input type="password" name="pass1" id="pass1" class="text ui-widget-content ui-corner-all" /></div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label">Identificacion</label>
-                        <div class="controls"><input type="text" name="identificacion" id="identificacion" class="text ui-widget-content ui-corner-all" /></div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label">Telefono</label>
-                        <div class="controls"><input type="text" name="telefono" id="telefono" class="text ui-widget-content ui-corner-all" /></div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label">Cargo</label>
+                        <label class="control-label">¿Presenta golpes?</label>
                         <div class="controls">
-                            <select name="cargo" id="cargo" class="text ui-widget-content ui-corner-all">
+                            <select name="golpes" id="golpes" class="text ui-widget-content ui-corner-all">
                                 <option value="seleccione">Seleccione...</option>
-                                <option value="Administrador">Administrador</option>
-                                <option value="Recepcionista">Recepcionista</option>
-                                <option value="Tecnico lider">Técnico líder</option>
-                                <option value="Tecnico">Técnico</option>
-                                <option value="Tecnologo">Tecnólogo</option>
+                                <option value="Administrador">Si</option>
+                                <option value="Recepcionista">No</option>
                             </select>
                         </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label">Habilitado</label>
+                        <label class="control-label">¿Presenta manchas?</label>
                         <div class="controls">
-                            <select name="estado" id="estado" class="text ui-widget-content ui-corner-all">
+                            <select name="manchas" id="manchas" class="text ui-widget-content ui-corner-all">
                                 <option value="seleccione">Seleccione...</option>
-                                <option value="Activo">Si</option>
-                                <option value="Inactivo">No</option>
+                                <option value="Administrador">Si</option>
+                                <option value="Recepcionista">No</option>
                             </select>
                         </div>
                     </div>
+                    <div class="control-group">
+                        <label class="control-label">¿Pasa prueba?</label>
+                        <div class="controls">
+                            <select name="prueba" id="prueba" class="text ui-widget-content ui-corner-all">
+                                <option value="seleccione">Seleccione...</option>
+                                <option value="Administrador">Si</option>
+                                <option value="Recepcionista">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <label class="controls">Observaciones de entrega</label>
+                    <div class="controls"><textarea id="obsentre" rows="10" cols="25" wrap="soft"></textarea></div>
                 </form>
             </td>
 
         </tr>
     </table>
 </div>
+<div id="dialog-equipo" title="Buscar equipo" style="display: none;">
+    <section id="section_wrap2">
+
+    </section>
+</div>
+<div id="dialog-observa" title="Observaciones" style="display: none;">
+    <p class="validateTips"></p>
+    <table>
+        <tr>
+            <td>
+                <form id="formcreate3" class="form-horizontal">
+                    <label class="controls">Observaciones de recepción</label>
+                    <div class="controls"><textarea id="obsrecep2" rows="10" cols="25" wrap="soft"></textarea></div>
+
+                </form>
+                </form>
+            </td>
+            <td>
+                <form id="formcreate5" class="form-horizontal">
+                    <label class="controls">Observaciones de entrega</label>
+                    <div class="controls"><textarea id="obsentre2" rows="10" cols="25" wrap="soft"></textarea></div>
+                </form>
+            </td>
+
+        </tr>
+    </table>
+</div>
+
 <?php include 'include/generic_script.php'; ?>
 <link rel="stylesheet" media="screen" href="../danmet/css/dynamictable.css" type="text/css" />
 <script type="text/javascript" src="js/jquery/jquery-dataTables.js"></script>
 <script type="text/javascript" src="js/lib/data-sha1.js"></script>
-<script type="text/javascript" src="js/tipoequipo.js"></script>
+<script type="text/javascript" src="js/equiporecep.js"></script>
 <script type="text/javascript" src="js/opcionusr.js"></script>
 </body>
 </html>
