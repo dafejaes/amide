@@ -41,6 +41,12 @@
                 <li class="divider-vertical"></li>
                 <?php
             }
+            if($SESSION_DATA->getPermission(22)) {
+            ?>
+            <li <?php if ($_ACTIVE_SIDEBAR == "certificado") echo 'class="active"'; ?>><a href="certificado.php">Certificados</a></li>
+            <li class="divider-vertical"></li>
+            <?php
+            }
             ?>
 
         </ul>
