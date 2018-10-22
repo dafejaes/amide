@@ -47,6 +47,12 @@
             <li class="divider-vertical"></li>
             <?php
             }
+            if($SESSION_DATA->getPermission(23)) {
+            ?>
+            <li <?php if ($_ACTIVE_SIDEBAR == "historial") echo 'class="active"'; ?>><a href="Historial.php">Historial</a></li>
+            <li class="divider-vertical"></li>
+            <?php
+            }
             ?>
 
         </ul>
