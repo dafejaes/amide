@@ -116,7 +116,7 @@ class ControllerEquipRecep {
     }
 
     public function conseget() {
-        $q = "SELECT rcp_consecutivo FROM am_recepcion ORDER BY rcp_consecutivo ASC LIMIT 0,1";
+        $q = "SELECT rcp_consecutivo FROM am_recepcion ORDER BY rcp_consecutivo DESC LIMIT 1";
         if ($this->id > 0) {
             $q = "SELECT * FROM am_equipos, am_ubicaciones, am_servicio, am_recepcion  WHERE rcp = " . $this->id . " AND rcp_borrado = 0 AND am_equipos_eq_id = eq_id AND am_ubicaciones_ubi_id = ubi_id AND am_servicio_ser_id = ser_id AND am_equipos_tipo_eqt_id = eqt_id ORDER BY rcp_consecutivo";
         }

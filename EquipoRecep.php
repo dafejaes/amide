@@ -163,8 +163,8 @@ $arrusuarios = $arrusuarios['output']['response'];
                         <div class="controls">
                             <select name="manchas" id="manchas" class="text ui-widget-content ui-corner-all">
                                 <option value="seleccione">Seleccione...</option>
-                                <option value="Administrador">Si</option>
-                                <option value="Recepcionista">No</option>
+                                <option value="Si">Si</option>
+                                <option value="No">No</option>
                             </select>
                         </div>
                     </div>
@@ -173,8 +173,8 @@ $arrusuarios = $arrusuarios['output']['response'];
                         <div class="controls">
                             <select name="prueba" id="prueba" class="text ui-widget-content ui-corner-all">
                                 <option value="seleccione">Seleccione...</option>
-                                <option value="Administrador">Si</option>
-                                <option value="Recepcionista">No</option>
+                                <option value="Si">Si</option>
+                                <option value="No">No</option>
                             </select>
                         </div>
                     </div>

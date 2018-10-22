@@ -83,7 +83,6 @@ var RECEPCION = {
     },
     getobservacionHandler:function (data) {
         UTIL.cursorNormal();
-        debugger
         if(data.output.valid){
             var res= data.output.response[0];
             $('#obsentre2').empty();
@@ -234,22 +233,23 @@ var RECEPCION = {
             var golpes = '';
             var manchas = '';
             var prueba = '';
-            if(todo.golpes){
+              if(todo.golpes == "1"){
                 golpes = 'Si';
             }else{
                 golpes = 'No'
             }
-            if(todo.manchas){
+            if(todo.manchas == "1"){
                 manchas='Si';
             }
             else{
                 manchas='No';
             }
-            if(todo.prueba){
+            if(todo.prueba == "1"){
                 prueba='Si';
             }else{
                 prueba='No';
             }
+            debugger
             var doc = document.open("text/html","replace");
             var text = '<!DOCTYPE><html><head><style type="text/css">\n' +
                 '            body{\n' +
