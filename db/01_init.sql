@@ -38,7 +38,8 @@ INSERT INTO `am_perfiles` (`prf_id`, `prf_nombre`, `prf_descripcion`, `prf_actua
 (20, 'Recepcion equipos - editar', 'El usuario puede editar recepcion de equipos', NOW(), 0),
 (21, 'Recepcion equipos - borrar', 'El usuario puede borrar recepcion de equipos', NOW(), 0),
 (22, 'Certificado recepcion - ver', 'El usuario podrá ver los certificados', NOW(),0),
-(23, 'Historial recepcion - ver', 'El usuario podrá ver el historial', NOW(),0);
+(23, 'Historial recepcion - ver', 'El usuario podrá ver el historial', NOW(),0),
+(24, 'Equipos director - ver', 'el usuario puede ver los equipos en el laboratorio', NOW(),0);
 
 INSERT INTO `am_usuarios_has_am_perfiles` (`am_usuarios_usr_id`, `am_perfiles_prf_id`) VALUES
 (1,1),

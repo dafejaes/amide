@@ -70,7 +70,20 @@ function initrecep() {
         }
     });
 
-
+    $("#dialog-orden").dialog({
+        autoOpen: false,
+        height: 700,
+        width: 1000,
+        modal: true,
+        buttons: {
+            "Cerrar": function () {
+                $(this).dialog("close");
+            }
+        },
+        close: function () {
+            updateTips('');
+        }
+    });
 }
 
 
@@ -254,7 +267,7 @@ var RECEPCION = {
             var text = '<!DOCTYPE><html><head><style type="text/css">\n' +
                 '            body{\n' +
                 '                /* font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;*/\n' +
-                '                font-family: verdana,arial,sans-serif;\n' +
+                '                font-family: verdana,sans-serif;\n' +
                 '                font-size: 12px;\n' +
                 '                margin: 0px;\n' +
                 '                padding: 0px;\n' +
@@ -546,6 +559,35 @@ var RECEPCION = {
             doc.write(text);
         }else{
             alert('Error: ' + data.output.response.content);
+        }
+    },
+    generarorden: function (id) {
+        q.id=id;
+
+    },
+    generarordenHandler: function (data) {
+        UTIL.cursorNormal();
+        if(data.output.valid){
+            $('#infoequipo').append('<tr>\n' +
+                '                <th>Nombre</th>\n' +
+                '                <th>Marca</th>\n' +
+                '                <th>Modelo</th>\n' +
+                '                <th>Placa</th>\n' +
+                '                <th>Serie</th>\n' +
+                '                <th>Codigo</th>\n' +
+                '            </tr>\n' +
+                '            <tr>\n' +
+                '                <td></td>\n' +
+                '                <td></td>\n' +
+                '                <td></td>\n' +
+                '                <td></td>\n' +
+                '                <td></td>\n' +
+                '                <td></td>\n' +
+                '            </tr>');
+            $('#dialog-orden').dialog('open');
+        }else{
+            alert('Error: ' + data.output.response.content);
+
         }
     }
 }

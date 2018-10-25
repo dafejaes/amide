@@ -3,7 +3,7 @@
 if (isset($_SESSION['usuario'])) {
     ?>
         <div align="left" class= "nav">
-            <img class="img-rounded" src="images/prueba.jpg" width="150px">
+            <img class="img-rounded" src="images/Captura.PNG" width="110px">
             <select name="opcusr" id="opcusr" onchange="OPCION_USUARIO.opciones($(this).val(),<?php echo($_SESSION['usuario']['id']);?>)" class="text ui-widget-content ui-corner-all">
                 <option value="nada"><?php
                     echo($_SESSION['usuario']['nombre'] . "(" . $_SESSION['usuario']['cargo'] . ")");

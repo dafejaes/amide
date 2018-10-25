@@ -53,6 +53,12 @@
             <li class="divider-vertical"></li>
             <?php
             }
+            if($SESSION_DATA->getPermission(24)) {
+            ?>
+            <li <?php if ($_ACTIVE_SIDEBAR == "equipodirect") echo 'class="active"'; ?>><a href="equipodirector.php">Equipos</a></li>
+            <li class="divider-vertical"></li>
+            <?php
+            }
             ?>
 
         </ul>
