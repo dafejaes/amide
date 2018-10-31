@@ -59,6 +59,12 @@
             <li class="divider-vertical"></li>
             <?php
             }
+            if($SESSION_DATA->getPermission(25)) {
+                ?>
+                <li <?php if ($_ACTIVE_SIDEBAR == "ordenabierta") echo 'class="active"'; ?>><a href="ordenabierta.php">Órdenes abiertas</a></li>
+                <li class="divider-vertical"></li>
+                <?php
+            }
             ?>
 
         </ul>

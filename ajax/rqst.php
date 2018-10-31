@@ -48,6 +48,10 @@ if ($op == 'clisave' || $op == 'cliget' || $op == 'clidelete') {
     include '../lib/ControllerEquipDirect.php';
     $CONTROL = new ControllerEquipDirect();
     echo $CONTROL->getResponseJSON();
+}else if($op == 'patronesordenget'){
+    include '../lib/ControllerOpenOrder.php';
+    $CONTROL = new ControllerOpenOrder();
+    echo $CONTROL->getResponseJSON();
 }else{
     echo 'OPERACION NO DISPONIBLE';
 }

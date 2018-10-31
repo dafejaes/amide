@@ -209,10 +209,12 @@ var RECEPCION = {
         q.prueba=$('#prueba').val();
         q.obsentre=$('#obsentre').val();
         UTIL.callAjaxRqst(q, this.savedataHandler);
+
     },
     savedataHandler:function (data) {
         UTIL.cursorNormal();
         if (data.output.valid) {
+            $('#dialog-recepcion').dialog('close');
             window.location = 'EquipoRecep.php';
         } else {
             alert('Error: ' + data.output.response.content);
@@ -262,7 +264,6 @@ var RECEPCION = {
             }else{
                 prueba='No';
             }
-            debugger
             var doc = document.open("text/html","replace");
             var text = '<!DOCTYPE><html><head><style type="text/css">\n' +
                 '            body{\n' +

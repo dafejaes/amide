@@ -193,8 +193,6 @@ class ControllerEquipRecep {
             $q = "INSERT INTO am_recepcion (am_equipos_eq_id, rcp_consecutivo, rcp_estado, rcp_fechaingreso, rcp_golpes, rcp_manchas, rcp_prueba_encendido, rcp_obs_recepcion, rcp_obs_entrega, rcp_recepcionista_id, rcp_borrado) VALUES (". $this->ideq . "," . $this->consecutivo . ",'" . $this->estado . "'," . $this->UTILITY->date_now_server() . "," . $golpes . "," . $manchas . "," . $prueba . ",'" . $this->obsrecep . "','" . $this->obsentre . "'," . $this->idrecep . "," . 0 .")";
             mysqli_query($this->conexion, $q) or die(mysqli_error() . "***ERROR: " . $q);
             $id = mysqli_insert_id($this->conexion);
-            $q2 = "INSERT INTO am_recepcion_has_am_equipos(am_recepcion_recp_id, am_equipos_eq_id,  req_entregado, req_borrado) VALUES ( " . $id . "," . $this->ideq . "," . 0 . "," . 0 . ")";
-            mysqli_query($this->conexion, $q2) or die(mysqli_error() . "***ERROR: " . $q2);
             $arrjson = array('output' => array('valid' => true, 'id' => $id));
         }
         $this->response = ($arrjson);

@@ -170,7 +170,7 @@ class ControllerEquipDirect {
             if($contador == 0){
                 $arrjson=array('output' => array('valid' => false, 'response' => array('content' => 'No seleccionó patrones')));
             }else{
-                $q = "INSERT INTO am_orden (am_metodo_calibracion_mc_id, am_recepcion_recp_id, or_fecha_hora_apertura, or_fecha_hora_entrega, or_fecha_hora_inicio, or_fecha_hora_finaliza, or_servicio, or_tipo, or_estado, or_director_id, or_tiempo_empleado, or_borrado, or_responsable) VALUES (" . $this->metodo . "," . $this->idrecep . "," . $this->UTILITY->date_now_server() . ",'" . "','" . "','" . "','" . $this->servicio . "','" . $this->tipo . "','". $this->estado . "',". $this->iddirector . ",'" . "'," . 0 . "," . $this->idresponsable . ")";
+                $q = "INSERT INTO am_orden (am_metodo_calibracion_mc_id, am_recepcion_recp_id, or_fecha_hora_apertura, or_servicio, or_tipo, or_estado, or_director_id, or_tiempo_empleado, or_borrado, or_responsable) VALUES (" . $this->metodo . "," . $this->idrecep . "," . $this->UTILITY->date_now_server() . ",'" . $this->servicio . "','" . $this->tipo . "','". $this->estado . "',". $this->iddirector . ",'" . "'," . 0 . "," . $this->idresponsable . ")";
                 mysqli_query($this->conexion, $q) or die(mysqli_error() . "***ERROR: " . $q);
                 $id = mysqli_insert_id($this->conexion);
                 $arrjson = array('output' => array('valid' => true, 'id' => $id));

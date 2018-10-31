@@ -398,6 +398,7 @@ var EQUIPODIRECT = {
             $('#infoequipo').empty();
             $('#listapatrones').empty();
             $('#dialog-orden').dialog('close');
+            window.location = 'equipodirector.php';
         }else{
             alert('Error: ' + data.output.response.content);
         }
