@@ -40,7 +40,7 @@ $arrusuarios = $arrusuarios['output']['response'];
         <?php
         if ($create) {
             ?>
-            <a href="#" onclick="RECEPCION.getconsecutivo(<?php echo $_SESSION['usuario']['id']?>)" class="btn btn-info botoncrear">Crear</a>
+            <a href="#" onclick="RECEPCION.getconsecutivo(<?php echo $_SESSION['usuario']['id'];?>)" class="btn btn-info botoncrear">Crear</a>
             <?php
         }
         ?>

@@ -37,9 +37,10 @@ class ControllerEquipRecep {
             $this->idrecep2=isset($rqst['idrecep2']) ? intval($rqst['idrecep2']) : 0;
             $this->obsget();
         } else if ($this->op == 'recepget') {
-            $this->idrecep2=isset($rqst['idrecep2']) ? intval($rqst['idrecep2']) : 0;
             $this->recepget();
-        } else if ($this->op == 'noautorizado') {
+        } else if ($this->op == 'estadoordenedit') {
+            $this->estadoordenedit();
+        }else if ($this->op == 'noautorizado') {
             $this->response = $this->UTILITY->error_invalid_authorization();
         } else {
             $this->response = $this->UTILITY->error_invalid_method_called();
@@ -82,15 +83,14 @@ class ControllerEquipRecep {
     }
 
     public function recepget() {
-        if ($this->id > 0) {
-            $q = "SELECT * FROM am_clientes, am_sucursales, am_equipos_tipo, am_equipos, am_recepcion, am_ubicaciones WHERE recp_id = " . $this->id . " AND am_equipos_eq_id = eq_id AND am_equipos_tipo_eqt_id = eqt_id AND am_equipos.am_ubicaciones_ubi_id = ubi_id AND am_sucursales_suc_id = suc_id AND am_clientes_cli_id = cli_id";
-        }
+        $q = "SELECT * FROM am_clientes, am_sucursales, am_equipos_tipo, am_equipos, am_recepcion, am_ubicaciones WHERE recp_id = " . $this->id . " AND am_equipos_eq_id = eq_id AND am_equipos_tipo_eqt_id = eqt_id AND am_equipos.am_ubicaciones_ubi_id = ubi_id AND am_sucursales_suc_id = suc_id AND am_clientes_cli_id = cli_id";
         $con = mysqli_query($this->conexion,$q) or die(mysqli_error($this->conexion) . "***ERROR: " . $q);
         $resultado = mysqli_num_rows($con);
 
         $arr = array();
         while ($obj = mysqli_fetch_object($con)) {
             $arr[] = array(
+                'idrecep' => $obj->recp_id,
                 'consecutivo' => $obj->rcp_consecutivo,
                 'sucnombre' => $obj->suc_nombre,
                 'nit' => $obj->cli_nit,
@@ -105,7 +105,8 @@ class ControllerEquipRecep {
                 'manchas' =>$obj->rcp_manchas,
                 'prueba' =>$obj->rcp_prueba_encendido,
                 'obsentre' =>$obj->rcp_obs_entrega,
-                'obsrecep' =>$obj->rcp_obs_recepcion);
+                'obsrecep' =>$obj->rcp_obs_recepcion,
+                'fechainicio'=>$this->UTILITY->date_now_server());
         }
         if ($resultado > 0) {
             $arrjson = array('output' => array('valid' => true, 'response' => $arr));
@@ -179,7 +180,7 @@ class ControllerEquipRecep {
                 $table = "am_clientes";
                 $arrfieldscomma = array(
                     'cli_nombre' => $this->nombre,
-                    'cli_estado' => $estado2,
+                    'cli_estado' => 1,
                     'cli_nit' => $this->nit,
                     'cli_tipo' => $this->tipo,
                     'cli_url' => $this->url);
@@ -192,7 +193,19 @@ class ControllerEquipRecep {
             $q = "INSERT INTO am_recepcion (am_equipos_eq_id, rcp_consecutivo, rcp_estado, rcp_fechaingreso, rcp_golpes, rcp_manchas, rcp_prueba_encendido, rcp_obs_recepcion, rcp_obs_entrega, rcp_recepcionista_id, rcp_borrado) VALUES (". $this->ideq . "," . $this->consecutivo . ",'" . $this->estado . "'," . $this->UTILITY->date_now_server() . "," . $golpes . "," . $manchas . "," . $prueba . ",'" . $this->obsrecep . "','" . $this->obsentre . "'," . $this->idrecep . "," . 0 .")";
             mysqli_query($this->conexion, $q) or die(mysqli_error() . "***ERROR: " . $q);
             $id = mysqli_insert_id($this->conexion);
+            $q2 = "INSERT INTO am_recepcion_has_am_equipos(am_recepcion_recp_id, am_equipos_eq_id,  req_entregado, req_borrado) VALUES ( " . $id . "," . $this->ideq . "," . 0 . "," . 0 . ")";
+            mysqli_query($this->conexion, $q2) or die(mysqli_error() . "***ERROR: " . $q2);
             $arrjson = array('output' => array('valid' => true, 'id' => $id));
+        }
+        $this->response = ($arrjson);
+    }
+    public function estadoordenedit(){
+        if ($this->id > 0) {
+            $q = "UPDATE am_recepcion SET rcp_estado = 'Orden generada' WHERE recp_id = $this->id";
+            mysqli_query($this->conexion,$q) or die(mysqli_error() . "***ERROR: " . $q);
+            $arrjson = array('output' => array('valid' => true, 'id' => $this->id));
+        } else {
+            $arrjson = $this->UTILITY->error_missing_data();
         }
         $this->response = ($arrjson);
     }

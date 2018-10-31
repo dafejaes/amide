@@ -59,3 +59,6 @@ INSERT INTO `am_usuarios_has_am_perfiles` (`am_usuarios_usr_id`, `am_perfiles_pr
 (1,15),
 (1,16),
 (1,17);
+
+INSERT INTO `am_metodo_calibracion` (`mc_id`, `mc_nombre`, `mc_descripcion`, `mc_borrado`, `mc_actualizado`) VALUES
+(1, 'Método general', 'Comparación directa de la magnitud con el patrón y el instrumento a calibrar, se toman cinco mediciones con el instrumento y diez con el patrón. Se calcula la media y el error', 0 , NOW());

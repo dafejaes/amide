@@ -43,11 +43,11 @@ $arrusuarios = $arrusuarios['output']['response'];
                     <th class="head0">Equipo</th>
                     <th class="head1">Extension</th>
                     <th class="head0">Ubicación</th>
-                    <th class="head1">Servicio</th>
-                    <th class="head0">Fecha de recepción</th>
-                    <th class="head1">Observación </th>
-                    <th class="head0">Certificado</th>
-                    <th class="head1">Entregar</th>
+                    <!--<th class="head1">Servicio</th>-->
+                    <th class="head1">Fecha de recepción</th>
+                    <th class="head0">Observación </th>
+                    <th class="head1">Certificado</th>
+                    <th class="head0">Entregar</th>
                 </tr>
                 </thead>
                 <colgroup>
@@ -55,34 +55,34 @@ $arrusuarios = $arrusuarios['output']['response'];
                     <col class="con0" />
                     <col class="con1" />
                     <col class="con0" />
+                    <!--<col class="con1"/>-->
                     <col class="con1"/>
-                    <col class="con0"/>
-                    <col class="con1" />
                     <col class="con0" />
                     <col class="con1" />
+                    <col class="con0" />
 
                 </colgroup>
                 <!--                                    <td class="con0"><a href="#" onclick="editdata();"><span class="ui-icon ui-icon-pencil"></span></a><a href="#"><span class="ui-icon ui-icon-trash"></span></a></td>-->
                 <tbody>
                 <?php
                 $c = count($arrusuarios);
-                if ($isvalid) {
-                    for ($i = 0; $i < $c; $i++) {
+                //if ($isvalid) {
+                    //for ($i = 0; $i < $c; $i++) {
                         ?>
                         <tr class="gradeC">
-                            <td class="con1"><?php echo $arrusuarios[$i]['consecutivo']; ?></td>
-                            <td class="con0"><?php echo $arrusuarios[$i]['nombre']; ?></td>
-                            <td class="con1"><?php echo $arrusuarios[$i]['extension']; ?></td>
-                            <td class="con0"><?php echo $arrusuarios[$i]['ubicacion'] . ' Piso ' . $arrusuarios[$i]['piso'] . ' Torre ' . $arrusuarios[$i]['torre'] ; ?></td>
-                            <td class="con1"><?php echo $arrusuarios[$i]['servicio']; ?></td>
-                            <td class="con0"><?php echo $arrusuarios[$i]['fechaingreso']; ?></td>
-                            <td class="con1"><a href="#" onclick="CERTIFICADO.getobservacion(<?php echo $arrusuarios[$i]['id']; ?>);"><span class="icon-book"></span></a><span>&nbsp;&nbsp;</span>
-                            <td class="con0"><a href="#" onclick="CERTIFICADO.getcertificado(<?php echo $arrusuarios[$i]['id']; ?>);"><span class="icon-print"></span></a><span>&nbsp;&nbsp;</span>
-                            <td class="con0"><a href="#" onclick="CERTIFICADO.entregar(<?php echo $arrusuarios[$i]['id']; ?>);"><span class="icon-align-right"></span></a><span>&nbsp;&nbsp;</span>
+                            <td class="con1"><?php echo /*$arrusuarios[$i]['consecutivo'];*/ '2' ?></td>
+                            <td class="con0"><?php echo /*$arrusuarios[$i]['nombre']; */ 'TENSIOMETRO'?></td>
+                            <td class="con1"><?php echo /*$arrusuarios[$i]['extension'];*/ '2112' ?></td>
+                            <td class="con0"><?php echo /*$arrusuarios[$i]['ubicacion'] . ' Piso ' . $arrusuarios[$i]['piso'] . ' Torre ' . $arrusuarios[$i]['torre'] */ 'Servicio: Servicio 3. En: Torre 2 piso 1 Oficna 2'; ?></td>
+                            <!--<td class="con1"><?php //echo $arrusuarios[$i]['servicio']; ?></td>-->
+                            <td class="con1"><?php echo /*$arrusuarios[$i]['fechaingreso']*/ '2018-06-18'; ?></td>
+                            <td class="con0"><a href="#" "><span class="icon-book"></span></a><span>&nbsp;&nbsp;</span>
+                            <td class="con1"><a href="#" "><span class="icon-print"></span></a><span>&nbsp;&nbsp;</span>
+                            <td class="con0"><a href="#" "><span class="icon-chevron-right"></span></a><span>&nbsp;&nbsp;</span>
                         </tr>
                         <?php
-                    }
-                }
+                    //}
+                //}
                 ?>
                 </tbody>
             </table>

@@ -221,7 +221,7 @@ var RECEPCION = {
     getcertificado:function (id) {
         q.id=id;
         q.op='recepget';
-        UTIL.callAjaxRqst(q,this.getcertificadoHandler)
+        UTIL.callAjaxRqst(q,this.getcertificadoHandler);
     },
     getcertificadoHandler:function (data){
         UTIL.cursorNormal();
@@ -375,7 +375,7 @@ var RECEPCION = {
                 '\n' +
                 '            .printord label{\n' +
                 '                cursor: pointer;\n' +
-                '            }                    </style></head>' +
+                '            }</style></head>' +
                 '<body>' +
                 '   <div class="pagina">' +
                 '       <table class="paginatabla">' +

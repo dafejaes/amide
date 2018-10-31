@@ -2,17 +2,18 @@
 
 if (isset($_SESSION['usuario'])) {
     ?>
-        <div align="left" class= "nav">
-            <img class="img-rounded" src="images/Captura.PNG" width="110px">
-            <select name="opcusr" id="opcusr" onchange="OPCION_USUARIO.opciones($(this).val(),<?php echo($_SESSION['usuario']['id']);?>)" class="text ui-widget-content ui-corner-all">
-                <option value="nada"><?php
-                    echo($_SESSION['usuario']['nombre'] . "(" . $_SESSION['usuario']['cargo'] . ")");
-                    ?></option>
-                <option value="editarinfo">Editar informacion</option>
-                <option value="cerrarsesion">Cerrar sesion</option>
-            </select>
-
-            <img class="img-polaroid" src="images/favicon3.png" width="150px" align="right">
+        <div align="left" class= "nav" style="background-color: gray">
+            <img class="img-polaroid" src="images/favicon3.png" width="115px" align="left">
+            <div align="right">
+                <select  style="alignment: right" name="opcusr" id="opcusr" onchange="OPCION_USUARIO.opciones($(this).val(),<?php echo($_SESSION['usuario']['id']);?>)" class="text ui-widget-content ui-corner-all">
+                    <option value="nada"><?php
+                        echo($_SESSION['usuario']['nombre'] . "(" . $_SESSION['usuario']['cargo'] . ")");
+                        ?></option>
+                    <option value="editarinfo">Editar informacion</option>
+                    <option value="cerrarsesion">Cerrar sesion</option>
+                </select>
+                <img class="img-circle" src="images/Captura.PNG" width="80px">
+            </div>
         </div>
 
 

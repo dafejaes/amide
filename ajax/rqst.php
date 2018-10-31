@@ -40,9 +40,13 @@ if ($op == 'clisave' || $op == 'cliget' || $op == 'clidelete') {
     include '../lib/ControllerEquipments.php';
     $CONTROL = new ControllerEquipments();
     echo $CONTROL->getResponseJSON();
-}else if($op == 'conseget' || $op == 'recepsave' || $op == 'obsget' || $op == 'recepget'){
+}else if($op == 'conseget' || $op == 'recepsave' || $op == 'obsget' || $op == 'recepget' || $op == 'estadoordenedit'){
     include '../lib/ControllerEquipRecep.php';
     $CONTROL = new ControllerEquipRecep();
+    echo $CONTROL->getResponseJSON();
+}else if($op == 'metroget' || $op == 'patronesget' || $op == 'ordensave'){
+    include '../lib/ControllerEquipDirect.php';
+    $CONTROL = new ControllerEquipDirect();
     echo $CONTROL->getResponseJSON();
 }else{
     echo 'OPERACION NO DISPONIBLE';
