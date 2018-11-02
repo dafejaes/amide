@@ -40,7 +40,8 @@ INSERT INTO `am_perfiles` (`prf_id`, `prf_nombre`, `prf_descripcion`, `prf_actua
 (22, 'Certificado recepcion - ver', 'El usuario podrá ver los certificados', NOW(),0),
 (23, 'Historial recepcion - ver', 'El usuario podrá ver el historial', NOW(),0),
 (24, 'Equipos director - ver', 'el usuario puede ver los equipos en el laboratorio', NOW(),0),
-(25, 'Ordenes abiertas - ver', 'El usuario puede ver las órdenes abiertas', NOW(), 0);
+(25, 'Ordenes abiertas - ver', 'El usuario puede ver las órdenes abiertas', NOW(), 0),
+(26, 'Ordenes cerradas - ver', 'El usauario puede ver las ordenes cerradas', NOW(), 0);
 
 INSERT INTO `am_usuarios_has_am_perfiles` (`am_usuarios_usr_id`, `am_perfiles_prf_id`) VALUES
 (1,1),
